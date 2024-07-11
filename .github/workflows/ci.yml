@@ -1,0 +1,29 @@
+name: Ruby SDK CI
+
+on:
+  push:
+    branches: [ main, init-ruby-sdk ]
+  pull_request:
+    branches: [ main, init-ruby-sdk ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Run tests
+      run: bundle exec rake test
+
+    - name: Build gem
+      run: gem build rulebricks_api_client.gemspec
