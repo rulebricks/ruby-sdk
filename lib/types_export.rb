@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+require_relative "rulebricks_api_client/rules/types/list_response_item_request_schema_item"
+require_relative "rulebricks_api_client/rules/types/list_response_item_response_schema_item"
+require_relative "rulebricks_api_client/rules/types/list_response_item"
+require_relative "rulebricks_api_client/rules/types/usage_response"
+require_relative "rulebricks_api_client/values/types/list_values_response_item_type"
+require_relative "rulebricks_api_client/values/types/list_values_response_item_value"
+require_relative "rulebricks_api_client/values/types/list_values_response_item"
+require_relative "rulebricks_api_client/values/types/update_values_request_value"
+require_relative "rulebricks_api_client/values/types/update_values_response_item_type"
+require_relative "rulebricks_api_client/values/types/update_values_response_item_value"
+require_relative "rulebricks_api_client/values/types/update_values_response_item"
+require_relative "rulebricks_api_client/values/types/delete_value_response"
+require_relative "rulebricks_api_client/types/internal_server_error_body"
+require_relative "rulebricks_api_client/types/bad_request_error_body"
+require_relative "rulebricks_api_client/types/not_found_error_body"
