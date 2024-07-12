@@ -5,6 +5,8 @@ on:
     branches: [ main, init-ruby-sdk ]
   pull_request:
     branches: [ main, init-ruby-sdk ]
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -12,10 +14,10 @@ jobs:
 
     steps:
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.7'
 
@@ -27,3 +29,24 @@ jobs:
 
     - name: Build gem
       run: gem build rulebricks_api_client.gemspec
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Publish to RubyGems
+      env:
+        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+      run: gem push rulebricks_api_client-*.gem
