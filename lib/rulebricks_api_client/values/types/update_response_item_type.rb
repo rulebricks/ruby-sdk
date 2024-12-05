@@ -3,7 +3,7 @@
 module RulebricksApiClient
   class Values
     # Data type of the dynamic value.
-    class ListValuesResponseItemType
+    class UpdateResponseItemType
       STRING = "string"
       NUMBER = "number"
       BOOLEAN = "boolean"

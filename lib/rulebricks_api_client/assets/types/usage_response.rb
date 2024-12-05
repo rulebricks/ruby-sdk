@@ -4,7 +4,7 @@ require "ostruct"
 require "json"
 
 module RulebricksApiClient
-  class Rules
+  class Assets
     class UsageResponse
       # @return [String] The current plan of the organization.
       attr_reader :plan
@@ -33,7 +33,7 @@ module RulebricksApiClient
       # @param monthly_executions_limit [Float] The total number of rule executions allowed this month.
       # @param monthly_executions_remaining [Float] The number of rule executions remaining this month.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [RulebricksApiClient::Rules::UsageResponse]
+      # @return [RulebricksApiClient::Assets::UsageResponse]
       def initialize(plan: OMIT, monthly_period_start: OMIT, monthly_period_end: OMIT, monthly_executions_usage: OMIT,
                      monthly_executions_limit: OMIT, monthly_executions_remaining: OMIT, additional_properties: nil)
         @plan = plan if plan != OMIT
@@ -58,7 +58,7 @@ module RulebricksApiClient
       # Deserialize a JSON object to an instance of UsageResponse
       #
       # @param json_object [String]
-      # @return [RulebricksApiClient::Rules::UsageResponse]
+      # @return [RulebricksApiClient::Assets::UsageResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         plan = struct["plan"]

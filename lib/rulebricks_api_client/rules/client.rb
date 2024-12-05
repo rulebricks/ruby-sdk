@@ -2,8 +2,6 @@
 
 require_relative "../../requests"
 require "json"
-require_relative "types/list_response_item"
-require_relative "types/usage_response"
 require "async"
 
 module RulebricksApiClient
@@ -67,15 +65,15 @@ module RulebricksApiClient
       JSON.parse(response.body)
     end
 
-    # Executes multiple rules in parallel based on a provided mapping of rule slugs to
-    #  payloads.
+    # Executes multiple rules or flows in parallel based on a provided mapping of
+    #  rule/flow slugs to payloads.
     #
     # @param request [Hash{String => Object}]
     # @param request_options [RulebricksApiClient::RequestOptions]
     # @return [Hash{String => Object}]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.parallel_solve(request: { "eligibility": {"rule":"1ef03ms","name":"John Doe","age":30,"email":"jdoe@acme.co"}, "offers": {"rule":"OvmsYwn","customer_id":"12345","last_purchase_days_ago":30,"selected_plan":"premium"} })
+    #  api.rules.parallel_solve(request: { "eligibility": {"rule":"1ef03ms","name":"John Doe","age":30,"email":"jdoe@acme.co"}, "offers": {"flow":"OvmsYwn","customer_id":"12345","last_purchase_days_ago":30,"selected_plan":"premium"} })
     def parallel_solve(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -89,52 +87,6 @@ module RulebricksApiClient
         req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/parallel-solve"
       end
       JSON.parse(response.body)
-    end
-
-    # List all rules in the organization.
-    #
-    # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [Array<RulebricksApiClient::Rules::ListResponseItem>]
-    # @example
-    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.list
-    def list(request_options: nil)
-      response = @request_client.conn.get do |req|
-        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = {
-      **(req.headers || {}),
-      **@request_client.get_headers,
-      **(request_options&.additional_headers || {})
-        }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/list"
-      end
-      parsed_json = JSON.parse(response.body)
-      parsed_json&.map do |item|
-        item = item.to_json
-        RulebricksApiClient::Rules::ListResponseItem.from_json(json_object: item)
-      end
-    end
-
-    # Get the rule execution usage of your organization.
-    #
-    # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [RulebricksApiClient::Rules::UsageResponse]
-    # @example
-    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.usage
-    def usage(request_options: nil)
-      response = @request_client.conn.get do |req|
-        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = {
-      **(req.headers || {}),
-      **@request_client.get_headers,
-      **(request_options&.additional_headers || {})
-        }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/usage"
-      end
-      RulebricksApiClient::Rules::UsageResponse.from_json(json_object: response.body)
     end
   end
 
@@ -204,15 +156,15 @@ module RulebricksApiClient
       end
     end
 
-    # Executes multiple rules in parallel based on a provided mapping of rule slugs to
-    #  payloads.
+    # Executes multiple rules or flows in parallel based on a provided mapping of
+    #  rule/flow slugs to payloads.
     #
     # @param request [Hash{String => Object}]
     # @param request_options [RulebricksApiClient::RequestOptions]
     # @return [Hash{String => Object}]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.parallel_solve(request: { "eligibility": {"rule":"1ef03ms","name":"John Doe","age":30,"email":"jdoe@acme.co"}, "offers": {"rule":"OvmsYwn","customer_id":"12345","last_purchase_days_ago":30,"selected_plan":"premium"} })
+    #  api.rules.parallel_solve(request: { "eligibility": {"rule":"1ef03ms","name":"John Doe","age":30,"email":"jdoe@acme.co"}, "offers": {"flow":"OvmsYwn","customer_id":"12345","last_purchase_days_ago":30,"selected_plan":"premium"} })
     def parallel_solve(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -228,56 +180,6 @@ module RulebricksApiClient
         end
         parsed_json = JSON.parse(response.body)
         parsed_json
-      end
-    end
-
-    # List all rules in the organization.
-    #
-    # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [Array<RulebricksApiClient::Rules::ListResponseItem>]
-    # @example
-    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.list
-    def list(request_options: nil)
-      Async do
-        response = @request_client.conn.get do |req|
-          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = {
-        **(req.headers || {}),
-        **@request_client.get_headers,
-        **(request_options&.additional_headers || {})
-          }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/list"
-        end
-        parsed_json = JSON.parse(response.body)
-        parsed_json&.map do |item|
-          item = item.to_json
-          RulebricksApiClient::Rules::ListResponseItem.from_json(json_object: item)
-        end
-      end
-    end
-
-    # Get the rule execution usage of your organization.
-    #
-    # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [RulebricksApiClient::Rules::UsageResponse]
-    # @example
-    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.rules.usage
-    def usage(request_options: nil)
-      Async do
-        response = @request_client.conn.get do |req|
-          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = {
-        **(req.headers || {}),
-        **@request_client.get_headers,
-        **(request_options&.additional_headers || {})
-          }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/usage"
-        end
-        RulebricksApiClient::Rules::UsageResponse.from_json(json_object: response.body)
       end
     end
   end

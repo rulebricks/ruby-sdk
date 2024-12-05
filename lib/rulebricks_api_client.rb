@@ -4,6 +4,10 @@ require_relative "types_export"
 require_relative "requests"
 require_relative "rulebricks_api_client/rules/client"
 require_relative "rulebricks_api_client/flows/client"
+require_relative "rulebricks_api_client/decisions/client"
+require_relative "rulebricks_api_client/assets/client"
+require_relative "rulebricks_api_client/users/client"
+require_relative "rulebricks_api_client/tests/client"
 require_relative "rulebricks_api_client/values/client"
 
 module RulebricksApiClient
@@ -12,6 +16,14 @@ module RulebricksApiClient
     attr_reader :rules
     # @return [RulebricksApiClient::FlowsClient]
     attr_reader :flows
+    # @return [RulebricksApiClient::DecisionsClient]
+    attr_reader :decisions
+    # @return [RulebricksApiClient::AssetsClient]
+    attr_reader :assets
+    # @return [RulebricksApiClient::UsersClient]
+    attr_reader :users
+    # @return [RulebricksApiClient::TestsClient]
+    attr_reader :tests
     # @return [RulebricksApiClient::ValuesClient]
     attr_reader :values
 
@@ -29,6 +41,10 @@ module RulebricksApiClient
       )
       @rules = RulebricksApiClient::RulesClient.new(request_client: @request_client)
       @flows = RulebricksApiClient::FlowsClient.new(request_client: @request_client)
+      @decisions = RulebricksApiClient::DecisionsClient.new(request_client: @request_client)
+      @assets = RulebricksApiClient::AssetsClient.new(request_client: @request_client)
+      @users = RulebricksApiClient::UsersClient.new(request_client: @request_client)
+      @tests = RulebricksApiClient::TestsClient.new(request_client: @request_client)
       @values = RulebricksApiClient::ValuesClient.new(request_client: @request_client)
     end
   end
@@ -38,6 +54,14 @@ module RulebricksApiClient
     attr_reader :rules
     # @return [RulebricksApiClient::AsyncFlowsClient]
     attr_reader :flows
+    # @return [RulebricksApiClient::AsyncDecisionsClient]
+    attr_reader :decisions
+    # @return [RulebricksApiClient::AsyncAssetsClient]
+    attr_reader :assets
+    # @return [RulebricksApiClient::AsyncUsersClient]
+    attr_reader :users
+    # @return [RulebricksApiClient::AsyncTestsClient]
+    attr_reader :tests
     # @return [RulebricksApiClient::AsyncValuesClient]
     attr_reader :values
 
@@ -55,6 +79,10 @@ module RulebricksApiClient
       )
       @rules = RulebricksApiClient::AsyncRulesClient.new(request_client: @async_request_client)
       @flows = RulebricksApiClient::AsyncFlowsClient.new(request_client: @async_request_client)
+      @decisions = RulebricksApiClient::AsyncDecisionsClient.new(request_client: @async_request_client)
+      @assets = RulebricksApiClient::AsyncAssetsClient.new(request_client: @async_request_client)
+      @users = RulebricksApiClient::AsyncUsersClient.new(request_client: @async_request_client)
+      @tests = RulebricksApiClient::AsyncTestsClient.new(request_client: @async_request_client)
       @values = RulebricksApiClient::AsyncValuesClient.new(request_client: @async_request_client)
     end
   end

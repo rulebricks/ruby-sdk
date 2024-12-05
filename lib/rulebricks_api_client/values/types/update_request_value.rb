@@ -4,12 +4,11 @@ require "json"
 
 module RulebricksApiClient
   class Values
-    # Value of the dynamic value.
-    class ListValuesResponseItemValue
-      # Deserialize a JSON object to an instance of ListValuesResponseItemValue
+    class UpdateRequestValue
+      # Deserialize a JSON object to an instance of UpdateRequestValue
       #
       # @param json_object [String]
-      # @return [RulebricksApiClient::Values::ListValuesResponseItemValue]
+      # @return [RulebricksApiClient::Values::UpdateRequestValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin

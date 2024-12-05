@@ -34,7 +34,7 @@ module RulebricksApiClient
       **(request_options&.additional_headers || {})
         }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flow/#{slug}"
+        req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flows/#{slug}"
       end
       JSON.parse(response.body)
     end
@@ -70,7 +70,7 @@ module RulebricksApiClient
         **(request_options&.additional_headers || {})
           }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flow/#{slug}"
+          req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flows/#{slug}"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

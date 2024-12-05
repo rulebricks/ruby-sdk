@@ -4,9 +4,9 @@ require "ostruct"
 require "json"
 
 module RulebricksApiClient
-  class Values
-    class DeleteValueResponse
-      # @return [String] Confirmation message of successful deletion.
+  class Assets
+    class DeleteRuleResponse
+      # @return [String]
       attr_reader :message
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -16,9 +16,9 @@ module RulebricksApiClient
 
       OMIT = Object.new
 
-      # @param message [String] Confirmation message of successful deletion.
+      # @param message [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [RulebricksApiClient::Values::DeleteValueResponse]
+      # @return [RulebricksApiClient::Assets::DeleteRuleResponse]
       def initialize(message: OMIT, additional_properties: nil)
         @message = message if message != OMIT
         @additional_properties = additional_properties
@@ -27,17 +27,17 @@ module RulebricksApiClient
         end
       end
 
-      # Deserialize a JSON object to an instance of DeleteValueResponse
+      # Deserialize a JSON object to an instance of DeleteRuleResponse
       #
       # @param json_object [String]
-      # @return [RulebricksApiClient::Values::DeleteValueResponse]
+      # @return [RulebricksApiClient::Assets::DeleteRuleResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         message = struct["message"]
         new(message: message, additional_properties: struct)
       end
 
-      # Serialize an instance of DeleteValueResponse to a JSON object
+      # Serialize an instance of DeleteRuleResponse to a JSON object
       #
       # @return [String]
       def to_json(*_args)
