@@ -6,7 +6,7 @@ require "json"
 
 module RulebricksApiClient
   class Tests
-    class CreateTestResponse
+    class ListFlowTestsResponseItem
       # @return [String] Unique identifier for the test.
       attr_reader :id
       # @return [String] The name of the test.
@@ -43,7 +43,7 @@ module RulebricksApiClient
       # @param test_state [Hash{String => Object}] The state of the test after execution.
       # @param last_executed [DateTime] The timestamp when the test was last executed.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [RulebricksApiClient::Tests::CreateTestResponse]
+      # @return [RulebricksApiClient::Tests::ListFlowTestsResponseItem]
       def initialize(id:, name:, request:, response:, critical:, error:, success:, test_state: OMIT,
                      last_executed: OMIT, additional_properties: nil)
         @id = id
@@ -71,10 +71,10 @@ module RulebricksApiClient
         end
       end
 
-      # Deserialize a JSON object to an instance of CreateTestResponse
+      # Deserialize a JSON object to an instance of ListFlowTestsResponseItem
       #
       # @param json_object [String]
-      # @return [RulebricksApiClient::Tests::CreateTestResponse]
+      # @return [RulebricksApiClient::Tests::ListFlowTestsResponseItem]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -101,7 +101,7 @@ module RulebricksApiClient
         )
       end
 
-      # Serialize an instance of CreateTestResponse to a JSON object
+      # Serialize an instance of ListFlowTestsResponseItem to a JSON object
       #
       # @return [String]
       def to_json(*_args)

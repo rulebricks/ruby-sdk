@@ -5,6 +5,7 @@ require_relative "types/delete_rule_response"
 require "json"
 require "date"
 require_relative "types/import_rule_response"
+require_relative "types/list_rules_response_item"
 require_relative "types/usage_response"
 require "async"
 
@@ -133,14 +134,39 @@ module RulebricksApiClient
       RulebricksApiClient::Assets::ImportRuleResponse.from_json(json_object: response.body)
     end
 
+    # List all rules in the organization.
+    #
+    # @param request_options [RulebricksApiClient::RequestOptions]
+    # @return [Array<RulebricksApiClient::Assets::ListRulesResponseItem>]
+    # @example
+    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+    #  api.assets.list_rules
+    def list_rules(request_options: nil)
+      response = @request_client.conn.get do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/rules/list"
+      end
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |item|
+        item = item.to_json
+        RulebricksApiClient::Assets::ListRulesResponseItem.from_json(json_object: item)
+      end
+    end
+
     # List all flows in the organization.
     #
     # @param request_options [RulebricksApiClient::RequestOptions]
     # @return [Void]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.assets.list
-    def list(request_options: nil)
+    #  api.assets.list_flows
+    def list_flows(request_options: nil)
       @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
@@ -306,14 +332,41 @@ module RulebricksApiClient
       end
     end
 
+    # List all rules in the organization.
+    #
+    # @param request_options [RulebricksApiClient::RequestOptions]
+    # @return [Array<RulebricksApiClient::Assets::ListRulesResponseItem>]
+    # @example
+    #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+    #  api.assets.list_rules
+    def list_rules(request_options: nil)
+      Async do
+        response = @request_client.conn.get do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/rules/list"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |item|
+          item = item.to_json
+          RulebricksApiClient::Assets::ListRulesResponseItem.from_json(json_object: item)
+        end
+      end
+    end
+
     # List all flows in the organization.
     #
     # @param request_options [RulebricksApiClient::RequestOptions]
     # @return [Void]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.assets.list
-    def list(request_options: nil)
+    #  api.assets.list_flows
+    def list_flows(request_options: nil)
       Async do
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

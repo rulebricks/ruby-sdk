@@ -5,7 +5,7 @@ require "json"
 
 module RulebricksApiClient
   class Assets
-    class ListResponseItem
+    class ListRulesResponseItem
       # @return [String] The unique identifier for the rule.
       attr_reader :id
       # @return [String] The name of the rule.
@@ -33,7 +33,7 @@ module RulebricksApiClient
       # @param slug [String] The unique slug for the rule used in API requests.
       # @param updated_at [String] The date this rule was last updated.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [RulebricksApiClient::Assets::ListResponseItem]
+      # @return [RulebricksApiClient::Assets::ListRulesResponseItem]
       def initialize(id: OMIT, name: OMIT, description: OMIT, published: OMIT, slug: OMIT, updated_at: OMIT,
                      additional_properties: nil)
         @id = id if id != OMIT
@@ -55,10 +55,10 @@ module RulebricksApiClient
         end
       end
 
-      # Deserialize a JSON object to an instance of ListResponseItem
+      # Deserialize a JSON object to an instance of ListRulesResponseItem
       #
       # @param json_object [String]
-      # @return [RulebricksApiClient::Assets::ListResponseItem]
+      # @return [RulebricksApiClient::Assets::ListRulesResponseItem]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]
@@ -78,7 +78,7 @@ module RulebricksApiClient
         )
       end
 
-      # Serialize an instance of ListResponseItem to a JSON object
+      # Serialize an instance of ListRulesResponseItem to a JSON object
       #
       # @return [String]
       def to_json(*_args)
