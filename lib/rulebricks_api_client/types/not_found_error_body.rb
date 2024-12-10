@@ -5,7 +5,7 @@ require "json"
 
 module RulebricksApiClient
   class NotFoundErrorBody
-    # @return [String] Error message indicating the value was not found.
+    # @return [String] Error message indicating the folder was not found.
     attr_reader :error
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -15,7 +15,7 @@ module RulebricksApiClient
 
     OMIT = Object.new
 
-    # @param error [String] Error message indicating the value was not found.
+    # @param error [String] Error message indicating the folder was not found.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [RulebricksApiClient::NotFoundErrorBody]
     def initialize(error: OMIT, additional_properties: nil)

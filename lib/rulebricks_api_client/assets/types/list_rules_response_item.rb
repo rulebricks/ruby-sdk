@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "date"
+require_relative "list_rules_response_item_folder"
 require "ostruct"
 require "json"
 
@@ -8,16 +10,20 @@ module RulebricksApiClient
     class ListRulesResponseItem
       # @return [String] The unique identifier for the rule.
       attr_reader :id
+      # @return [DateTime] The date this rule was created.
+      attr_reader :created_at
       # @return [String] The name of the rule.
       attr_reader :name
       # @return [String] The description of the rule.
       attr_reader :description
-      # @return [Boolean] Whether the rule is published.
-      attr_reader :published
       # @return [String] The unique slug for the rule used in API requests.
       attr_reader :slug
-      # @return [String] The date this rule was last updated.
-      attr_reader :updated_at
+      # @return [RulebricksApiClient::Assets::ListRulesResponseItemFolder] The folder containing this rule
+      attr_reader :folder
+      # @return [Hash{String => Object}] The published request schema for the rule.
+      attr_reader :request_schema
+      # @return [Hash{String => Object}] The published response schema for the rule.
+      attr_reader :response_schema
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -27,29 +33,35 @@ module RulebricksApiClient
       OMIT = Object.new
 
       # @param id [String] The unique identifier for the rule.
+      # @param created_at [DateTime] The date this rule was created.
       # @param name [String] The name of the rule.
       # @param description [String] The description of the rule.
-      # @param published [Boolean] Whether the rule is published.
       # @param slug [String] The unique slug for the rule used in API requests.
-      # @param updated_at [String] The date this rule was last updated.
+      # @param folder [RulebricksApiClient::Assets::ListRulesResponseItemFolder] The folder containing this rule
+      # @param request_schema [Hash{String => Object}] The published request schema for the rule.
+      # @param response_schema [Hash{String => Object}] The published response schema for the rule.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [RulebricksApiClient::Assets::ListRulesResponseItem]
-      def initialize(id: OMIT, name: OMIT, description: OMIT, published: OMIT, slug: OMIT, updated_at: OMIT,
-                     additional_properties: nil)
+      def initialize(id: OMIT, created_at: OMIT, name: OMIT, description: OMIT, slug: OMIT, folder: OMIT,
+                     request_schema: OMIT, response_schema: OMIT, additional_properties: nil)
         @id = id if id != OMIT
+        @created_at = created_at if created_at != OMIT
         @name = name if name != OMIT
         @description = description if description != OMIT
-        @published = published if published != OMIT
         @slug = slug if slug != OMIT
-        @updated_at = updated_at if updated_at != OMIT
+        @folder = folder if folder != OMIT
+        @request_schema = request_schema if request_schema != OMIT
+        @response_schema = response_schema if response_schema != OMIT
         @additional_properties = additional_properties
         @_field_set = {
           "id": id,
+          "created_at": created_at,
           "name": name,
           "description": description,
-          "published": published,
           "slug": slug,
-          "updated_at": updated_at
+          "folder": folder,
+          "request_schema": request_schema,
+          "response_schema": response_schema
         }.reject do |_k, v|
           v == OMIT
         end
@@ -61,19 +73,29 @@ module RulebricksApiClient
       # @return [RulebricksApiClient::Assets::ListRulesResponseItem]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         id = struct["id"]
+        created_at = (DateTime.parse(parsed_json["created_at"]) unless parsed_json["created_at"].nil?)
         name = struct["name"]
         description = struct["description"]
-        published = struct["published"]
         slug = struct["slug"]
-        updated_at = struct["updated_at"]
+        if parsed_json["folder"].nil?
+          folder = nil
+        else
+          folder = parsed_json["folder"].to_json
+          folder = RulebricksApiClient::Assets::ListRulesResponseItemFolder.from_json(json_object: folder)
+        end
+        request_schema = struct["request_schema"]
+        response_schema = struct["response_schema"]
         new(
           id: id,
+          created_at: created_at,
           name: name,
           description: description,
-          published: published,
           slug: slug,
-          updated_at: updated_at,
+          folder: folder,
+          request_schema: request_schema,
+          response_schema: response_schema,
           additional_properties: struct
         )
       end
@@ -93,11 +115,13 @@ module RulebricksApiClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+        obj.created_at&.is_a?(DateTime) != false || raise("Passed value for field obj.created_at is not the expected type, validation failed.")
         obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
         obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
-        obj.published&.is_a?(Boolean) != false || raise("Passed value for field obj.published is not the expected type, validation failed.")
         obj.slug&.is_a?(String) != false || raise("Passed value for field obj.slug is not the expected type, validation failed.")
-        obj.updated_at&.is_a?(String) != false || raise("Passed value for field obj.updated_at is not the expected type, validation failed.")
+        obj.folder.nil? || RulebricksApiClient::Assets::ListRulesResponseItemFolder.validate_raw(obj: obj.folder)
+        obj.request_schema&.is_a?(Hash) != false || raise("Passed value for field obj.request_schema is not the expected type, validation failed.")
+        obj.response_schema&.is_a?(Hash) != false || raise("Passed value for field obj.response_schema is not the expected type, validation failed.")
       end
     end
   end
