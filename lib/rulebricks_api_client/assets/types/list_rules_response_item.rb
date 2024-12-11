@@ -20,9 +20,9 @@ module RulebricksApiClient
       attr_reader :slug
       # @return [RulebricksApiClient::Assets::ListRulesResponseItemFolder] The folder containing this rule
       attr_reader :folder
-      # @return [Hash{String => Object}] The published request schema for the rule.
+      # @return [Array<Object>] The published request schema for the rule.
       attr_reader :request_schema
-      # @return [Hash{String => Object}] The published response schema for the rule.
+      # @return [Array<Object>] The published response schema for the rule.
       attr_reader :response_schema
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -38,8 +38,8 @@ module RulebricksApiClient
       # @param description [String] The description of the rule.
       # @param slug [String] The unique slug for the rule used in API requests.
       # @param folder [RulebricksApiClient::Assets::ListRulesResponseItemFolder] The folder containing this rule
-      # @param request_schema [Hash{String => Object}] The published request schema for the rule.
-      # @param response_schema [Hash{String => Object}] The published response schema for the rule.
+      # @param request_schema [Array<Object>] The published request schema for the rule.
+      # @param response_schema [Array<Object>] The published response schema for the rule.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [RulebricksApiClient::Assets::ListRulesResponseItem]
       def initialize(id: OMIT, created_at: OMIT, name: OMIT, description: OMIT, slug: OMIT, folder: OMIT,
@@ -120,8 +120,8 @@ module RulebricksApiClient
         obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
         obj.slug&.is_a?(String) != false || raise("Passed value for field obj.slug is not the expected type, validation failed.")
         obj.folder.nil? || RulebricksApiClient::Assets::ListRulesResponseItemFolder.validate_raw(obj: obj.folder)
-        obj.request_schema&.is_a?(Hash) != false || raise("Passed value for field obj.request_schema is not the expected type, validation failed.")
-        obj.response_schema&.is_a?(Hash) != false || raise("Passed value for field obj.response_schema is not the expected type, validation failed.")
+        obj.request_schema&.is_a?(Array) != false || raise("Passed value for field obj.request_schema is not the expected type, validation failed.")
+        obj.response_schema&.is_a?(Array) != false || raise("Passed value for field obj.response_schema is not the expected type, validation failed.")
       end
     end
   end
