@@ -2,9 +2,9 @@
 
 require_relative "rulebricks_api_client/decisions/types/query_response"
 require_relative "rulebricks_api_client/assets/types/delete_rule_response"
-require_relative "rulebricks_api_client/assets/types/import_rule_response"
 require_relative "rulebricks_api_client/assets/types/list_rules_response_item_folder"
 require_relative "rulebricks_api_client/assets/types/list_rules_response_item"
+require_relative "rulebricks_api_client/assets/types/list_flows_response_item"
 require_relative "rulebricks_api_client/assets/types/usage_response"
 require_relative "rulebricks_api_client/assets/types/list_folders_response_item"
 require_relative "rulebricks_api_client/assets/types/upsert_folder_response"

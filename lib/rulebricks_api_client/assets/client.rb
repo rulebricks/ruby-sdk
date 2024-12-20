@@ -3,9 +3,8 @@
 require_relative "../../requests"
 require_relative "types/delete_rule_response"
 require "json"
-require "date"
-require_relative "types/import_rule_response"
 require_relative "types/list_rules_response_item"
+require_relative "types/list_flows_response_item"
 require_relative "types/usage_response"
 require_relative "types/list_folders_response_item"
 require_relative "types/upsert_folder_response"
@@ -71,42 +70,13 @@ module RulebricksApiClient
 
     # Import a rule into the user's account.
     #
-    # @param id [String]
-    # @param created_at [DateTime]
-    # @param slug [String]
-    # @param updated_at [DateTime]
-    # @param test_request [Hash{String => Object}]
-    # @param name [String]
-    # @param description [String]
-    # @param request_schema [Array<Object>]
-    # @param response_schema [Array<Object>]
-    # @param sample_request [Hash{String => Object}]
-    # @param sample_response [Hash{String => Object}]
-    # @param conditions [Array<Object>]
-    # @param published [Boolean]
-    # @param history [Array<Object>]
+    # @param rule [Hash{String => Object}] The rule data to import.
     # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [RulebricksApiClient::Assets::ImportRuleResponse]
+    # @return [Hash{String => Object}]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.assets.import_rule(
-    #    id: "id",
-    #    created_at: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    slug: "slug",
-    #    updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    test_request: { "key": "value" },
-    #    name: "name",
-    #    description: "description",
-    #    request_schema: ,
-    #    response_schema: ,
-    #    sample_request: { "key": "value" },
-    #    sample_response: { "key": "value" },
-    #    conditions: ,
-    #    published: true,
-    #    history:
-    #  )
-    def import_rule(id:, created_at:, slug:, updated_at:, test_request:, name:, description:, request_schema:,
-                    response_schema:, sample_request:, sample_response:, conditions:, published:, history:, request_options: nil)
+    #  api.assets.import_rule(rule: { "key": "value" })
+    def import_rule(rule:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
@@ -115,26 +85,10 @@ module RulebricksApiClient
       **@request_client.get_headers,
       **(request_options&.additional_headers || {})
         }.compact
-        req.body = {
-          **(request_options&.additional_body_parameters || {}),
-          id: id,
-          createdAt: created_at,
-          slug: slug,
-          updatedAt: updated_at,
-          testRequest: test_request,
-          name: name,
-          description: description,
-          requestSchema: request_schema,
-          responseSchema: response_schema,
-          sampleRequest: sample_request,
-          sampleResponse: sample_response,
-          conditions: conditions,
-          published: published,
-          history: history
-        }.compact
+        req.body = { **(request_options&.additional_body_parameters || {}), rule: rule }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/rules/import"
       end
-      RulebricksApiClient::Assets::ImportRuleResponse.from_json(json_object: response.body)
+      JSON.parse(response.body)
     end
 
     # List all rules in the organization. Optionally filter by folder name or ID.
@@ -167,12 +121,12 @@ module RulebricksApiClient
     # List all flows in the organization.
     #
     # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [Void]
+    # @return [Array<RulebricksApiClient::Assets::ListFlowsResponseItem>]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
     #  api.assets.list_flows
     def list_flows(request_options: nil)
-      @request_client.conn.get do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
@@ -181,6 +135,11 @@ module RulebricksApiClient
       **(request_options&.additional_headers || {})
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/flows/list"
+      end
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |item|
+        item = item.to_json
+        RulebricksApiClient::Assets::ListFlowsResponseItem.from_json(json_object: item)
       end
     end
 
@@ -348,42 +307,13 @@ module RulebricksApiClient
 
     # Import a rule into the user's account.
     #
-    # @param id [String]
-    # @param created_at [DateTime]
-    # @param slug [String]
-    # @param updated_at [DateTime]
-    # @param test_request [Hash{String => Object}]
-    # @param name [String]
-    # @param description [String]
-    # @param request_schema [Array<Object>]
-    # @param response_schema [Array<Object>]
-    # @param sample_request [Hash{String => Object}]
-    # @param sample_response [Hash{String => Object}]
-    # @param conditions [Array<Object>]
-    # @param published [Boolean]
-    # @param history [Array<Object>]
+    # @param rule [Hash{String => Object}] The rule data to import.
     # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [RulebricksApiClient::Assets::ImportRuleResponse]
+    # @return [Hash{String => Object}]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-    #  api.assets.import_rule(
-    #    id: "id",
-    #    created_at: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    slug: "slug",
-    #    updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    test_request: { "key": "value" },
-    #    name: "name",
-    #    description: "description",
-    #    request_schema: ,
-    #    response_schema: ,
-    #    sample_request: { "key": "value" },
-    #    sample_response: { "key": "value" },
-    #    conditions: ,
-    #    published: true,
-    #    history:
-    #  )
-    def import_rule(id:, created_at:, slug:, updated_at:, test_request:, name:, description:, request_schema:,
-                    response_schema:, sample_request:, sample_response:, conditions:, published:, history:, request_options: nil)
+    #  api.assets.import_rule(rule: { "key": "value" })
+    def import_rule(rule:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -393,26 +323,11 @@ module RulebricksApiClient
         **@request_client.get_headers,
         **(request_options&.additional_headers || {})
           }.compact
-          req.body = {
-            **(request_options&.additional_body_parameters || {}),
-            id: id,
-            createdAt: created_at,
-            slug: slug,
-            updatedAt: updated_at,
-            testRequest: test_request,
-            name: name,
-            description: description,
-            requestSchema: request_schema,
-            responseSchema: response_schema,
-            sampleRequest: sample_request,
-            sampleResponse: sample_response,
-            conditions: conditions,
-            published: published,
-            history: history
-          }.compact
+          req.body = { **(request_options&.additional_body_parameters || {}), rule: rule }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/rules/import"
         end
-        RulebricksApiClient::Assets::ImportRuleResponse.from_json(json_object: response.body)
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
 
@@ -448,13 +363,13 @@ module RulebricksApiClient
     # List all flows in the organization.
     #
     # @param request_options [RulebricksApiClient::RequestOptions]
-    # @return [Void]
+    # @return [Array<RulebricksApiClient::Assets::ListFlowsResponseItem>]
     # @example
     #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
     #  api.assets.list_flows
     def list_flows(request_options: nil)
       Async do
-        @request_client.conn.get do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["x-api-key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
@@ -463,6 +378,11 @@ module RulebricksApiClient
         **(request_options&.additional_headers || {})
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/admin/flows/list"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |item|
+          item = item.to_json
+          RulebricksApiClient::Assets::ListFlowsResponseItem.from_json(json_object: item)
         end
       end
     end
