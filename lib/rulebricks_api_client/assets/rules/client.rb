@@ -62,8 +62,8 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.assets.rules.export(id: "id")
-      def export(id:, request_options: nil)
+#  api.assets.rules.pull(id: "id")
+      def pull(id:, request_options: nil)
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -92,8 +92,8 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.assets.rules.import(rule: { "key": "value" })
-      def import(rule:, request_options: nil)
+#  api.assets.rules.push(rule: { "key": "value" })
+      def push(rule:, request_options: nil)
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -197,8 +197,8 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.assets.rules.export(id: "id")
-      def export(id:, request_options: nil)
+#  api.assets.rules.pull(id: "id")
+      def pull(id:, request_options: nil)
         Async do
           response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -229,8 +229,8 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.assets.rules.import(rule: { "key": "value" })
-      def import(rule:, request_options: nil)
+#  api.assets.rules.push(rule: { "key": "value" })
+      def push(rule:, request_options: nil)
         Async do
           response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
