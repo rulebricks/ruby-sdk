@@ -28,8 +28,8 @@ module RulebricksApiClient
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.list_dynamic_values
-    def list_dynamic_values(name: nil, request_options: nil)
+#  api.values.list
+    def list(name: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -60,8 +60,8 @@ end
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.update_values(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
-    def update_values(values:, access_groups: nil, request_options: nil)
+#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
+    def update(values:, access_groups: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -89,8 +89,8 @@ end
     # @return [RulebricksApiClient::SuccessMessage]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.delete_dynamic_value(id: "id")
-    def delete_dynamic_value(id:, request_options: nil)
+#  api.values.delete(id: "id")
+    def delete(id:, request_options: nil)
       response = @request_client.conn.delete do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -127,8 +127,8 @@ end
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.list_dynamic_values
-    def list_dynamic_values(name: nil, request_options: nil)
+#  api.values.list
+    def list(name: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -161,8 +161,8 @@ end
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.update_values(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
-    def update_values(values:, access_groups: nil, request_options: nil)
+#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
+    def update(values:, access_groups: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -192,8 +192,8 @@ end
     # @return [RulebricksApiClient::SuccessMessage]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.values.delete_dynamic_value(id: "id")
-    def delete_dynamic_value(id:, request_options: nil)
+#  api.values.delete(id: "id")
+    def delete(id:, request_options: nil)
       Async do
         response = @request_client.conn.delete do | req |
   unless request_options&.timeout_in_seconds.nil?

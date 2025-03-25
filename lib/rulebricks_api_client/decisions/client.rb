@@ -31,8 +31,8 @@ module RulebricksApiClient
     # @return [RulebricksApiClient::DecisionLogResponse]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.decisions.query_decisions(slug: "slug")
-    def query_decisions(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
+#  api.decisions.query(slug: "slug")
+    def query(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -74,8 +74,8 @@ end
     # @return [RulebricksApiClient::DecisionLogResponse]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.decisions.query_decisions(slug: "slug")
-    def query_decisions(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
+#  api.decisions.query(slug: "slug")
+    def query(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?

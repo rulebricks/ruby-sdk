@@ -28,8 +28,8 @@ module RulebricksApiClient
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.flows.execute_flow(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
-    def execute_flow(slug:, request:, request_options: nil)
+#  api.flows.execute(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
+    def execute(slug:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -69,8 +69,8 @@ end
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
 #  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
-#  api.flows.execute_flow(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
-    def execute_flow(slug:, request:, request_options: nil)
+#  api.flows.execute(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
+    def execute(slug:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?

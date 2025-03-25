@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+require_relative "list_value_value_item"
 require_relative "rule_usage"
 require "ostruct"
 require "json"
 
 module RulebricksApiClient
   class ListValue
-  # @return [Array<String>] The list value
+  # @return [Array<RulebricksApiClient::ListValueValueItem>] The list value
     attr_reader :value
   # @return [String] Unique identifier for the dynamic value.
     attr_reader :id
@@ -23,7 +24,7 @@ module RulebricksApiClient
 
     OMIT = Object.new
 
-    # @param value [Array<String>] The list value
+    # @param value [Array<RulebricksApiClient::ListValueValueItem>] The list value
     # @param id [String] Unique identifier for the dynamic value.
     # @param name [String] Name of the dynamic value.
     # @param usages [Array<RulebricksApiClient::RuleUsage>] Rules that use this dynamic value.
@@ -48,7 +49,10 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      value = parsed_json["value"]
+      value = parsed_json["value"]&.map do | item |
+  item = item.to_json
+  RulebricksApiClient::ListValueValueItem.from_json(json_object: item)
+end
       id = parsed_json["id"]
       name = parsed_json["name"]
       usages = parsed_json["usages"]&.map do | item |
