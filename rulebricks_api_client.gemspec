@@ -1,8 +1,15 @@
 # frozen_string_literal: true
-
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
 require_relative "lib/gemconfig"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do | spec |
   spec.name = "rulebricks_api_client"
   spec.version = RulebricksApiClient::Gemconfig::VERSION
   spec.authors = RulebricksApiClient::Gemconfig::AUTHORS
@@ -18,8 +25,8 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.add_dependency "async-http-faraday", ">= 0.0", "< 1.0"
   spec.add_dependency "faraday", ">= 1.10", "< 3.0"
   spec.add_dependency "faraday-net_http", ">= 1.0", "< 4.0"
   spec.add_dependency "faraday-retry", ">= 1.0", "< 3.0"
+  spec.add_dependency "async-http-faraday", ">= 0.0", "< 1.0"
 end

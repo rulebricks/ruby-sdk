@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require_relative "types_export"
 require_relative "requests"
 require_relative "rulebricks_api_client/rules/client"
@@ -9,36 +8,38 @@ require_relative "rulebricks_api_client/assets/client"
 require_relative "rulebricks_api_client/users/client"
 require_relative "rulebricks_api_client/tests/client"
 require_relative "rulebricks_api_client/values/client"
+require_relative "requests"
 
 module RulebricksApiClient
   class Client
-    # @return [RulebricksApiClient::RulesClient]
+  # @return [RulebricksApiClient::RulesClient] 
     attr_reader :rules
-    # @return [RulebricksApiClient::FlowsClient]
+  # @return [RulebricksApiClient::FlowsClient] 
     attr_reader :flows
-    # @return [RulebricksApiClient::DecisionsClient]
+  # @return [RulebricksApiClient::DecisionsClient] 
     attr_reader :decisions
-    # @return [RulebricksApiClient::AssetsClient]
+  # @return [RulebricksApiClient::AssetsClient] 
     attr_reader :assets
-    # @return [RulebricksApiClient::UsersClient]
+  # @return [RulebricksApiClient::UsersClient] 
     attr_reader :users
-    # @return [RulebricksApiClient::TestsClient]
+  # @return [RulebricksApiClient::TestsClient] 
     attr_reader :tests
-    # @return [RulebricksApiClient::ValuesClient]
+  # @return [RulebricksApiClient::ValuesClient] 
     attr_reader :values
 
-    # @param base_url [String]
+
+    # @param base_url [String] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param api_key [String]
+    # @param timeout_in_seconds [Long] 
+    # @param api_key [String] 
     # @return [RulebricksApiClient::Client]
-    def initialize(api_key:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key:)
       @request_client = RulebricksApiClient::RequestClient.new(
-        base_url: base_url,
-        max_retries: max_retries,
-        timeout_in_seconds: timeout_in_seconds,
-        api_key: api_key
-      )
+  base_url: base_url,
+  max_retries: max_retries,
+  timeout_in_seconds: timeout_in_seconds,
+  api_key: api_key
+)
       @rules = RulebricksApiClient::RulesClient.new(request_client: @request_client)
       @flows = RulebricksApiClient::FlowsClient.new(request_client: @request_client)
       @decisions = RulebricksApiClient::DecisionsClient.new(request_client: @request_client)
@@ -48,35 +49,35 @@ module RulebricksApiClient
       @values = RulebricksApiClient::ValuesClient.new(request_client: @request_client)
     end
   end
-
   class AsyncClient
-    # @return [RulebricksApiClient::AsyncRulesClient]
+  # @return [RulebricksApiClient::AsyncRulesClient] 
     attr_reader :rules
-    # @return [RulebricksApiClient::AsyncFlowsClient]
+  # @return [RulebricksApiClient::AsyncFlowsClient] 
     attr_reader :flows
-    # @return [RulebricksApiClient::AsyncDecisionsClient]
+  # @return [RulebricksApiClient::AsyncDecisionsClient] 
     attr_reader :decisions
-    # @return [RulebricksApiClient::AsyncAssetsClient]
+  # @return [RulebricksApiClient::AsyncAssetsClient] 
     attr_reader :assets
-    # @return [RulebricksApiClient::AsyncUsersClient]
+  # @return [RulebricksApiClient::AsyncUsersClient] 
     attr_reader :users
-    # @return [RulebricksApiClient::AsyncTestsClient]
+  # @return [RulebricksApiClient::AsyncTestsClient] 
     attr_reader :tests
-    # @return [RulebricksApiClient::AsyncValuesClient]
+  # @return [RulebricksApiClient::AsyncValuesClient] 
     attr_reader :values
 
-    # @param base_url [String]
+
+    # @param base_url [String] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param api_key [String]
+    # @param timeout_in_seconds [Long] 
+    # @param api_key [String] 
     # @return [RulebricksApiClient::AsyncClient]
-    def initialize(api_key:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key:)
       @async_request_client = RulebricksApiClient::AsyncRequestClient.new(
-        base_url: base_url,
-        max_retries: max_retries,
-        timeout_in_seconds: timeout_in_seconds,
-        api_key: api_key
-      )
+  base_url: base_url,
+  max_retries: max_retries,
+  timeout_in_seconds: timeout_in_seconds,
+  api_key: api_key
+)
       @rules = RulebricksApiClient::AsyncRulesClient.new(request_client: @async_request_client)
       @flows = RulebricksApiClient::AsyncFlowsClient.new(request_client: @async_request_client)
       @decisions = RulebricksApiClient::AsyncDecisionsClient.new(request_client: @async_request_client)
