@@ -27,7 +27,11 @@ module RulebricksApiClient
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.flows.execute(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
     def execute(slug:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -42,7 +46,7 @@ module RulebricksApiClient
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flows/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/flows/#{slug}"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json
@@ -68,7 +72,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.flows.execute(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
     def execute(slug:, request:, request_options: nil)
       Async do
@@ -84,7 +92,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/flows/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/flows/#{slug}"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json

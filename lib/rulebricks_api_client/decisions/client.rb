@@ -30,7 +30,11 @@ module RulebricksApiClient
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DecisionLogResponse]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.decisions.query(slug: "slug")
     def query(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
       response = @request_client.conn.get do | req |
@@ -45,7 +49,7 @@ module RulebricksApiClient
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/decisions/query"
+  req.url "#{@request_client.get_url(request_options: request_options)}/decisions/query"
 end
       RulebricksApiClient::DecisionLogResponse.from_json(json_object: response.body)
     end
@@ -73,7 +77,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DecisionLogResponse]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.decisions.query(slug: "slug")
     def query(slug:, from: nil, to: nil, cursor: nil, limit: nil, request_options: nil)
       Async do
@@ -89,7 +97,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/decisions/query"
+  req.url "#{@request_client.get_url(request_options: request_options)}/decisions/query"
 end
         RulebricksApiClient::DecisionLogResponse.from_json(json_object: response.body)
       end

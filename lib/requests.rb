@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "environment"
 require "faraday"
 require "faraday/retry"
 require "faraday"
@@ -14,15 +15,19 @@ module RulebricksApiClient
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
+  # @return [String] 
+    attr_reader :default_environment
 
 
     # @param base_url [String] 
+    # @param environment [RulebricksApiClient::Environment] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
     # @return [RulebricksApiClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key:)
-      @base_url = base_url
+    def initialize(base_url: nil, environment: RulebricksApiClient::Environment::DEFAULT, max_retries: nil, timeout_in_seconds: nil, api_key:)
+      @default_environment = environment
+      @base_url = environment || base_url
       @api_key = api_key
       @conn = Faraday.new do | faraday |
   faraday.request :json
@@ -38,7 +43,7 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
     end
     # @return [Hash{String => String}]
     def get_headers
@@ -54,15 +59,19 @@ end
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
+  # @return [String] 
+    attr_reader :default_environment
 
 
     # @param base_url [String] 
+    # @param environment [RulebricksApiClient::Environment] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
     # @return [RulebricksApiClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key:)
-      @base_url = base_url
+    def initialize(base_url: nil, environment: RulebricksApiClient::Environment::DEFAULT, max_retries: nil, timeout_in_seconds: nil, api_key:)
+      @default_environment = environment
+      @base_url = environment || base_url
       @api_key = api_key
       @conn = Faraday.new do | faraday |
   faraday.request :json
@@ -79,7 +88,7 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
     end
     # @return [Hash{String => String}]
     def get_headers

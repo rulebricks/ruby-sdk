@@ -32,7 +32,11 @@ module RulebricksApiClient
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.solve(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
     def solve(slug:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -47,7 +51,7 @@ module RulebricksApiClient
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/solve/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/solve/#{slug}"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json
@@ -60,7 +64,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [Array<RulebricksApiClient::BulkRuleResponseItem>]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.bulk_solve(slug: "slug", request: [{ "name": "John Doe", "age": 30, "email": "jdoe@acme.co" }, { "name": "Jane Doe", "age": 28, "email": "jane@example.com" }])
     def bulk_solve(slug:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -75,7 +83,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/bulk-solve/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/bulk-solve/#{slug}"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json&.map do | item |
@@ -90,7 +98,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::PARALLEL_SOLVE_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.parallel_solve(request: { "eligibility": { rule: "1ef03ms" }, "offers": { flow: "OvmsYwn" } })
     def parallel_solve(request:, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -105,7 +117,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/parallel-solve"
+  req.url "#{@request_client.get_url(request_options: request_options)}/parallel-solve"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json
@@ -131,7 +143,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_RESPONSE_PAYLOAD]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.solve(slug: "slug", request: { "name": "John Doe", "age": 30, "email": "jdoe@acme.co" })
     def solve(slug:, request:, request_options: nil)
       Async do
@@ -147,7 +163,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/solve/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/solve/#{slug}"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json
@@ -161,7 +177,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [Array<RulebricksApiClient::BulkRuleResponseItem>]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.bulk_solve(slug: "slug", request: [{ "name": "John Doe", "age": 30, "email": "jdoe@acme.co" }, { "name": "Jane Doe", "age": 28, "email": "jane@example.com" }])
     def bulk_solve(slug:, request:, request_options: nil)
       Async do
@@ -177,7 +197,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/bulk-solve/#{slug}"
+  req.url "#{@request_client.get_url(request_options: request_options)}/bulk-solve/#{slug}"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do | item |
@@ -193,7 +213,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::PARALLEL_SOLVE_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.rules.parallel_solve(request: { "eligibility": { rule: "1ef03ms" }, "offers": { flow: "OvmsYwn" } })
     def parallel_solve(request:, request_options: nil)
       Async do
@@ -209,7 +233,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/parallel-solve"
+  req.url "#{@request_client.get_url(request_options: request_options)}/parallel-solve"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json

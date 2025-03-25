@@ -23,11 +23,15 @@ module RulebricksApiClient
     end
 # Retrieve all dynamic values for the authenticated user.
     #
-    # @param name [String] Name of a specific dynamic value to retrieve data for
+    # @param name [String] Query all dynamic values containing a specific name
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.list
     def list(name: nil, request_options: nil)
       response = @request_client.conn.get do | req |
@@ -42,7 +46,7 @@ module RulebricksApiClient
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json&.map do | item |
@@ -59,7 +63,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
     def update(values:, access_groups: nil, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -74,7 +82,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), values: values, accessGroups: access_groups }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
       parsed_json = JSON.parse(response.body)
       parsed_json&.map do | item |
@@ -88,7 +96,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::SuccessMessage]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.delete(id: "id")
     def delete(id:, request_options: nil)
       response = @request_client.conn.delete do | req |
@@ -103,7 +115,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
       RulebricksApiClient::SuccessMessage.from_json(json_object: response.body)
     end
@@ -122,11 +134,15 @@ end
     end
 # Retrieve all dynamic values for the authenticated user.
     #
-    # @param name [String] Name of a specific dynamic value to retrieve data for
+    # @param name [String] Query all dynamic values containing a specific name
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.list
     def list(name: nil, request_options: nil)
       Async do
@@ -142,7 +158,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do | item |
@@ -160,7 +176,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
     def update(values:, access_groups: nil, request_options: nil)
       Async do
@@ -176,7 +196,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), values: values, accessGroups: access_groups }.compact
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
         parsed_json = JSON.parse(response.body)
         parsed_json&.map do | item |
@@ -191,7 +211,11 @@ end
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::SuccessMessage]
     # @example
-#  api = RulebricksApiClient::Client.new(base_url: "https://api.example.com", api_key: "YOUR_API_KEY")
+#  api = RulebricksApiClient::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: RulebricksApiClient::Environment::DEFAULT,
+#    api_key: "YOUR_API_KEY"
+#  )
 #  api.values.delete(id: "id")
     def delete(id:, request_options: nil)
       Async do
@@ -207,7 +231,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(request_options: request_options)}/api/v1/values"
+  req.url "#{@request_client.get_url(request_options: request_options)}/values"
 end
         RulebricksApiClient::SuccessMessage.from_json(json_object: response.body)
       end
