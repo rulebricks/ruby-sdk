@@ -21,9 +21,12 @@ module RulebricksApiClient
     def initialize(request_client:)
       @request_client = request_client
     end
-# Retrieve all dynamic values for the authenticated user.
+# Retrieve all dynamic values for the authenticated user. Use the 'include'
+#  parameter to control whether usage information is returned.
     #
     # @param name [String] Query all dynamic values containing a specific name
+    # @param include [String] Comma-separated list of additional data to include. Use 'usage' to include which
+#  rules reference each value.
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
@@ -32,8 +35,8 @@ module RulebricksApiClient
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.values.list
-    def list(name: nil, request_options: nil)
+#  api.values.list(include: "usage")
+    def list(name: nil, include: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -42,7 +45,7 @@ module RulebricksApiClient
     req.headers["x-api-key"] = request_options.api_key
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "name": name }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "name": name, "include": include }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -55,8 +58,15 @@ end
       end
     end
 # Update existing dynamic values or add new ones for the authenticated user.
+#  Supports both flat and nested object structures. Nested objects are
+#  automatically flattened using dot notation and keys are converted to readable
+#  format (e.g., 'user_name' becomes 'User Name', nested 'user.contact_info.email'
+#  becomes 'User.Contact Info.Email').
     #
-    # @param values [Hash{String => RulebricksApiClient::Values::UpdateValuesRequestValuesValue}] A flat dictionary of keys and values to update or add.
+    # @param values [Hash{String => Object}] A dictionary of keys and values to update or add. Supports both flat key-value
+#  pairs and nested objects. Nested objects will be automatically flattened using
+#  dot notation with readable key names (e.g., 'user.contact_info.email' becomes
+#  'User.Contact Info.Email').
     # @param access_groups [Array<String>] Optional array of access group names or IDs. If omitted and user belongs to
 #  access groups, values will be assigned to all user's access groups. Required if
 #  values should be restricted to specific access groups.
@@ -68,7 +78,7 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
+#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading","cycling"] }, access_groups: ["marketing", "developers"])
     def update(values:, access_groups: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -132,9 +142,12 @@ end
     def initialize(request_client:)
       @request_client = request_client
     end
-# Retrieve all dynamic values for the authenticated user.
+# Retrieve all dynamic values for the authenticated user. Use the 'include'
+#  parameter to control whether usage information is returned.
     #
     # @param name [String] Query all dynamic values containing a specific name
+    # @param include [String] Comma-separated list of additional data to include. Use 'usage' to include which
+#  rules reference each value.
     # @param request_options [RulebricksApiClient::RequestOptions] 
     # @return [RulebricksApiClient::DYNAMIC_VALUE_LIST_RESPONSE]
     # @example
@@ -143,8 +156,8 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.values.list
-    def list(name: nil, request_options: nil)
+#  api.values.list(include: "usage")
+    def list(name: nil, include: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -154,7 +167,7 @@ end
     req.headers["x-api-key"] = request_options.api_key
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "name": name }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "name": name, "include": include }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -168,8 +181,15 @@ end
       end
     end
 # Update existing dynamic values or add new ones for the authenticated user.
+#  Supports both flat and nested object structures. Nested objects are
+#  automatically flattened using dot notation and keys are converted to readable
+#  format (e.g., 'user_name' becomes 'User Name', nested 'user.contact_info.email'
+#  becomes 'User.Contact Info.Email').
     #
-    # @param values [Hash{String => RulebricksApiClient::Values::UpdateValuesRequestValuesValue}] A flat dictionary of keys and values to update or add.
+    # @param values [Hash{String => Object}] A dictionary of keys and values to update or add. Supports both flat key-value
+#  pairs and nested objects. Nested objects will be automatically flattened using
+#  dot notation with readable key names (e.g., 'user.contact_info.email' becomes
+#  'User.Contact Info.Email').
     # @param access_groups [Array<String>] Optional array of access group names or IDs. If omitted and user belongs to
 #  access groups, values will be assigned to all user's access groups. Required if
 #  values should be restricted to specific access groups.
@@ -181,7 +201,7 @@ end
 #    environment: RulebricksApiClient::Environment::DEFAULT,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading", "cycling"] }, access_groups: ["marketing", "developers"])
+#  api.values.update(values: { "Favorite Color": "blue", "Age": 30, "Is Student": false, "Hobbies": ["reading","cycling"] }, access_groups: ["marketing", "developers"])
     def update(values:, access_groups: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
