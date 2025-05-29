@@ -5,7 +5,7 @@ require "json"
 
 module RulebricksApiClient
   class DecisionLogResponse
-  # @return [Array<RulebricksApiClient::DecisionLog>] 
+  # @return [Array<RulebricksApiClient::DECISION_LOG>] 
     attr_reader :data
   # @return [String] Pagination cursor for next page
     attr_reader :cursor
@@ -17,7 +17,7 @@ module RulebricksApiClient
 
     OMIT = Object.new
 
-    # @param data [Array<RulebricksApiClient::DecisionLog>] 
+    # @param data [Array<RulebricksApiClient::DECISION_LOG>] 
     # @param cursor [String] Pagination cursor for next page
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [RulebricksApiClient::DecisionLogResponse]
@@ -36,10 +36,7 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      data = parsed_json["data"]&.map do | item |
-  item = item.to_json
-  RulebricksApiClient::DecisionLog.from_json(json_object: item)
-end
+      data = parsed_json["data"]
       cursor = parsed_json["cursor"]
       new(
         data: data,
