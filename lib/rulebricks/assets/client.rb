@@ -42,6 +42,78 @@ module Rulebricks
         end
       end
 
+      # Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rbm).
+      #
+      # @param request_options [Hash]
+      # @param params [Rulebricks::Assets::Types::ImportManifestRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Rulebricks::Types::ImportManifestResponse]
+      def import_rbm(request_options: {}, **params)
+        body_prop_names = %i[manifest conflict_strategy target_folder_name legacy_rule_mapping]
+        body_bag = params.slice(*body_prop_names)
+
+        request = Rulebricks::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "admin/import",
+          body: Rulebricks::Assets::Types::ImportManifestRequest.new(body_bag).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Rulebricks::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Rulebricks::Types::ImportManifestResponse.load(response.body)
+        else
+          error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Export selected rules, flows, contexts, and values to an Rulebricks manifest file (*.rbm).
+      #
+      # @param request_options [Hash]
+      # @param params [Rulebricks::Assets::Types::ExportManifestRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Rulebricks::Assets::Types::ExportRbmAssetsResponse]
+      def export_rbm(request_options: {}, **params)
+        body_prop_names = %i[root_type root_ids include_downstream manifest_name manifest_description preview_only]
+        body_bag = params.slice(*body_prop_names)
+
+        request = Rulebricks::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "admin/export",
+          body: Rulebricks::Assets::Types::ExportManifestRequest.new(body_bag).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Rulebricks::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Rulebricks::Assets::Types::ExportRbmAssetsResponse.load(response.body)
+        else
+          error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # @return [Rulebricks::Rules::Client]
       def rules
         @rules ||= Rulebricks::Assets::Rules::Client.new(client: @client)

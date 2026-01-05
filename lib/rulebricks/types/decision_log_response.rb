@@ -2,7 +2,8 @@
 
 module Rulebricks
   module Types
-    # Response containing decision logs or a count.
+    # Response containing decision logs or a count. Returns either {data, cursor} for log queries OR {count} for count
+    # queries - these are mutually exclusive based on the count parameter.
     class DecisionLogResponse < Internal::Types::Model
       field :data, -> { Internal::Types::Array[Rulebricks::Types::DecisionLog] }, optional: true, nullable: false
       field :cursor, -> { String }, optional: true, nullable: false

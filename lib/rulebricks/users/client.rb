@@ -10,7 +10,7 @@ module Rulebricks
         @client = client
       end
 
-      # Invite a new user to the organization or update role or access group data for an existing user.
+      # Invite a new user to the organization or update role or user group data for an existing user.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Users::Types::UserInviteRequest]
@@ -22,7 +22,7 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::UserInviteResponse]
       def invite(request_options: {}, **params)
-        body_prop_names = %i[email role access_groups]
+        body_prop_names = %i[email role user_groups]
         body_bag = params.slice(*body_prop_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
@@ -47,7 +47,7 @@ module Rulebricks
       end
 
       # List all users (including the admin and all team members) in the organization with their details including
-      # email, name, API key, role, access groups, and join date.
+      # email, name, API key, role, user groups, and join date.
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -92,7 +92,7 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::CreateUserResponse]
       def create(request_options: {}, **params)
-        body_prop_names = %i[email password name role access_groups]
+        body_prop_names = %i[email password name role user_groups]
         body_bag = params.slice(*body_prop_names)
 
         request = Rulebricks::Internal::JSON::Request.new(

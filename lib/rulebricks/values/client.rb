@@ -68,7 +68,7 @@ module Rulebricks
       #
       # @return [Array[Rulebricks::Types::DynamicValue]]
       def update(request_options: {}, **params)
-        body_prop_names = %i[values access_groups]
+        body_prop_names = %i[values user_groups]
         body_bag = params.slice(*body_prop_names)
 
         request = Rulebricks::Internal::JSON::Request.new(

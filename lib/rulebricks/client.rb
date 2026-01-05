@@ -46,6 +46,11 @@ module Rulebricks
       @values ||= Rulebricks::Values::Client.new(client: @raw_client)
     end
 
+    # @return [Rulebricks::Contexts::Client]
+    def contexts
+      @contexts ||= Rulebricks::Contexts::Client.new(client: @raw_client)
+    end
+
     # @return [Rulebricks::Tests::Client]
     def tests
       @tests ||= Rulebricks::Tests::Client.new(client: @raw_client)

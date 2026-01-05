@@ -8,10 +8,10 @@ module Rulebricks
       field :request, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
       field :response, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
       field :critical, -> { Internal::Types::Boolean }, optional: false, nullable: false
-      field :error, -> { Internal::Types::Boolean }, optional: false, nullable: false
-      field :success, -> { Internal::Types::Boolean }, optional: false, nullable: false
-      field :test_state, -> { Rulebricks::Types::TestTestState }, optional: true, nullable: false, api_name: "testState"
-      field :last_executed, -> { String }, optional: true, nullable: false, api_name: "lastExecuted"
+      field :error, -> { Internal::Types::Boolean }, optional: true, nullable: false
+      field :success, -> { Internal::Types::Boolean }, optional: true, nullable: false
+      field :test_state, -> { Rulebricks::Types::TestTestState }, optional: true, nullable: false
+      field :last_executed, -> { String }, optional: true, nullable: false
     end
   end
 end

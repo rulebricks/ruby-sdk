@@ -5,7 +5,7 @@ module Rulebricks
     module Types
       class UpdateValuesRequest < Internal::Types::Model
         field :values, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
-        field :access_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false, api_name: "accessGroups"
+        field :user_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false
       end
     end
   end

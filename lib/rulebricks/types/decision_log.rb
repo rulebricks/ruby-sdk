@@ -8,8 +8,8 @@ module Rulebricks
       field :name, -> { String }, optional: true, nullable: false
       field :endpoint, -> { String }, optional: true, nullable: false
       field :status, -> { Integer }, optional: true, nullable: false
-      field :request, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
-      field :response, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+      field :request, -> { Rulebricks::Types::DecisionLogRequest }, optional: true, nullable: false
+      field :response, -> { Rulebricks::Types::DecisionLogResponse }, optional: true, nullable: false
       field :decision, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
       field :error, -> { String }, optional: true, nullable: false
       field :abbreviated, -> { Internal::Types::Boolean }, optional: true, nullable: false

@@ -428,7 +428,7 @@ client.decisions.query(
 <dl>
 <dd>
 
-Invite a new user to the organization or update role or access group data for an existing user.
+Invite a new user to the organization or update role or user group data for an existing user.
 </dd>
 </dl>
 </dd>
@@ -446,7 +446,7 @@ Invite a new user to the organization or update role or access group data for an
 client.users.invite(
   email: 'newuser@example.com',
   role: 'developer',
-  access_groups: ['group1', 'group2']
+  user_groups: ['group1', 'group2']
 );
 ```
 </dd>
@@ -478,7 +478,7 @@ client.users.invite(
 <dl>
 <dd>
 
-**access_groups:** `Internal::Types::Array[String]` — List of access group names or IDs to assign to the user. All specified groups must exist in your organization.
+**user_groups:** `Internal::Types::Array[String]` — List of user group names or IDs to assign to the user. All specified groups must exist in your organization.
     
 </dd>
 </dl>
@@ -510,7 +510,7 @@ client.users.invite(
 <dl>
 <dd>
 
-List all users (including the admin and all team members) in the organization with their details including email, name, API key, role, access groups, and join date.
+List all users (including the admin and all team members) in the organization with their details including email, name, API key, role, user groups, and join date.
 </dd>
 </dl>
 </dd>
@@ -629,7 +629,7 @@ client.users.create(
 <dl>
 <dd>
 
-**access_groups:** `Internal::Types::Array[String]` — List of access group names or IDs to assign to the user.
+**user_groups:** `Internal::Types::Array[String]` — List of user group names or IDs to assign to the user.
     
 </dd>
 </dl>
@@ -688,6 +688,207 @@ client.assets.get_usage();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Assets::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.assets.<a href="/lib/rulebricks/assets/client.rb">import_rbm</a>(request) -> Rulebricks::Types::ImportManifestResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rbm).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.assets.import_rbm(
+  manifest: {
+    version: '1.0',
+    rules: [{}],
+    flows: [{}],
+    entities: [{}],
+    values: [{}]
+  },
+  conflict_strategy: 'update'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**manifest:** `Rulebricks::Assets::Types::ImportManifestRequestManifest` — The RBM manifest object containing assets to import.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conflict_strategy:** `Rulebricks::Assets::Types::ImportManifestRequestConflictStrategy` — How to handle conflicts with existing assets. 'update' overwrites, 'skip' ignores, 'error' fails.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_folder_name:** `String` — Optional folder name to place imported assets into. Created if it doesn't exist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_rule_mapping:** `Internal::Types::Hash[String, Rulebricks::Assets::Types::ImportManifestRequestLegacyRuleMappingValue]` — Optional mapping for legacy flow imports to reuse existing rules.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Assets::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.assets.<a href="/lib/rulebricks/assets/client.rb">export_rbm</a>(request) -> Rulebricks::Assets::Types::ExportRbmAssetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Export selected rules, flows, contexts, and values to an Rulebricks manifest file (*.rbm).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.assets.export_rbm(
+  root_type: 'rule',
+  root_ids: ['pricing-rule', 'eligibility-check'],
+  include_downstream: false
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**root_type:** `Rulebricks::Assets::Types::ExportManifestRequestRootType` — The type of root asset to export. All dependencies will be included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**root_ids:** `Internal::Types::Array[String]` — Array of IDs for the root assets to export. Dependencies are automatically resolved.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_downstream:** `Internal::Types::Boolean` — For context exports, whether to include rules and flows bound to the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**manifest_name:** `String` — Optional name for the exported manifest.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**manifest_description:** `String` — Optional description for the exported manifest.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**preview_only:** `Internal::Types::Boolean` — If true, returns a preview of what would be exported without the full data.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -804,7 +1005,7 @@ Update existing dynamic values or add new ones for the authenticated user. Suppo
 ```ruby
 client.values.update(
   values: {},
-  access_groups: ['marketing', 'developers']
+  user_groups: ['marketing', 'developers']
 );
 ```
 </dd>
@@ -828,7 +1029,7 @@ client.values.update(
 <dl>
 <dd>
 
-**access_groups:** `Internal::Types::Array[String]` — Optional array of access group names or IDs. If omitted and user belongs to access groups, values will be assigned to all user's access groups. Required if values should be restricted to specific access groups.
+**user_groups:** `Internal::Types::Array[String]` — Optional array of user group names or IDs. If omitted and user belongs to user groups, values will be assigned to all user's user groups. Required if values should be restricted to specific user groups.
     
 </dd>
 </dl>
@@ -899,6 +1100,661 @@ client.values.delete(id: 'id');
 <dd>
 
 **request_options:** `Rulebricks::Values::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Contexts
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">get</a>(slug, instance) -> Rulebricks::Types::ContextInstanceState</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the current state of a context instance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.get(
+  slug: 'customer',
+  instance: 'cust-12345'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">submit</a>(slug, instance, request) -> Rulebricks::Types::SubmitContextDataResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Submit data to a context instance, creating it if it doesn't exist. May trigger bound rule/flow evaluations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.submit(
+  slug: 'customer',
+  instance: 'cust-12345',
+  request: {}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">delete</a>(slug, instance) -> Rulebricks::Types::DeleteContextInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific context instance and its history.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.delete(
+  slug: 'customer',
+  instance: 'cust-12345'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">get_history</a>(slug, instance) -> Rulebricks::Types::ContextInstanceHistory</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the change history for a context instance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.get_history(
+  slug: 'customer',
+  instance: 'cust-12345'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**field:** `String` — Filter history to a specific field.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Integer` — Maximum number of history entries to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">get_pending</a>(slug, instance) -> Rulebricks::Types::ContextInstancePendingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get list of rules/flows that need to be evaluated for this instance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.get_pending(
+  slug: 'customer',
+  instance: 'cust-12345'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">solve</a>(slug, instance, rule_slug, request) -> Rulebricks::Types::SolveContextRuleResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a specific rule using the context instance's state as input.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.solve(
+  slug: 'customer',
+  instance: 'cust-12345',
+  rule_slug: 'eligibility-check',
+  request: {}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rule_slug:** `String` — The unique slug for the rule.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">cascade</a>(slug, instance, request) -> Rulebricks::Types::CascadeContextResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Trigger re-evaluation of all bound rules and flows for the instance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.cascade(
+  slug: 'customer',
+  instance: 'cust-12345',
+  request: {}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/lib/rulebricks/contexts/client.rb">execute</a>(slug, instance, flow_slug, request) -> Rulebricks::Types::SolveContextFlowResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a specific flow using the context instance's state as input.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.execute(
+  slug: 'customer',
+  instance: 'cust-12345',
+  flow_slug: 'onboarding-flow',
+  request: {}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `String` — The unique slug for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instance:** `String` — The unique identifier for the context instance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**flow_slug:** `String` — The unique slug for the flow.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::RequestOptions` 
     
 </dd>
 </dl>
@@ -1401,6 +2257,730 @@ client.assets.folders.delete(id: 'abc123');
 <dd>
 
 **request_options:** `Rulebricks::Assets::Folders::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Contexts Objects
+<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">list</a>() -> Internal::Types::Array[Rulebricks::Types::ContextListItem]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all contexts for the authenticated user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.objects.list();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">create</a>(request) -> Rulebricks::Types::ContextDetail</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new context for the authenticated user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.objects.create(
+  name: 'Customer',
+  description: 'Represents a customer in the system',
+  schema: [{
+    key: 'email',
+    name: 'Email',
+    type: 'string'
+  }, {
+    key: 'age',
+    name: 'Age',
+    type: 'number'
+  }],
+  identity_fact: 'email'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `String` — The name of the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `String` — Optional custom slug. Auto-generated if not provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `String` — The description of the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `Internal::Types::Array[Rulebricks::Contexts::Objects::Types::CreateContextRequestSchemaItem]` — Initial schema fields for the context. At least one field must be defined.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identity_fact:** `String` — The field key to use as the unique identifier for instances. Must be a key from the schema.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_execute_decisions:** `Internal::Types::Boolean` — When true (default), bound rules and flows automatically execute when their inputs are satisfied.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ttl_seconds:** `Integer` — Time-to-live in seconds for live context instances. Instances expire after this duration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**history_limit:** `Integer` — Maximum number of history entries to retain per field.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**on_schema_mismatch:** `Rulebricks::Contexts::Objects::Types::CreateContextRequestOnSchemaMismatch` — How to handle fields that don't match the schema.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_on_solve:** `String` — Webhook URL called when a rule or flow successfully solves.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_on_expire:** `String` — Webhook URL called when a live context expires due to TTL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">get</a>(id) -> Rulebricks::Types::ContextDetail</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific context by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.objects.get(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">update</a>(id, request) -> Rulebricks::Types::UpdateContextResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing context's properties and schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.objects.update(
+  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+  name: 'Updated Customer',
+  description: 'Updated description for premium customers'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` — The name of the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `String` — The slug of the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `String` — The description of the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**schema:** `Internal::Types::Array[Rulebricks::Contexts::Objects::Types::UpdateContextRequestSchemaItem]` — Updated schema fields for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_execute_decisions:** `Internal::Types::Boolean` — When true, bound rules and flows automatically execute when their inputs are satisfied.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ttl_seconds:** `Integer` — Time-to-live in seconds for live context instances. Instances expire after this duration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**history_limit:** `Integer` — Maximum number of history entries to retain per field.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**on_schema_mismatch:** `Rulebricks::Contexts::Objects::Types::UpdateContextRequestOnSchemaMismatch` — How to handle fields that don't match the schema.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_on_solve:** `String` — Webhook URL called when a rule or flow successfully solves.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_on_expire:** `String` — Webhook URL called when a live context expires due to TTL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">delete</a>(id) -> Rulebricks::Types::DeleteContextResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific context and all its instances.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.objects.delete(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Contexts Relationships
+<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">list</a>(id) -> Rulebricks::Types::ContextRelationshipsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all relationships for a specific context.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.relationships.list(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">create</a>(id, request) -> Rulebricks::Types::ContextRelationshipOutgoing</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new relationship between two contexts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.relationships.create(
+  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+  to_context_id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
+  relation_type: 'has_many',
+  foreign_key_fact: 'customer_id',
+  name: 'Customer Orders'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_context_id:** `String` — The ID of the target context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**relation_type:** `Rulebricks::Contexts::Relationships::Types::CreateRelationshipRequestRelationType` — The type of relationship.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**foreign_key_fact:** `String` — The field key to use as the foreign key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` — Display name for the relationship.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `String` — Description of the relationship.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">delete</a>(id, relationship) -> Rulebricks::Types::DeleteRelationshipResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific relationship between contexts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.contexts.relationships.delete(
+  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+  relationship: 'c3d4e5f6-a7b8-9012-cdef-123456789012'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The unique identifier for the context.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**relationship:** `String` — The unique identifier for the relationship.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
     
 </dd>
 </dl>
