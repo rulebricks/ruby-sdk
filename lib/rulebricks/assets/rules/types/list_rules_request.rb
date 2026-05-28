@@ -6,6 +6,8 @@ module Rulebricks
       module Types
         class ListRulesRequest < Internal::Types::Model
           field :folder, -> { String }, optional: true, nullable: false
+
+          field :user_group, -> { String }, optional: true, nullable: false
         end
       end
     end

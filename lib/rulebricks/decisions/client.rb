@@ -33,8 +33,7 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::DecisionLogResponse]
       def query(request_options: {}, **params)
-        params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[search rules statuses start end_ cursor limit count slug]
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["search"] = params[:search] if params.key?(:search)
         query_params["rules"] = params[:rules] if params.key?(:rules)
@@ -45,7 +44,6 @@ module Rulebricks
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["count"] = params[:count] if params.key?(:count)
         query_params["slug"] = params[:slug] if params.key?(:slug)
-        params.except(*query_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

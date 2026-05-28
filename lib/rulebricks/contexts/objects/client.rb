@@ -14,7 +14,7 @@ module Rulebricks
         # Retrieve all contexts for the authenticated user.
         #
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,14 +55,12 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::ContextDetail]
         def create(request_options: {}, **params)
-          body_prop_names = %i[name slug description schema identity_fact auto_execute_decisions ttl_seconds history_limit on_schema_mismatch webhook_on_solve webhook_on_expire]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "admin/contexts",
-            body: Rulebricks::Contexts::Objects::Types::CreateContextRequest.new(body_bag).to_h,
+            body: Rulebricks::Contexts::Objects::Types::CreateContextRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -92,10 +90,11 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::ContextDetail]
         def get(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "admin/contexts/#{params[:id]}",
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}",
             request_options: request_options
           )
           begin
@@ -125,16 +124,16 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::UpdateContextResponse]
         def update(request_options: {}, **params)
-          path_param_names = %i[id]
-          body_params = params.except(*path_param_names)
-          body_prop_names = %i[name slug description schema auto_execute_decisions ttl_seconds history_limit on_schema_mismatch webhook_on_solve webhook_on_expire]
-          body_bag = body_params.slice(*body_prop_names)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+          request_data = Rulebricks::Contexts::Objects::Types::UpdateContextRequest.new(params).to_h
+          non_body_param_names = %w[id]
+          body = request_data.except(*non_body_param_names)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
-            path: "admin/contexts/#{params[:id]}",
-            body: Rulebricks::Contexts::Objects::Types::UpdateContextRequest.new(body_bag).to_h,
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}",
+            body: body,
             request_options: request_options
           )
           begin
@@ -164,10 +163,11 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::DeleteContextResponse]
         def delete(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
-            path: "admin/contexts/#{params[:id]}",
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}",
             request_options: request_options
           )
           begin

@@ -6,6 +6,7 @@ module Rulebricks
       extend Rulebricks::Internal::Types::Union
 
       member -> { String }
+
       member -> { Rulebricks::Types::ContextInstancePendingEvaluationWaitingOnItemField }
     end
   end

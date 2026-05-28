@@ -22,14 +22,12 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::UserInviteResponse]
       def invite(request_options: {}, **params)
-        body_prop_names = %i[email role user_groups]
-        body_bag = params.slice(*body_prop_names)
-
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "admin/users/invite",
-          body: Rulebricks::Users::Types::UserInviteRequest.new(body_bag).to_h,
+          body: Rulebricks::Users::Types::UserInviteRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -50,7 +48,7 @@ module Rulebricks
       # email, name, API key, role, user groups, and join date.
       #
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -92,14 +90,12 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::CreateUserResponse]
       def create(request_options: {}, **params)
-        body_prop_names = %i[email password name role user_groups]
-        body_bag = params.slice(*body_prop_names)
-
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "admin/users/create",
-          body: Rulebricks::Users::Types::CreateUserRequest.new(body_bag).to_h,
+          body: Rulebricks::Users::Types::CreateUserRequest.new(params).to_h,
           request_options: request_options
         )
         begin

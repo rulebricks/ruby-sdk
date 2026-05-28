@@ -6,6 +6,7 @@ module Rulebricks
       module Types
         class DeleteRulesRequest < Internal::Types::Model
           field :slug, -> { String }, optional: false, nullable: false
+
           field :test_id, -> { String }, optional: false, nullable: false, api_name: "testId"
         end
       end

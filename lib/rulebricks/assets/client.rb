@@ -13,7 +13,7 @@ module Rulebricks
       # Get the rule execution usage of your organization.
       #
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -54,14 +54,12 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::ImportManifestResponse]
       def import_rbm(request_options: {}, **params)
-        body_prop_names = %i[manifest conflict_strategy target_folder_name legacy_rule_mapping]
-        body_bag = params.slice(*body_prop_names)
-
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "admin/import",
-          body: Rulebricks::Assets::Types::ImportManifestRequest.new(body_bag).to_h,
+          body: Rulebricks::Assets::Types::ImportManifestRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -90,14 +88,12 @@ module Rulebricks
       #
       # @return [Rulebricks::Assets::Types::ExportRbmAssetsResponse]
       def export_rbm(request_options: {}, **params)
-        body_prop_names = %i[root_type root_ids include_downstream manifest_name manifest_description preview_only]
-        body_bag = params.slice(*body_prop_names)
-
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "admin/export",
-          body: Rulebricks::Assets::Types::ExportManifestRequest.new(body_bag).to_h,
+          body: Rulebricks::Assets::Types::ExportManifestRequest.new(params).to_h,
           request_options: request_options
         )
         begin

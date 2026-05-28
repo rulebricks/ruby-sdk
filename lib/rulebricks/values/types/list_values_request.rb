@@ -5,6 +5,7 @@ module Rulebricks
     module Types
       class ListValuesRequest < Internal::Types::Model
         field :name, -> { String }, optional: true, nullable: false
+
         field :include, -> { String }, optional: true, nullable: false
       end
     end

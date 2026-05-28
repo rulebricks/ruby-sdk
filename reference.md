@@ -28,9 +28,9 @@ Executes a single rule identified by a unique slug. The request and response for
 
 ```ruby
 client.rules.solve(
-  slug: 'slug',
+  slug: "slug",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -101,9 +101,9 @@ Executes a particular rule against multiple request data payloads provided in a 
 
 ```ruby
 client.rules.bulk_solve(
-  slug: 'slug',
+  slug: "slug",
   body: [{}, {}]
-);
+)
 ```
 </dd>
 </dl>
@@ -174,8 +174,13 @@ Executes multiple rules or flows in parallel based on a provided mapping of rule
 
 ```ruby
 client.rules.parallel_solve(request: {
-  body: {}
-});
+  eligibility: {
+    rule: "1ef03ms"
+  },
+  offers: {
+    flow: "OvmsYwn"
+  }
+})
 ```
 </dd>
 </dl>
@@ -239,9 +244,9 @@ Execute a flow by its slug.
 
 ```ruby
 client.flows.execute(
-  slug: 'slug',
+  slug: "slug",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -313,10 +318,10 @@ Query decision logs with support for the decision data query language, rule/stat
 
 ```ruby
 client.decisions.query(
-  search: 'status=200',
-  rules: 'Lead Qualification,Pricing Calculator',
-  statuses: '200,400,500'
-);
+  search: "status=200",
+  rules: "Lead Qualification,Pricing Calculator",
+  statuses: "200,400,500"
+)
 ```
 </dd>
 </dl>
@@ -444,10 +449,10 @@ Invite a new user to the organization or update role or user group data for an e
 
 ```ruby
 client.users.invite(
-  email: 'newuser@example.com',
-  role: 'developer',
-  user_groups: ['group1', 'group2']
-);
+  email: "newuser@example.com",
+  role: "developer",
+  user_groups: %w[group1 group2]
+)
 ```
 </dd>
 </dl>
@@ -525,7 +530,7 @@ List all users (including the admin and all team members) in the organization wi
 <dd>
 
 ```ruby
-client.users.list();
+client.users.list
 ```
 </dd>
 </dl>
@@ -580,9 +585,9 @@ Create a new user directly with a password, bypassing the email invitation flow.
 
 ```ruby
 client.users.create(
-  email: 'newuser@example.com',
-  password: 'securePassword123'
-);
+  email: "newuser@example.com",
+  password: "securePassword123"
+)
 ```
 </dd>
 </dl>
@@ -677,7 +682,7 @@ Get the rule execution usage of your organization.
 <dd>
 
 ```ruby
-client.assets.get_usage();
+client.assets.get_usage
 ```
 </dd>
 </dl>
@@ -733,14 +738,14 @@ Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rb
 ```ruby
 client.assets.import_rbm(
   manifest: {
-    version: '1.0',
+    version: "1.0",
     rules: [{}],
     flows: [{}],
     entities: [{}],
     values: [{}]
   },
-  conflict_strategy: 'update'
-);
+  conflict_strategy: "update"
+)
 ```
 </dd>
 </dl>
@@ -755,7 +760,7 @@ client.assets.import_rbm(
 <dl>
 <dd>
 
-**manifest:** `Rulebricks::Assets::Types::ImportManifestRequestManifest` — The RBM manifest object containing assets to import.
+**manifest:** `Rulebricks::Assets::Types::ImportManifestRequestManifest` — The RBM manifest object containing assets to import. Asset objects inside the manifest intentionally preserve `.rbm`/database casing so exported manifests can be imported without rewriting asset payloads.
     
 </dd>
 </dl>
@@ -827,10 +832,10 @@ Export selected rules, flows, contexts, and values to an Rulebricks manifest fil
 
 ```ruby
 client.assets.export_rbm(
-  root_type: 'rule',
-  root_ids: ['pricing-rule', 'eligibility-check'],
+  root_type: "rule",
+  root_ids: %w[pricing-rule eligibility-check],
   include_downstream: false
-);
+)
 ```
 </dd>
 </dl>
@@ -933,7 +938,7 @@ Retrieve all dynamic values for the authenticated user. Use the 'include' parame
 <dd>
 
 ```ruby
-client.values.list(include: 'usage');
+client.values.list(include: "usage")
 ```
 </dd>
 </dl>
@@ -1005,8 +1010,8 @@ Update existing dynamic values or add new ones for the authenticated user. Suppo
 ```ruby
 client.values.update(
   values: {},
-  user_groups: ['marketing', 'developers']
-);
+  user_groups: %w[marketing developers]
+)
 ```
 </dd>
 </dl>
@@ -1030,6 +1035,14 @@ client.values.update(
 <dd>
 
 **user_groups:** `Internal::Types::Array[String]` — Optional array of user group names or IDs. If omitted and user belongs to user groups, values will be assigned to all user's user groups. Required if values should be restricted to specific user groups.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata_by_name:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` — Optional metadata keyed by dynamic value name. This is the canonical snake_case field; legacy clients may still send `metadataByName`.
     
 </dd>
 </dl>
@@ -1076,7 +1089,7 @@ Delete a specific dynamic value for the authenticated user by its ID.
 <dd>
 
 ```ruby
-client.values.delete(id: 'id');
+client.values.delete(id: "id")
 ```
 </dd>
 </dl>
@@ -1140,9 +1153,9 @@ Retrieve the current state of a context instance.
 
 ```ruby
 client.contexts.get(
-  slug: 'customer',
-  instance: 'cust-12345'
-);
+  slug: "customer",
+  instance: "cust-12345"
+)
 ```
 </dd>
 </dl>
@@ -1213,10 +1226,10 @@ Submit data to a context instance, creating it if it doesn't exist. May trigger 
 
 ```ruby
 client.contexts.submit(
-  slug: 'customer',
-  instance: 'cust-12345',
+  slug: "customer",
+  instance: "cust-12345",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -1295,9 +1308,9 @@ Delete a specific context instance and its history.
 
 ```ruby
 client.contexts.delete(
-  slug: 'customer',
-  instance: 'cust-12345'
-);
+  slug: "customer",
+  instance: "cust-12345"
+)
 ```
 </dd>
 </dl>
@@ -1368,9 +1381,9 @@ Retrieve the change history for a context instance.
 
 ```ruby
 client.contexts.get_history(
-  slug: 'customer',
-  instance: 'cust-12345'
-);
+  slug: "customer",
+  instance: "cust-12345"
+)
 ```
 </dd>
 </dl>
@@ -1457,9 +1470,9 @@ Get list of rules/flows that need to be evaluated for this instance.
 
 ```ruby
 client.contexts.get_pending(
-  slug: 'customer',
-  instance: 'cust-12345'
-);
+  slug: "customer",
+  instance: "cust-12345"
+)
 ```
 </dd>
 </dl>
@@ -1530,11 +1543,11 @@ Execute a specific rule using the context instance's state as input.
 
 ```ruby
 client.contexts.solve(
-  slug: 'customer',
-  instance: 'cust-12345',
-  rule_slug: 'eligibility-check',
+  slug: "customer",
+  instance: "cust-12345",
+  rule_slug: "eligibility-check",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -1621,10 +1634,10 @@ Trigger re-evaluation of all bound rules and flows for the instance.
 
 ```ruby
 client.contexts.cascade(
-  slug: 'customer',
-  instance: 'cust-12345',
+  slug: "customer",
+  instance: "cust-12345",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -1703,11 +1716,11 @@ Execute a specific flow using the context instance's state as input.
 
 ```ruby
 client.contexts.execute(
-  slug: 'customer',
-  instance: 'cust-12345',
-  flow_slug: 'onboarding-flow',
+  slug: "customer",
+  instance: "cust-12345",
+  flow_slug: "onboarding-flow",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -1794,7 +1807,7 @@ Delete a specific rule by its ID.
 <dd>
 
 ```ruby
-client.assets.rules.delete(id: '2855f8da-2654-4df9-8903-8f797cbfe8eb');
+client.assets.rules.delete(id: "2855f8da-2654-4df9-8903-8f797cbfe8eb")
 ```
 </dd>
 </dl>
@@ -1841,7 +1854,7 @@ client.assets.rules.delete(id: '2855f8da-2654-4df9-8903-8f797cbfe8eb');
 <dl>
 <dd>
 
-Export a specific rule by its ID.
+Export a specific rule by its ID. This response preserves the raw rule document casing (for example, `requestSchema`, `sampleRequest`, and `createdAt`) so it can round-trip through `/admin/rules/import` and `.rbm` workflows.
 </dd>
 </dl>
 </dd>
@@ -1856,7 +1869,7 @@ Export a specific rule by its ID.
 <dd>
 
 ```ruby
-client.assets.rules.pull(id: '2855f8da-2654-4df9-8903-8f797cbfe8eb');
+client.assets.rules.pull(id: "2855f8da-2654-4df9-8903-8f797cbfe8eb")
 ```
 </dd>
 </dl>
@@ -1903,7 +1916,7 @@ client.assets.rules.pull(id: '2855f8da-2654-4df9-8903-8f797cbfe8eb');
 <dl>
 <dd>
 
-Import a rule into the user's account.
+Create or update a rule. If `id` is provided, the matching rule is partially updated (all other fields optional). If `id` is omitted, a new rule is created (`id` and `slug` are auto-generated; all other fields required).
 </dd>
 </dl>
 </dd>
@@ -1918,7 +1931,91 @@ Import a rule into the user's account.
 <dd>
 
 ```ruby
-client.assets.rules.push(rule: {});
+client.assets.rules.push(rule: {
+  name: "Basic Pricing Rule",
+  description: "",
+  created_at: "2026-02-12T01:29:23.000Z",
+  updated_at: "2026-02-12T01:29:23.000Z",
+  published: false,
+  test_request: {},
+  sample_request: {},
+  sample_response: {},
+  request_schema: [{
+    key: "customer_tier",
+    show: true,
+    name: "Customer Tier",
+    type: "string"
+  }, {
+    key: "order_total",
+    show: true,
+    name: "Order Total",
+    type: "number"
+  }, {
+    key: "expedited",
+    show: true,
+    name: "Expedited",
+    type: "boolean"
+  }],
+  response_schema: [{
+    key: "discount_rate",
+    show: true,
+    name: "Discount Rate",
+    type: "number"
+  }, {
+    key: "approval_status",
+    show: true,
+    name: "Approval Status",
+    type: "string"
+  }],
+  conditions: [{
+    request: {
+      customer_tier: {
+        op: "equals",
+        args: []
+      }
+    },
+    response: {
+      discount_rate: {},
+      approval_status: {}
+    },
+    settings: {
+      enabled: true,
+      group_id: nil,
+      priority: 0,
+      schedule: []
+    }
+  }, {
+    request: {
+      expedited: {
+        op: "equals",
+        args: []
+      }
+    },
+    response: {
+      discount_rate: {},
+      approval_status: {}
+    },
+    settings: {
+      enabled: true,
+      group_id: nil,
+      priority: 1,
+      schedule: []
+    }
+  }, {
+    request: {},
+    response: {
+      discount_rate: {},
+      approval_status: {}
+    },
+    settings: {
+      enabled: true,
+      group_id: nil,
+      priority: 2,
+      schedule: []
+    }
+  }],
+  history: []
+})
 ```
 </dd>
 </dl>
@@ -1933,7 +2030,7 @@ client.assets.rules.push(rule: {});
 <dl>
 <dd>
 
-**rule:** `Internal::Types::Hash[String, Object]` — The rule data to import.
+**rule:** `Rulebricks::Types::RuleImportPayload` 
     
 </dd>
 </dl>
@@ -1965,7 +2062,7 @@ client.assets.rules.push(rule: {});
 <dl>
 <dd>
 
-List all rules in the organization. Optionally filter by folder name or ID.
+List all rules in the organization. Results are scoped to the API key holder's user groups. Optionally filter by folder name or ID, or by user group name or ID when the API key has access to that group.
 </dd>
 </dl>
 </dd>
@@ -1980,7 +2077,7 @@ List all rules in the organization. Optionally filter by folder name or ID.
 <dd>
 
 ```ruby
-client.assets.rules.list(folder: 'Marketing Rules');
+client.assets.rules.list(folder: "Marketing Rules")
 ```
 </dd>
 </dl>
@@ -1996,6 +2093,14 @@ client.assets.rules.list(folder: 'Marketing Rules');
 <dd>
 
 **folder:** `String` — Filter rules by folder name or folder ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_group:** `String` — Filter rules by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
     
 </dd>
 </dl>
@@ -2043,7 +2148,7 @@ List all flows in the organization.
 <dd>
 
 ```ruby
-client.assets.flows.list();
+client.assets.flows.list
 ```
 </dd>
 </dl>
@@ -2098,7 +2203,7 @@ Retrieve all rule folders for the authenticated user.
 <dd>
 
 ```ruby
-client.assets.folders.list();
+client.assets.folders.list
 ```
 </dd>
 </dl>
@@ -2153,9 +2258,9 @@ Create a new rule folder or update an existing one for the authenticated user.
 
 ```ruby
 client.assets.folders.upsert(
-  name: 'Marketing Rules',
-  description: 'Rules for marketing automation workflows'
-);
+  name: "Marketing Rules",
+  description: "Rules for marketing automation workflows"
+)
 ```
 </dd>
 </dl>
@@ -2233,7 +2338,7 @@ Delete a specific rule folder for the authenticated user. This does not delete t
 <dd>
 
 ```ruby
-client.assets.folders.delete(id: 'abc123');
+client.assets.folders.delete(id: "abc123")
 ```
 </dd>
 </dl>
@@ -2296,7 +2401,7 @@ Retrieve all contexts for the authenticated user.
 <dd>
 
 ```ruby
-client.contexts.objects.list();
+client.contexts.objects.list
 ```
 </dd>
 </dl>
@@ -2351,19 +2456,19 @@ Create a new context for the authenticated user.
 
 ```ruby
 client.contexts.objects.create(
-  name: 'Customer',
-  description: 'Represents a customer in the system',
+  name: "Customer",
+  description: "Represents a customer in the system",
   schema: [{
-    key: 'email',
-    name: 'Email',
-    type: 'string'
+    key: "email",
+    name: "Email",
+    type: "string"
   }, {
-    key: 'age',
-    name: 'Age',
-    type: 'number'
+    key: "age",
+    name: "Age",
+    type: "number"
   }],
-  identity_fact: 'email'
-);
+  identity_fact: "email"
+)
 ```
 </dd>
 </dl>
@@ -2505,7 +2610,7 @@ Retrieve a specific context by its ID.
 <dd>
 
 ```ruby
-client.contexts.objects.get(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+client.contexts.objects.get(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -2568,10 +2673,10 @@ Update an existing context's properties and schema.
 
 ```ruby
 client.contexts.objects.update(
-  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  name: 'Updated Customer',
-  description: 'Updated description for premium customers'
-);
+  id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  name: "Updated Customer",
+  description: "Updated description for premium customers"
+)
 ```
 </dd>
 </dl>
@@ -2713,7 +2818,7 @@ Delete a specific context and all its instances.
 <dd>
 
 ```ruby
-client.contexts.objects.delete(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+client.contexts.objects.delete(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -2776,7 +2881,7 @@ List all relationships for a specific context.
 <dd>
 
 ```ruby
-client.contexts.relationships.list(id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+client.contexts.relationships.list(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -2839,12 +2944,12 @@ Create a new relationship between two contexts.
 
 ```ruby
 client.contexts.relationships.create(
-  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  to_context_id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
-  relation_type: 'has_many',
-  foreign_key_fact: 'customer_id',
-  name: 'Customer Orders'
-);
+  id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  to_context_id: "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  relation_type: "has_many",
+  foreign_key_fact: "customer_id",
+  name: "Customer Orders"
+)
 ```
 </dd>
 </dl>
@@ -2947,9 +3052,9 @@ Delete a specific relationship between contexts.
 
 ```ruby
 client.contexts.relationships.delete(
-  id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  relationship: 'c3d4e5f6-a7b8-9012-cdef-123456789012'
-);
+  id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  relationship: "c3d4e5f6-a7b8-9012-cdef-123456789012"
+)
 ```
 </dd>
 </dl>
@@ -3020,7 +3125,7 @@ Retrieves a list of tests associated with the rule identified by the slug.
 <dd>
 
 ```ruby
-client.tests.rules.list(slug: 'slug');
+client.tests.rules.list(slug: "slug")
 ```
 </dd>
 </dl>
@@ -3083,12 +3188,12 @@ Adds a new test to the test suite of a rule identified by the slug.
 
 ```ruby
 client.tests.rules.create(
-  slug: 'slug',
-  name: 'Test 3',
+  slug: "slug",
+  name: "Test 3",
   request: {},
   response: {},
   critical: true
-);
+)
 ```
 </dd>
 </dl>
@@ -3159,9 +3264,9 @@ Deletes a test from the test suite of a rule identified by the slug.
 
 ```ruby
 client.tests.rules.delete(
-  slug: 'slug',
-  test_id: 'testId'
-);
+  slug: "slug",
+  test_id: "testId"
+)
 ```
 </dd>
 </dl>
@@ -3232,7 +3337,7 @@ Retrieves a list of tests associated with the flow identified by the slug.
 <dd>
 
 ```ruby
-client.tests.flows.list(slug: 'slug');
+client.tests.flows.list(slug: "slug")
 ```
 </dd>
 </dl>
@@ -3295,12 +3400,12 @@ Adds a new test to the test suite of a flow identified by the slug.
 
 ```ruby
 client.tests.flows.create(
-  slug: 'slug',
-  name: 'Test 3',
+  slug: "slug",
+  name: "Test 3",
   request: {},
   response: {},
   critical: true
-);
+)
 ```
 </dd>
 </dl>
@@ -3371,9 +3476,9 @@ Deletes a test from the test suite of a flow identified by the slug.
 
 ```ruby
 client.tests.flows.delete(
-  slug: 'slug',
-  test_id: 'testId'
-);
+  slug: "slug",
+  test_id: "testId"
+)
 ```
 </dd>
 </dl>
@@ -3444,7 +3549,7 @@ List all user groups available in your Rulebricks organization.
 <dd>
 
 ```ruby
-client.users.groups.list();
+client.users.groups.list
 ```
 </dd>
 </dl>
@@ -3499,9 +3604,9 @@ Create a new user group in your Rulebricks organization.
 
 ```ruby
 client.users.groups.create(
-  name: 'NewGroup',
-  description: 'Description of the new group.'
-);
+  name: "NewGroup",
+  description: "Description of the new group."
+)
 ```
 </dd>
 </dl>
@@ -3543,3 +3648,4 @@ client.users.groups.create(
 </dd>
 </dl>
 </details>
+

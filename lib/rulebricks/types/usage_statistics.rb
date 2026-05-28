@@ -4,13 +4,21 @@ module Rulebricks
   module Types
     class UsageStatistics < Internal::Types::Model
       field :plan, -> { String }, optional: true, nullable: false
+
       field :monthly_period_start, -> { String }, optional: true, nullable: false
+
       field :monthly_period_end, -> { String }, optional: true, nullable: false
+
       field :monthly_executions_usage, -> { Integer }, optional: true, nullable: false
+
       field :monthly_executions_limit, -> { Integer }, optional: true, nullable: false
+
       field :monthly_executions_remaining, -> { Integer }, optional: true, nullable: false
+
       field :unlimited_plan, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
       field :days_remaining_in_period, -> { Integer }, optional: true, nullable: false
+
       field :daily_average_usage, -> { Integer }, optional: true, nullable: false
     end
   end

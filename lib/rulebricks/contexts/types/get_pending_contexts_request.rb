@@ -5,6 +5,7 @@ module Rulebricks
     module Types
       class GetPendingContextsRequest < Internal::Types::Model
         field :slug, -> { String }, optional: false, nullable: false
+
         field :instance, -> { String }, optional: false, nullable: false
       end
     end

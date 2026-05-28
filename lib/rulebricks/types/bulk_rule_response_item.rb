@@ -7,6 +7,7 @@ module Rulebricks
       extend Rulebricks::Internal::Types::Union
 
       member -> { Internal::Types::Hash[String, Object] }
+
       member -> { Rulebricks::Types::BulkRuleResponseItemError }
     end
   end

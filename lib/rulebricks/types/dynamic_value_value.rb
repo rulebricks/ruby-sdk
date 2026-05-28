@@ -7,9 +7,13 @@ module Rulebricks
       extend Rulebricks::Internal::Types::Union
 
       member -> { String }
+
       member -> { Integer }
+
       member -> { Internal::Types::Boolean }
+
       member -> { Internal::Types::Array[Object] }
+
       member -> { Internal::Types::Hash[String, Object] }
     end
   end

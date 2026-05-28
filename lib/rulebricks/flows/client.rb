@@ -23,13 +23,14 @@ module Rulebricks
       #
       # @return [Hash[String, Object]]
       def execute(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "flows/#{params[:slug]}",
+          path: "flows/#{URI.encode_uri_component(params[:slug].to_s)}",
           body: body_params,
           request_options: request_options
         )

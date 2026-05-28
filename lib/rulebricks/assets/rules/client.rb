@@ -23,14 +23,12 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::SuccessMessage]
         def delete(request_options: {}, **params)
-          body_prop_names = %i[id]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
             path: "admin/rules/delete",
-            body: Rulebricks::Assets::Rules::Types::DeleteRuleRequest.new(body_bag).to_h,
+            body: Rulebricks::Assets::Rules::Types::DeleteRuleRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -47,7 +45,9 @@ module Rulebricks
           end
         end
 
-        # Export a specific rule by its ID.
+        # Export a specific rule by its ID. This response preserves the raw rule document casing (for example,
+        # `requestSchema`, `sampleRequest`, and `createdAt`) so it can round-trip through `/admin/rules/import` and
+        # `.rbm` workflows.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -60,11 +60,9 @@ module Rulebricks
         #
         # @return [Hash[String, Object]]
         def pull(request_options: {}, **params)
-          params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-          query_param_names = %i[id]
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
           query_params["id"] = params[:id] if params.key?(:id)
-          params.except(*query_param_names)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
@@ -87,7 +85,9 @@ module Rulebricks
           end
         end
 
-        # Import a rule into the user's account.
+        # Create or update a rule. If `id` is provided, the matching rule is partially updated (all other fields
+        # optional). If `id` is omitted, a new rule is created (`id` and `slug` are auto-generated; all other fields
+        # required).
         #
         # @param request_options [Hash]
         # @param params [Rulebricks::Assets::Rules::Types::ImportRuleRequest]
@@ -99,14 +99,12 @@ module Rulebricks
         #
         # @return [Hash[String, Object]]
         def push(request_options: {}, **params)
-          body_prop_names = %i[rule]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "admin/rules/import",
-            body: Rulebricks::Assets::Rules::Types::ImportRuleRequest.new(body_bag).to_h,
+            body: Rulebricks::Assets::Rules::Types::ImportRuleRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -123,7 +121,8 @@ module Rulebricks
           end
         end
 
-        # List all rules in the organization. Optionally filter by folder name or ID.
+        # List all rules in the organization. Results are scoped to the API key holder's user groups. Optionally filter
+        # by folder name or ID, or by user group name or ID when the API key has access to that group.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -133,14 +132,14 @@ module Rulebricks
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String, nil] :folder
+        # @option params [String, nil] :user_group
         #
         # @return [Array[Rulebricks::Types::RuleDetail]]
         def list(request_options: {}, **params)
-          params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-          query_param_names = %i[folder]
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
           query_params["folder"] = params[:folder] if params.key?(:folder)
-          params.except(*query_param_names)
+          query_params["user_group"] = params[:user_group] if params.key?(:user_group)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

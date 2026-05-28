@@ -4,6 +4,7 @@ module Rulebricks
   module Types
     class UserInviteResponse < Internal::Types::Model
       field :message, -> { String }, optional: true, nullable: false
+
       field :user, -> { Rulebricks::Types::UserInviteResponseUser }, optional: true, nullable: false
     end
   end

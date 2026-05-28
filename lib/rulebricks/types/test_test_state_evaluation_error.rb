@@ -7,6 +7,7 @@ module Rulebricks
       extend Rulebricks::Internal::Types::Union
 
       member -> { Internal::Types::Boolean }
+
       member -> { String }
     end
   end

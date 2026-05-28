@@ -14,7 +14,7 @@ module Rulebricks
         # Retrieve all rule folders for the authenticated user.
         #
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,14 +55,12 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::Folder]
         def upsert(request_options: {}, **params)
-          body_prop_names = %i[id name description]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "admin/folders",
-            body: Rulebricks::Assets::Folders::Types::UpsertFolderRequest.new(body_bag).to_h,
+            body: Rulebricks::Assets::Folders::Types::UpsertFolderRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -91,14 +89,12 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::Folder]
         def delete(request_options: {}, **params)
-          body_prop_names = %i[id]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
             path: "admin/folders",
-            body: Rulebricks::Assets::Folders::Types::DeleteFolderRequest.new(body_bag).to_h,
+            body: Rulebricks::Assets::Folders::Types::DeleteFolderRequest.new(params).to_h,
             request_options: request_options
           )
           begin

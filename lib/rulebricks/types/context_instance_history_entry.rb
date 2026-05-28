@@ -5,6 +5,7 @@ module Rulebricks
     # A single history entry for a field value.
     class ContextInstanceHistoryEntry < Internal::Types::Model
       field :timestamp, -> { String }, optional: true, nullable: false
+
       field :value, -> { Object }, optional: true, nullable: false
     end
   end

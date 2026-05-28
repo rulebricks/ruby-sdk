@@ -3,12 +3,17 @@
 module Rulebricks
   module Assets
     module Types
-      # The RBM manifest object containing assets to import.
+      # The RBM manifest object containing assets to import. Asset objects inside the manifest intentionally preserve
+      # `.rbm`/database casing so exported manifests can be imported without rewriting asset payloads.
       class ImportManifestRequestManifest < Internal::Types::Model
         field :version, -> { String }, optional: true, nullable: false
+
         field :rules, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+
         field :flows, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+
         field :entities, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+
         field :values, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
       end
     end

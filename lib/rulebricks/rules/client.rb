@@ -24,13 +24,14 @@ module Rulebricks
       #
       # @return [Hash[String, Object]]
       def solve(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "solve/#{params[:slug]}",
+          path: "solve/#{URI.encode_uri_component(params[:slug].to_s)}",
           body: body_params,
           request_options: request_options
         )
@@ -61,13 +62,14 @@ module Rulebricks
       #
       # @return [Array[Rulebricks::Types::BulkRuleResponseItem]]
       def bulk_solve(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "bulk-solve/#{params[:slug]}",
+          path: "bulk-solve/#{URI.encode_uri_component(params[:slug].to_s)}",
           body: body_params,
           request_options: request_options
         )
@@ -95,6 +97,7 @@ module Rulebricks
       #
       # @return [Hash[String, Hash[String, Object]]]
       def parallel_solve(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

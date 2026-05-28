@@ -14,7 +14,7 @@ module Rulebricks
         # List all user groups available in your Rulebricks organization.
         #
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,14 +55,12 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::UserGroup]
         def create(request_options: {}, **params)
-          body_prop_names = %i[name description]
-          body_bag = params.slice(*body_prop_names)
-
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "admin/users/groups",
-            body: Rulebricks::Users::Groups::Types::CreateUserGroupRequest.new(body_bag).to_h,
+            body: Rulebricks::Users::Groups::Types::CreateUserGroupRequest.new(params).to_h,
             request_options: request_options
           )
           begin

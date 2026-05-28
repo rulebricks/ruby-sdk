@@ -24,10 +24,11 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::ContextRelationshipsResponse]
         def list(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "admin/contexts/#{params[:id]}/relationships",
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}/relationships",
             request_options: request_options
           )
           begin
@@ -57,16 +58,16 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::ContextRelationshipOutgoing]
         def create(request_options: {}, **params)
-          path_param_names = %i[id]
-          body_params = params.except(*path_param_names)
-          body_prop_names = %i[to_context_id relation_type foreign_key_fact name description]
-          body_bag = body_params.slice(*body_prop_names)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+          request_data = Rulebricks::Contexts::Relationships::Types::CreateRelationshipRequest.new(params).to_h
+          non_body_param_names = %w[id]
+          body = request_data.except(*non_body_param_names)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "admin/contexts/#{params[:id]}/relationships",
-            body: Rulebricks::Contexts::Relationships::Types::CreateRelationshipRequest.new(body_bag).to_h,
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}/relationships",
+            body: body,
             request_options: request_options
           )
           begin
@@ -97,10 +98,11 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::DeleteRelationshipResponse]
         def delete(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
-            path: "admin/contexts/#{params[:id]}/relationships/#{params[:relationship]}",
+            path: "admin/contexts/#{URI.encode_uri_component(params[:id].to_s)}/relationships/#{URI.encode_uri_component(params[:relationship].to_s)}",
             request_options: request_options
           )
           begin

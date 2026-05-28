@@ -5,7 +5,7 @@ module Rulebricks
     module Rules
       module Types
         class ImportRuleRequest < Internal::Types::Model
-          field :rule, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
+          field :rule, -> { Rulebricks::Types::RuleImportPayload }, optional: false, nullable: false
         end
       end
     end

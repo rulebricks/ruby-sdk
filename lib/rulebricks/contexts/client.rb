@@ -24,10 +24,11 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::ContextInstanceState]
       def get(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}",
           request_options: request_options
         )
         begin
@@ -58,13 +59,14 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::SubmitContextDataResponse]
       def submit(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug instance]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}",
           body: body_params,
           request_options: request_options
         )
@@ -96,10 +98,11 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::DeleteContextInstanceResponse]
       def delete(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}",
           request_options: request_options
         )
         begin
@@ -132,17 +135,15 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::ContextInstanceHistory]
       def get_history(request_options: {}, **params)
-        params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[field limit]
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["field"] = params[:field] if params.key?(:field)
         query_params["limit"] = params[:limit] if params.key?(:limit)
-        params = params.except(*query_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}/history",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/history",
           query: query_params,
           request_options: request_options
         )
@@ -174,10 +175,11 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::ContextInstancePendingResponse]
       def get_pending(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}/pending",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/pending",
           request_options: request_options
         )
         begin
@@ -209,13 +211,14 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::SolveContextRuleResponse]
       def solve(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug instance rule_slug]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}/solve/#{params[:rule_slug]}",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/solve/#{URI.encode_uri_component(params[:rule_slug].to_s)}",
           body: body_params,
           request_options: request_options
         )
@@ -247,13 +250,14 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::CascadeContextResponse]
       def cascade(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug instance]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}/cascade",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/cascade",
           body: body_params,
           request_options: request_options
         )
@@ -286,13 +290,14 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::SolveContextFlowResponse]
       def execute(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug instance flow_slug]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "contexts/#{params[:slug]}/#{params[:instance]}/flows/#{params[:flow_slug]}",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/flows/#{URI.encode_uri_component(params[:flow_slug].to_s)}",
           body: body_params,
           request_options: request_options
         )

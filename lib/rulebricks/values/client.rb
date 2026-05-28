@@ -25,12 +25,10 @@ module Rulebricks
       #
       # @return [Array[Rulebricks::Types::DynamicValue]]
       def list(request_options: {}, **params)
-        params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[name include]
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["name"] = params[:name] if params.key?(:name)
         query_params["include"] = params[:include] if params.key?(:include)
-        params.except(*query_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -68,14 +66,12 @@ module Rulebricks
       #
       # @return [Array[Rulebricks::Types::DynamicValue]]
       def update(request_options: {}, **params)
-        body_prop_names = %i[values user_groups]
-        body_bag = params.slice(*body_prop_names)
-
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "values",
-          body: Rulebricks::Values::Types::UpdateValuesRequest.new(body_bag).to_h,
+          body: Rulebricks::Values::Types::UpdateValuesRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -105,11 +101,9 @@ module Rulebricks
       #
       # @return [Rulebricks::Types::SuccessMessage]
       def delete(request_options: {}, **params)
-        params = Rulebricks::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[id]
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["id"] = params[:id] if params.key?(:id)
-        params.except(*query_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

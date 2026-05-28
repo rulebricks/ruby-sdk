@@ -7,6 +7,7 @@ module Rulebricks
         extend Rulebricks::Internal::Types::Union
 
         member -> { Rulebricks::Types::ExportManifestResponse }
+
         member -> { Rulebricks::Types::ExportManifestPreviewResponse }
       end
     end

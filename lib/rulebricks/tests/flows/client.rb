@@ -24,10 +24,11 @@ module Rulebricks
         #
         # @return [Array[Rulebricks::Types::Test]]
         def list(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "admin/flows/#{params[:slug]}/tests",
+            path: "admin/flows/#{URI.encode_uri_component(params[:slug].to_s)}/tests",
             request_options: request_options
           )
           begin
@@ -57,13 +58,14 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::Test]
         def create(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           path_param_names = %i[slug]
           body_params = params.except(*path_param_names)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "admin/flows/#{params[:slug]}/tests",
+            path: "admin/flows/#{URI.encode_uri_component(params[:slug].to_s)}/tests",
             body: Rulebricks::Types::CreateTestRequest.new(body_params).to_h,
             request_options: request_options
           )
@@ -95,10 +97,11 @@ module Rulebricks
         #
         # @return [Rulebricks::Types::Test]
         def delete(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",
-            path: "admin/flows/#{params[:slug]}/tests/#{params[:test_id]}",
+            path: "admin/flows/#{URI.encode_uri_component(params[:slug].to_s)}/tests/#{URI.encode_uri_component(params[:test_id].to_s)}",
             request_options: request_options
           )
           begin
