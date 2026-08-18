@@ -6,6 +6,8 @@ module Rulebricks
       class SolveRulesRequest < Internal::Types::Model
         field :slug, -> { String }, optional: false, nullable: false
 
+        field :version, -> { String }, optional: false, nullable: false
+
         field :body, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
       end
     end

@@ -1,6 +1,6 @@
 # Reference
 ## Rules
-<details><summary><code>client.rules.<a href="/lib/rulebricks/rules/client.rb">solve</a>(slug, request) -> Internal::Types::Hash[String, Object]</code></summary>
+<details><summary><code>client.rules.<a href="/lib/rulebricks/rules/client.rb">solve</a>(slug, version, request) -> Internal::Types::Hash[String, Object]</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Executes a single rule identified by a unique slug. The request and response formats are dynamic, dependent on the rule configuration.
+Executes a single rule identified by a unique slug. The request and response formats are dynamic, dependent on the rule configuration. Optionally target a specific published version (e.g. `3`) or a release environment (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published version.
 </dd>
 </dl>
 </dd>
@@ -29,6 +29,7 @@ Executes a single rule identified by a unique slug. The request and response for
 ```ruby
 client.rules.solve(
   slug: "slug",
+  version: "version",
   request: {}
 )
 ```
@@ -46,6 +47,14 @@ client.rules.solve(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
     
 </dd>
 </dl>
@@ -73,7 +82,7 @@ client.rules.solve(
 </dl>
 </details>
 
-<details><summary><code>client.rules.<a href="/lib/rulebricks/rules/client.rb">bulk_solve</a>(slug, request) -> Internal::Types::Array[Rulebricks::Types::BulkRuleResponseItem]</code></summary>
+<details><summary><code>client.rules.<a href="/lib/rulebricks/rules/client.rb">bulk_solve</a>(slug, version, request) -> Internal::Types::Array[Rulebricks::Types::BulkRuleResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +94,7 @@ client.rules.solve(
 <dl>
 <dd>
 
-Executes a particular rule against multiple request data payloads provided in a list.
+Executes a particular rule against multiple request data payloads provided in a list. Optionally target a specific published version (e.g. `3`) or a release environment (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published version.
 </dd>
 </dl>
 </dd>
@@ -102,6 +111,7 @@ Executes a particular rule against multiple request data payloads provided in a 
 ```ruby
 client.rules.bulk_solve(
   slug: "slug",
+  version: "version",
   body: [{}, {}]
 )
 ```
@@ -119,6 +129,14 @@ client.rules.bulk_solve(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
     
 </dd>
 </dl>
@@ -325,7 +343,7 @@ client.infra.scale
 </details>
 
 ## Flows
-<details><summary><code>client.flows.<a href="/lib/rulebricks/flows/client.rb">execute</a>(slug, request) -> Internal::Types::Hash[String, Object]</code></summary>
+<details><summary><code>client.flows.<a href="/lib/rulebricks/flows/client.rb">execute</a>(slug, version, request) -> Internal::Types::Hash[String, Object]</code></summary>
 <dl>
 <dd>
 
@@ -337,7 +355,7 @@ client.infra.scale
 <dl>
 <dd>
 
-Execute a flow by its slug.
+Execute a flow by its slug. Optionally target a specific published version (e.g. `3`) or a release environment (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published version.
 </dd>
 </dl>
 </dd>
@@ -354,6 +372,7 @@ Execute a flow by its slug.
 ```ruby
 client.flows.execute(
   slug: "slug",
+  version: "version",
   request: {}
 )
 ```
@@ -371,6 +390,14 @@ client.flows.execute(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
     
 </dd>
 </dl>
@@ -4148,7 +4175,7 @@ client.tests.rules.delete(
 <dl>
 <dd>
 
-Executes every test in the rule's test suite (or only the critical tests when `critical_only` is true) and returns a summary of which passed, which failed, and whether any CRITICAL test failed. Use the `critical_failure` flag as the signal for whether a release should be blocked.
+Executes every test in the rule's test suite (or only the critical tests when `critical_only` is true) and returns a summary of which passed, which failed, and whether any CRITICAL test failed. Use the `critical_failure` flag as the signal for whether a release should be blocked. Tests always run against the latest draft of the rule; version targeting does not apply.
 </dd>
 </dl>
 </dd>
@@ -4433,7 +4460,7 @@ client.tests.flows.delete(
 <dl>
 <dd>
 
-Executes every test in the flow's test suite (or only the critical tests when `critical_only` is true) against the flow's current graph and returns a summary of which passed, which failed, and whether any CRITICAL test failed.
+Executes every test in the flow's test suite (or only the critical tests when `critical_only` is true) against the flow's current graph and returns a summary of which passed, which failed, and whether any CRITICAL test failed. Tests always run against the latest draft of the flow; version targeting does not apply.
 </dd>
 </dl>
 </dd>

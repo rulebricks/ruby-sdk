@@ -10,6 +10,8 @@ module Rulebricks
       field :slug, -> { String }, optional: true, nullable: false
 
       field :published, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
+      field :context_version, -> { String }, optional: true, nullable: false
     end
   end
 end

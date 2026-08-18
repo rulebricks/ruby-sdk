@@ -120,7 +120,8 @@ module Rulebricks
 
         # Executes every test in the rule's test suite (or only the critical tests when `critical_only` is true) and
         # returns a summary of which passed, which failed, and whether any CRITICAL test failed. Use the
-        # `critical_failure` flag as the signal for whether a release should be blocked.
+        # `critical_failure` flag as the signal for whether a release should be blocked. Tests always run against the
+        # latest draft of the rule; version targeting does not apply.
         #
         # @param request_options [Hash]
         # @param params [Rulebricks::Types::RunTestsRequest]

@@ -10,7 +10,9 @@ module Rulebricks
         @client = client
       end
 
-      # Execute a flow by its slug.
+      # Execute a flow by its slug. Optionally target a specific published version (e.g. `3`) or a release environment
+      # (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published
+      # version.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Types::DynamicRequestPayload]
@@ -20,17 +22,18 @@ module Rulebricks
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :slug
+      # @option params [String] :version
       #
       # @return [Hash[String, Object]]
       def execute(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[slug]
+        path_param_names = %i[slug version]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "flows/#{URI.encode_uri_component(params[:slug].to_s)}",
+          path: "flows/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params.fetch(:version, "latest").to_s)}",
           body: body_params,
           request_options: request_options
         )

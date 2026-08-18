@@ -11,6 +11,8 @@ module Rulebricks
 
       field :published, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
+      field :context_version, -> { String }, optional: true, nullable: false
+
       field :origin_rule, -> { Rulebricks::Types::ContextDetailBoundFlowsItemOriginRule }, optional: true, nullable: false
     end
   end

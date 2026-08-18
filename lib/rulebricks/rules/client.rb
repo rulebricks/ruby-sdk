@@ -11,7 +11,8 @@ module Rulebricks
       end
 
       # Executes a single rule identified by a unique slug. The request and response formats are dynamic, dependent on
-      # the rule configuration.
+      # the rule configuration. Optionally target a specific published version (e.g. `3`) or a release environment (e.g.
+      # `production`) via the `version` path segment; `latest` (the default) executes the current published version.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Types::DynamicRequestPayload]
@@ -21,17 +22,18 @@ module Rulebricks
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :slug
+      # @option params [String] :version
       #
       # @return [Hash[String, Object]]
       def solve(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[slug]
+        path_param_names = %i[slug version]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "solve/#{URI.encode_uri_component(params[:slug].to_s)}",
+          path: "solve/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params.fetch(:version, "latest").to_s)}",
           body: body_params,
           request_options: request_options
         )
@@ -49,7 +51,9 @@ module Rulebricks
         end
       end
 
-      # Executes a particular rule against multiple request data payloads provided in a list.
+      # Executes a particular rule against multiple request data payloads provided in a list. Optionally target a
+      # specific published version (e.g. `3`) or a release environment (e.g. `production`) via the `version` path
+      # segment; `latest` (the default) executes the current published version.
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -59,17 +63,18 @@ module Rulebricks
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :slug
+      # @option params [String] :version
       #
       # @return [Array[Rulebricks::Types::BulkRuleResponseItem]]
       def bulk_solve(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[slug]
+        path_param_names = %i[slug version]
         body_params = params.except(*path_param_names)
 
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "bulk-solve/#{URI.encode_uri_component(params[:slug].to_s)}",
+          path: "bulk-solve/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params.fetch(:version, "latest").to_s)}",
           body: body_params,
           request_options: request_options
         )
