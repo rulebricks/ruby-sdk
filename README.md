@@ -13,7 +13,10 @@ The Rulebricks Ruby library provides convenient access to the Rulebricks APIs fr
 - [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
+  - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Reference
@@ -27,20 +30,19 @@ Instantiate and use the client with the following:
 ```ruby
 require "rulebricks"
 
-client = Rulebricks::Client.new(api_key: '<value>');
+client = Rulebricks::Client.new(api_key: "<value>")
 
 client.rules.solve(
-  slug: 'slug',
+  slug: "slug",
+  version: "version",
   request: {}
-);
+)
 ```
 
 ## Environments
 
 This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
-
 ### Environments
-
 ```ruby
 require "rulebricks"
 
@@ -50,12 +52,11 @@ rulebricks = Rulebricks::Client.new(
 ```
 
 ### Custom URL
-
 ```ruby
 require "rulebricks"
 
 client = Rulebricks::Client.new(
-    base_url: "https://rulebricks.com/api/v1"
+    base_url: "https://example.com"
 )
 ```
 
@@ -67,7 +68,7 @@ Failed API calls will raise errors that can be rescued from granularly.
 require "rulebricks"
 
 client = Rulebricks::Client.new(
-    base_url: "https://rulebricks.com/api/v1"
+    base_url: "https://example.com"
 )
 
 begin
@@ -87,6 +88,33 @@ end
 
 ## Advanced
 
+### Retries
+
+The SDK is instrumented with automatic retries. A request will be retried as long as the request is deemed
+retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, `500`, `502`, `503`, `504`, `521`, `522`, `524`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
+
+Use the `max_retries` option to configure this behavior.
+
+```ruby
+require "rulebricks"
+
+client = Rulebricks::Client.new(
+    base_url: "https://example.com",
+    max_retries: 3  # Configure max retries (default is 2)
+)
+```
+
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
@@ -97,6 +125,40 @@ require "rulebricks"
 response = client.rules.solve(
     ...,
     timeout: 30  # 30 second timeout
+)
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additional_headers` request option.
+
+```ruby
+require "rulebricks"
+
+response = client.rules.solve(
+    ...,
+    request_options: {
+        additional_headers: {
+            "X-Custom-Header" => "custom-value"
+        }
+    }
+)
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
+
+```ruby
+require "rulebricks"
+
+response = client.rules.solve(
+    ...,
+    request_options: {
+        additional_query_parameters: {
+            "custom_param" => "custom-value"
+        }
+    }
 )
 ```
 
