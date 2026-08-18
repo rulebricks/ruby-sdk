@@ -11,22 +11,34 @@ module Rulebricks
           @client = client
         end
 
-        # Retrieve all contexts for the authenticated user.
+        # Retrieve all contexts for the authenticated user. Results are scoped to the API key holder's user groups.
+        # Optionally filter by folder name or ID, by user group name or ID when the API key has access to that group, or
+        # by name.
         #
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String, nil] :folder
+        # @option params [String, nil] :user_group
+        # @option params [String, nil] :name
         #
         # @return [Array[Rulebricks::Types::ContextListItem]]
-        def list(request_options: {}, **_params)
+        def list(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+          query_params = {}
+          query_params["folder"] = params[:folder] if params.key?(:folder)
+          query_params["user_group"] = params[:user_group] if params.key?(:user_group)
+          query_params["name"] = params[:name] if params.key?(:name)
+
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "admin/contexts",
+            query: query_params,
             request_options: request_options
           )
           begin
@@ -53,7 +65,7 @@ module Rulebricks
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Rulebricks::Types::ContextDetail]
+        # @return [Rulebricks::Types::CreateContextResponse]
         def create(request_options: {}, **params)
           params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           request = Rulebricks::Internal::JSON::Request.new(

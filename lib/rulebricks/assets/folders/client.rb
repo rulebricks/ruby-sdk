@@ -14,19 +14,27 @@ module Rulebricks
         # Retrieve all rule folders for the authenticated user.
         #
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String, nil] :user_group
+        # @option params [String, nil] :name
         #
         # @return [Array[Rulebricks::Types::Folder]]
-        def list(request_options: {}, **_params)
+        def list(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+          query_params = {}
+          query_params["user_group"] = params[:user_group] if params.key?(:user_group)
+          query_params["name"] = params[:name] if params.key?(:name)
+
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "admin/folders",
+            query: query_params,
             request_options: request_options
           )
           begin
@@ -43,7 +51,8 @@ module Rulebricks
           end
         end
 
-        # Create a new rule folder or update an existing one for the authenticated user.
+        # Create a new folder or update an existing one for the authenticated user. Folders are typed to organize rules
+        # (the default), flows, or contexts.
         #
         # @param request_options [Hash]
         # @param params [Rulebricks::Assets::Folders::Types::UpsertFolderRequest]

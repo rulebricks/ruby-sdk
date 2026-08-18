@@ -7,6 +7,8 @@ module Rulebricks
 
       SOLVED = "solved"
       ERROR = "error"
+      PENDING = "pending"
+      SKIPPED_ALREADY_RUN = "skipped_already_run"
     end
   end
 end

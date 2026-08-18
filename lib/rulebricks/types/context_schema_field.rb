@@ -14,13 +14,17 @@ module Rulebricks
 
       field :default_value, -> { Object }, optional: true, nullable: false
 
-      field :derived, -> { Internal::Types::Boolean }, optional: true, nullable: false
+      field :required, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
-      field :source_rule, -> { String }, optional: true, nullable: false
+      field :output_only, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
-      field :source_flow, -> { String }, optional: true, nullable: false
+      field :track_history, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
-      field :source_field, -> { String }, optional: true, nullable: false
+      field :values_only, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
+      field :values_collection, -> { String }, optional: true, nullable: false
+
+      field :expression, -> { String }, optional: true, nullable: false
     end
   end
 end

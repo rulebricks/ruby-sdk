@@ -122,7 +122,7 @@ module Rulebricks
         end
 
         # List all rules in the organization. Results are scoped to the API key holder's user groups. Optionally filter
-        # by folder name or ID, or by user group name or ID when the API key has access to that group.
+        # by folder name or ID, by user group name or ID when the API key has access to that group, or by name.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -133,6 +133,7 @@ module Rulebricks
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String, nil] :folder
         # @option params [String, nil] :user_group
+        # @option params [String, nil] :name
         #
         # @return [Array[Rulebricks::Types::RuleDetail]]
         def list(request_options: {}, **params)
@@ -140,6 +141,7 @@ module Rulebricks
           query_params = {}
           query_params["folder"] = params[:folder] if params.key?(:folder)
           query_params["user_group"] = params[:user_group] if params.key?(:user_group)
+          query_params["name"] = params[:name] if params.key?(:name)
 
           request = Rulebricks::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

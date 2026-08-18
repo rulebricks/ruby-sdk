@@ -21,6 +21,11 @@ module Rulebricks
       @rules ||= Rulebricks::Rules::Client.new(client: @raw_client)
     end
 
+    # @return [Rulebricks::Infra::Client]
+    def infra
+      @infra ||= Rulebricks::Infra::Client.new(client: @raw_client)
+    end
+
     # @return [Rulebricks::Flows::Client]
     def flows
       @flows ||= Rulebricks::Flows::Client.new(client: @raw_client)
@@ -44,6 +49,11 @@ module Rulebricks
     # @return [Rulebricks::Values::Client]
     def values
       @values ||= Rulebricks::Values::Client.new(client: @raw_client)
+    end
+
+    # @return [Rulebricks::Objects::Client]
+    def objects
+      @objects ||= Rulebricks::Objects::Client.new(client: @raw_client)
     end
 
     # @return [Rulebricks::Contexts::Client]

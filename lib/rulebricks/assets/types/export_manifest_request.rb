@@ -15,6 +15,8 @@ module Rulebricks
         field :manifest_description, -> { String }, optional: true, nullable: false
 
         field :preview_only, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
+        field :compress, -> { Internal::Types::Boolean }, optional: true, nullable: false
       end
     end
   end

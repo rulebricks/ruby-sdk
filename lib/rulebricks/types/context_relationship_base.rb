@@ -5,9 +5,9 @@ module Rulebricks
     class ContextRelationshipBase < Internal::Types::Model
       field :id, -> { String }, optional: true, nullable: false
 
-      field :type, -> { Rulebricks::Types::ContextRelationshipBaseType }, optional: true, nullable: false
+      field :relation_type, -> { Rulebricks::Types::ContextRelationshipBaseRelationType }, optional: true, nullable: false
 
-      field :foreign_key, -> { String }, optional: true, nullable: false
+      field :foreign_key_fact, -> { String }, optional: true, nullable: false
 
       field :name, -> { String }, optional: true, nullable: false
 

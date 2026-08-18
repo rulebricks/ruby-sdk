@@ -10,6 +10,7 @@ module Rulebricks
       BOOLEAN = "boolean"
       DATE = "date"
       LIST = "list"
+      OBJECT = "object"
       FUNCTION = "function"
     end
   end

@@ -7,6 +7,7 @@ module Rulebricks
 
       IGNORE = "ignore"
       REJECT = "reject"
+      STORE = "store"
     end
   end
 end

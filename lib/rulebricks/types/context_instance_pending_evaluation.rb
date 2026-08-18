@@ -14,7 +14,7 @@ module Rulebricks
 
       field :flow_id, -> { String }, optional: true, nullable: false
 
-      field :waiting_on, -> { Internal::Types::Array[Rulebricks::Types::ContextInstancePendingEvaluationWaitingOnItem] }, optional: true, nullable: false
+      field :waiting_on, -> { Internal::Types::Array[Rulebricks::Types::ContextWaitingOn] }, optional: true, nullable: false
 
       field :created_at, -> { String }, optional: true, nullable: false
 

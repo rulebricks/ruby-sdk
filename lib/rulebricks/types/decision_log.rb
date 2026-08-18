@@ -18,6 +18,12 @@ module Rulebricks
 
       field :decision, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
 
+      field :trace_id, -> { String }, optional: true, nullable: false
+
+      field :path_trace, -> { Rulebricks::Types::DecisionLogPathTrace }, optional: true, nullable: false
+
+      field :matched_items, -> { Internal::Types::Array[Integer] }, optional: true, nullable: false
+
       field :error, -> { String }, optional: true, nullable: false
 
       field :abbreviated, -> { Internal::Types::Boolean }, optional: true, nullable: false

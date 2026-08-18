@@ -8,6 +8,8 @@ module Rulebricks
 
       field :schema, -> { Rulebricks::Types::ContextSchema }, optional: true, nullable: false
 
+      field :user_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
       field :folder, -> { Rulebricks::Types::ContextListItemFolder }, optional: true, nullable: false
 
       field :bound_rules_count, -> { Integer }, optional: true, nullable: false

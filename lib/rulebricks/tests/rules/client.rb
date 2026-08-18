@@ -117,6 +117,46 @@ module Rulebricks
             raise error_class.new(response.body, code: code)
           end
         end
+
+        # Executes every test in the rule's test suite (or only the critical tests when `critical_only` is true) and
+        # returns a summary of which passed, which failed, and whether any CRITICAL test failed. Use the
+        # `critical_failure` flag as the signal for whether a release should be blocked.
+        #
+        # @param request_options [Hash]
+        # @param params [Rulebricks::Types::RunTestsRequest]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :slug
+        #
+        # @return [Rulebricks::Types::RunTestsResponse]
+        def run(request_options: {}, **params)
+          params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+          path_param_names = %i[slug]
+          body_params = params.except(*path_param_names)
+
+          request = Rulebricks::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "admin/rules/#{URI.encode_uri_component(params[:slug].to_s)}/tests/run",
+            body: Rulebricks::Types::RunTestsRequest.new(body_params).to_h,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Rulebricks::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Rulebricks::Types::RunTestsResponse.load(response.body)
+          else
+            error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
       end
     end
   end

@@ -2,22 +2,15 @@
 
 module Rulebricks
   module Types
-    module CreateContextResponse
-      # CreateContextResponse is an alias for ContextDetail
+    # Summary of the newly created context.
+    class CreateContextResponse < Internal::Types::Model
+      field :id, -> { String }, optional: true, nullable: false
 
-      # @option str [String]
-      #
-      # @return [untyped]
-      def self.load(str)
-        ::JSON.parse(str)
-      end
+      field :slug, -> { String }, optional: true, nullable: false
 
-      # @option value [untyped]
-      #
-      # @return [String]
-      def self.dump(value)
-        ::JSON.generate(value)
-      end
+      field :name, -> { String }, optional: true, nullable: false
+
+      field :created_at, -> { String }, optional: true, nullable: false
     end
   end
 end

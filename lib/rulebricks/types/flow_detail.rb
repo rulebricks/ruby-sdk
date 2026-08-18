@@ -10,6 +10,10 @@ module Rulebricks
       field :origin_rule, -> { Rulebricks::Types::FlowDetailOriginRule }, optional: true, nullable: false
 
       field :context, -> { Rulebricks::Types::FlowDetailContext }, optional: true, nullable: false
+
+      field :user_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
+      field :folder, -> { Rulebricks::Types::Folder }, optional: true, nullable: false
     end
   end
 end

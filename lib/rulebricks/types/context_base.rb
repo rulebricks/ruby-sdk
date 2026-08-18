@@ -19,10 +19,6 @@ module Rulebricks
       field :history_limit, -> { Integer }, optional: true, nullable: false
 
       field :on_schema_mismatch, -> { Rulebricks::Types::ContextBaseOnSchemaMismatch }, optional: true, nullable: false
-
-      field :webhook_on_solve, -> { String }, optional: true, nullable: false
-
-      field :webhook_on_expire, -> { String }, optional: true, nullable: false
     end
   end
 end

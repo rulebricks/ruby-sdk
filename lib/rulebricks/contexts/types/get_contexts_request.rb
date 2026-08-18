@@ -7,6 +7,8 @@ module Rulebricks
         field :slug, -> { String }, optional: false, nullable: false
 
         field :instance, -> { String }, optional: false, nullable: false
+
+        field :include_relations, -> { String }, optional: true, nullable: false
       end
     end
   end

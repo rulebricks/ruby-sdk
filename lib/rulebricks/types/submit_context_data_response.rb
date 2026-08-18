@@ -18,7 +18,7 @@ module Rulebricks
 
       field :expires_at, -> { String }, optional: true, nullable: false
 
-      field :cascaded, -> { Internal::Types::Array[Rulebricks::Types::CascadeResult] }, optional: true, nullable: false
+      field :cascaded, -> { Internal::Types::Array[Rulebricks::Types::SubmitContextDataResponseCascadedItem] }, optional: true, nullable: false
     end
   end
 end
