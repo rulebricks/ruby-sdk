@@ -19,9 +19,9 @@ module Rulebricks
 
       field :values, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
 
-      field :rules, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+      field :rules, -> { Internal::Types::Array[Rulebricks::Types::ManifestLabeledAsset] }, optional: true, nullable: false
 
-      field :flows, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+      field :flows, -> { Internal::Types::Array[Rulebricks::Types::ManifestLabeledAsset] }, optional: true, nullable: false
     end
   end
 end

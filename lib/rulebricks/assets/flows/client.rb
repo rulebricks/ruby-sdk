@@ -12,7 +12,7 @@ module Rulebricks
         end
 
         # List all flows in the organization. Results are scoped to the API key holder's user groups. Optionally filter
-        # by folder name or ID, by user group name or ID when the API key has access to that group, or by name.
+        # by folder name or ID, labels, user group name or ID when the API key has access to that group, or by name.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -22,6 +22,7 @@ module Rulebricks
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String, nil] :folder
+        # @option params [String, nil] :labels
         # @option params [String, nil] :user_group
         # @option params [String, nil] :name
         #
@@ -30,6 +31,7 @@ module Rulebricks
           params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
           query_params["folder"] = params[:folder] if params.key?(:folder)
+          query_params["labels"] = params[:labels] if params.key?(:labels)
           query_params["user_group"] = params[:user_group] if params.key?(:user_group)
           query_params["name"] = params[:name] if params.key?(:name)
 

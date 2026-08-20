@@ -7,6 +7,8 @@ module Rulebricks
 
       field :updated_at, -> { String }, optional: true, nullable: false
 
+      field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
       field :origin_rule, -> { Rulebricks::Types::FlowDetailOriginRule }, optional: true, nullable: false
 
       field :context, -> { Rulebricks::Types::FlowDetailContext }, optional: true, nullable: false

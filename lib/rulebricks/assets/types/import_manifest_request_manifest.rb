@@ -10,9 +10,9 @@ module Rulebricks
       class ImportManifestRequestManifest < Internal::Types::Model
         field :version, -> { String }, optional: true, nullable: false
 
-        field :rules, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+        field :rules, -> { Internal::Types::Array[Rulebricks::Types::ManifestLabeledAsset] }, optional: true, nullable: false
 
-        field :flows, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+        field :flows, -> { Internal::Types::Array[Rulebricks::Types::ManifestLabeledAsset] }, optional: true, nullable: false
 
         field :entities, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
 

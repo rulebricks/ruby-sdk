@@ -15,7 +15,7 @@ module Rulebricks
 
       field :source_format, -> { String }, optional: true, nullable: false
 
-      field :parsed_fields, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+      field :parsed_fields, -> { Internal::Types::Array[Rulebricks::Types::WorkspaceObjectParsedFieldsItem] }, optional: true, nullable: false
 
       field :user_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false
 

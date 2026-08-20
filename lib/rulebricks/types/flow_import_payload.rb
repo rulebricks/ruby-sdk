@@ -10,6 +10,8 @@ module Rulebricks
 
       field :description, -> { String }, optional: true, nullable: false
 
+      field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
       field :nodes, -> { Internal::Types::Array[Rulebricks::Types::RulebricksFlowNode] }, optional: false, nullable: false
 
       field :connections, -> { Internal::Types::Array[Rulebricks::Types::RulebricksFlowConnection] }, optional: true, nullable: false

@@ -2,22 +2,11 @@
 
 module Rulebricks
   module Types
-    module RuleExport
-      # RuleExport is an alias for Hash
-
-      # @option str [String]
-      #
-      # @return [untyped]
-      def self.load(str)
-        ::JSON.parse(str)
-      end
-
-      # @option value [untyped]
-      #
-      # @return [String]
-      def self.dump(value)
-        ::JSON.generate(value)
-      end
+    # The exported rule object containing all rule definition data. This payload intentionally preserves raw rule
+    # document casing (for example, `requestSchema`, `sampleRequest`, and `createdAt`) so it can round-trip through
+    # `/admin/rules/import` and `.rbm` workflows.
+    class RuleExport < Internal::Types::Model
+      field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
     end
   end
 end

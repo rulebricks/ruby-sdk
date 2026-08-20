@@ -17,6 +17,8 @@ module Rulebricks
 
       field :description, -> { String }, optional: true, nullable: false
 
+      field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
       field :created_at, -> { String }, optional: true, nullable: false, api_name: "createdAt"
 
       field :updated_at, -> { String }, optional: true, nullable: false, api_name: "updatedAt"

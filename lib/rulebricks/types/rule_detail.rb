@@ -7,6 +7,8 @@ module Rulebricks
 
       field :updated_at, -> { String }, optional: true, nullable: false
 
+      field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
       field :published, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
       field :no_conditions, -> { Integer }, optional: true, nullable: false

@@ -7,6 +7,8 @@ module Rulebricks
         class ListFlowsRequest < Internal::Types::Model
           field :folder, -> { String }, optional: true, nullable: false
 
+          field :labels, -> { String }, optional: true, nullable: false
+
           field :user_group, -> { String }, optional: true, nullable: false
 
           field :name, -> { String }, optional: true, nullable: false

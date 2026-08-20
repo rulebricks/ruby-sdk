@@ -42,10 +42,7 @@ module Rulebricks
         end
       end
 
-      # Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rbm). Both plain manifests and
-      # compressed ones (the compress-json array form produced by exporting with `compress: true`) are accepted and
-      # detected automatically. Run Flow (subflow) references between flows in the manifest are resolved to the slugs,
-      # IDs, and published versions the flows receive in this workspace.
+      # Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rbm).
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Assets::Types::ImportManifestRequest]
