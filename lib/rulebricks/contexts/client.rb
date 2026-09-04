@@ -289,16 +289,6 @@ module Rulebricks
           raise error_class.new(response.body, code: code)
         end
       end
-
-      # @return [Rulebricks::Objects::Client]
-      def objects
-        @objects ||= Rulebricks::Contexts::Objects::Client.new(client: @client)
-      end
-
-      # @return [Rulebricks::Relationships::Client]
-      def relationships
-        @relationships ||= Rulebricks::Contexts::Relationships::Client.new(client: @client)
-      end
     end
   end
 end

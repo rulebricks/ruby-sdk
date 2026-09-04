@@ -10,6 +10,10 @@ module Rulebricks
       field :status, -> { String }, optional: true, nullable: false
 
       field :reason, -> { String }, optional: true, nullable: false
+
+      field :code, -> { String }, optional: true, nullable: false
+
+      field :issue_id, -> { String }, optional: true, nullable: false
     end
   end
 end

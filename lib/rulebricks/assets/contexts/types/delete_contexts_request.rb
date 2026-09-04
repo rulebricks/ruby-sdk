@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Objects
+  module Assets
+    module Contexts
       module Types
-        class DeleteObjectsRequest < Internal::Types::Model
+        class DeleteContextsRequest < Internal::Types::Model
           field :id, -> { String }, optional: false, nullable: false
         end
       end

@@ -2,8 +2,7 @@
 
 module Rulebricks
   module Types
-    # Optional single-field rename hint for an update. When `content` replaces an existing schema field key with a new
-    # key, this hint preserves matching managed enum value IDs instead of archiving and recreating them.
+    # Renames a field while preserving generated value IDs.
     class UpsertObjectRequestFieldRename < Internal::Types::Model
       field :from_key, -> { String }, optional: false, nullable: false
 

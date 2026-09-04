@@ -2,7 +2,7 @@
 
 module Rulebricks
   module Types
-    # Managed-value sync results (or would_sync / would_archive for dry runs).
+    # Managed-value sync results.
     class UpsertObjectResponseValues < Internal::Types::Model
       field :synced, -> { Integer }, optional: true, nullable: false
 

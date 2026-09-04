@@ -47,7 +47,7 @@ client.rules.solve(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
@@ -55,23 +55,23 @@ client.rules.solve(
 <dd>
 
 **version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
-    
+**request:** `Internal::Types::Hash[String, Object]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -129,7 +129,7 @@ client.rules.bulk_solve(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
@@ -137,23 +137,23 @@ client.rules.bulk_solve(
 <dd>
 
 **version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Internal::Types::Hash[String, Object]]` 
-    
+**request:** `Internal::Types::Array[Internal::Types::Hash[String, Object]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -213,16 +213,16 @@ client.rules.parallel_solve(request: {
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Rulebricks::Types::ParallelSolveRequestValue]` 
-    
+**request:** `Internal::Types::Hash[String, Rulebricks::Types::ParallelSolveRequestValue]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -276,8 +276,8 @@ client.infra.status
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Infra::RequestOptions` 
-    
+**request_options:** `Rulebricks::Infra::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -330,8 +330,8 @@ client.infra.scale
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Infra::RequestOptions` 
-    
+**request_options:** `Rulebricks::Infra::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -355,7 +355,7 @@ client.infra.scale
 <dl>
 <dd>
 
-Execute a flow by its slug. Optionally target a specific published version (e.g. `3`) or a release environment (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published version.
+Execute a flow by slug and optional version. Policy failures return `{ error }` with status 200, including per-item errors for bulk requests. Errors: 400 invalid input, 500 unhandled execution failure, 503 unavailable, 504 timeout.
 </dd>
 </dl>
 </dd>
@@ -390,7 +390,7 @@ client.flows.execute(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
@@ -398,23 +398,23 @@ client.flows.execute(
 <dd>
 
 **version:** `String` — The version of the resource to target: a published version number (e.g. `3`), a release environment slug (e.g. `production`, always lowercase), or `latest` (default) to use the current published version.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
-    
+**request:** `Internal::Types::Hash[String, Object]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -477,7 +477,7 @@ client.decisions.query(
 <dd>
 
 **search:** `String` — Decision data query language expression to filter logs by request/response data. Supports field comparisons (`field=value`, `field>10`), contains (`field:text`), not-contains (`field!:text`), boolean operators (`AND`, `OR`), and parentheses. A bare UUID or 32-hex term resolves as an execution/correlation-id lookup automatically.
-    
+
 </dd>
 </dl>
 
@@ -485,7 +485,7 @@ client.decisions.query(
 <dd>
 
 **rules:** `String` — Comma-separated list of rule names, IDs, or slugs to filter logs by. Names match partially; IDs and slugs match exactly.
-    
+
 </dd>
 </dl>
 
@@ -493,7 +493,7 @@ client.decisions.query(
 <dd>
 
 **flows:** `String` — Comma-separated list of flow names, IDs, or slugs to filter logs by. Matches only flow-level execution logs; the rule executions that ran inside a flow are separate records and are not included.
-    
+
 </dd>
 </dl>
 
@@ -501,7 +501,7 @@ client.decisions.query(
 <dd>
 
 **contexts:** `String` — Comma-separated list of context names or slugs to filter logs by. Matches the rule and flow executions that were triggered by those contexts (batch and interactive updates).
-    
+
 </dd>
 </dl>
 
@@ -509,7 +509,7 @@ client.decisions.query(
 <dd>
 
 **trace:** `String` — Execution-trace correlation id. Returns every decision log from one execution tree: pass a log's `decision.root_flow_execution_id` (or any `flow_execution_id` / `parallel_execution_id`, including a bulk run's per-item `item_execution_ids` entries) to retrieve the flow-level record plus all subflow and rule records from that run. On self-hosted deployments, a log's observability `trace_id` is also accepted. Combine with `rules` or `search` to narrow to a specific rule or payload within the run.
-    
+
 </dd>
 </dl>
 
@@ -517,7 +517,7 @@ client.decisions.query(
 <dd>
 
 **statuses:** `String` — Comma-separated list of HTTP status codes to filter logs by.
-    
+
 </dd>
 </dl>
 
@@ -525,15 +525,15 @@ client.decisions.query(
 <dd>
 
 **include_traces:** `Rulebricks::Decisions::Types::QueryDecisionsRequestIncludeTraces` — When `true`, each flow record in the response includes a decompressed `path_trace` field: the run's executed steps with their full inputs and outputs (an object for single runs, a null-aligned array matching the request array for bulk runs). Off by default - traces are stored compressed and can be large, so only enable this when you need them. Ignored in count mode.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**item_filter:** `String` — Bulk payload filter in the form `path=value`. For each bulk record in the results (array-shaped request/response), keeps only the items whose payload value at `path` equals `value`, slicing the `request` and `response` arrays and every index-aligned field (`decision.item_execution_ids`, `decision.item_indexes`, `decision.success_idxs`, and `path_trace` when `include_traces=true`) in lockstep so input/output alignment is preserved. Filtered records gain a `matched_items` array with the surviving items' original zero-based positions. Paths use dot notation into each item (`customer.id`, `lines.0.sku`); prefix with `request.` or `response.` to match only that side (unprefixed paths match either side). Values compare as exact scalar strings (`status=200`, `approved=true`). Non-bulk records are returned unchanged; bulk records with no matching items are returned with empty item arrays. Typical use: combine with `search`, `flows`, or `trace` to locate a bulk run, then isolate one item's payloads and its `item_execution_ids` entry without tracking indexes. Ignored in count mode.
-    
+**item_filter:** `String` — Bulk payload filter in the form `path=value`. For each bulk record in the results (array-shaped request/response), keeps only the items whose payload value at `path` equals `value`, slicing the `request` and `response` arrays and every index-aligned field (`decision.item_execution_ids`, `decision.item_indexes`, `decision.success_idxs`, and `path_trace` when `include_traces=true`) in lockstep so input/output alignment is preserved. Filtered records gain a `matched_items` array with the surviving items' original zero-based positions. Paths use dot notation into each item (`customer.id`, `lines.0.sku`); prefix with `request.` or `response.` to match only that side (unprefixed paths match either side). Values compare as exact scalar strings (`status=200`, `approved=true`). Non-bulk records are returned unchanged; bulk records with no matching items are returned with empty item arrays. For a bulk solve of a Collect Matches rule, each response item is itself a `{ results: [...] }` envelope, so use a positional path such as `response.results.0.status`. Wildcards are available in `search`, not `item_filter`. Typical use: combine with `search`, `flows`, or `trace` to locate a bulk run, then isolate one item's payloads and its `item_execution_ids` entry without tracking indexes. Ignored in count mode.
+
 </dd>
 </dl>
 
@@ -541,7 +541,7 @@ client.decisions.query(
 <dd>
 
 **start:** `String` — Start date for the query range (ISO8601 format). Hosted queries may span at most 90 days. Persistent self-hosted queries may use any range within local ClickHouse retention; PVC-less archive mode is limited to 7 days. Defaults to the applicable maximum before `end` (or before now).
-    
+
 </dd>
 </dl>
 
@@ -549,7 +549,7 @@ client.decisions.query(
 <dd>
 
 **end_:** `String` — End date for the query range (ISO8601 format). Defaults to now. When supplied without `start`, the query covers the preceding 90 days on hosted/table mode or 7 days in PVC-less archive mode.
-    
+
 </dd>
 </dl>
 
@@ -557,7 +557,7 @@ client.decisions.query(
 <dd>
 
 **sort:** `Rulebricks::Decisions::Types::QueryDecisionsRequestSort` — Column to sort results by. `time` orders by execution timestamp, `name` by rule/flow name, `status` by HTTP status code, and `type` by operation (solve, bulk-solve, flows, etc.). Defaults to `time`.
-    
+
 </dd>
 </dl>
 
@@ -565,7 +565,7 @@ client.decisions.query(
 <dd>
 
 **order:** `Rulebricks::Decisions::Types::QueryDecisionsRequestOrder` — Sort direction. Defaults to `desc`.
-    
+
 </dd>
 </dl>
 
@@ -573,7 +573,7 @@ client.decisions.query(
 <dd>
 
 **cursor:** `String` — Opaque pagination token returned by the previous response. Pass it back verbatim to fetch the next page; do not construct or modify cursor values.
-    
+
 </dd>
 </dl>
 
@@ -581,7 +581,7 @@ client.decisions.query(
 <dd>
 
 **limit:** `Integer` — Number of results to return per page (default: 100, maximum: 1000). Logs carry full request/response payloads, so use smaller limits when querying workspaces with large bulk operations. Time-sorted pagination uses a keyset cursor, so its scan cost does not grow with page depth.
-    
+
 </dd>
 </dl>
 
@@ -589,15 +589,15 @@ client.decisions.query(
 <dd>
 
 **count:** `Rulebricks::Decisions::Types::QueryDecisionsRequestCount` — If set to 'true', returns only the count of matching logs instead of the log data.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Decisions::RequestOptions` 
-    
+**request_options:** `Rulebricks::Decisions::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -656,7 +656,7 @@ client.users.invite(
 <dd>
 
 **email:** `String` — Email of the user to invite.
-    
+
 </dd>
 </dl>
 
@@ -664,7 +664,7 @@ client.users.invite(
 <dd>
 
 **role:** `Rulebricks::Users::Types::UserInviteRequestRole` — System or custom role ID to assign to the user. Available system roles include 'admin', 'editor', and 'developer'.
-    
+
 </dd>
 </dl>
 
@@ -672,15 +672,15 @@ client.users.invite(
 <dd>
 
 **user_groups:** `Internal::Types::Array[String]` — List of user group names or IDs to assign to the user. All specified groups must exist in your organization.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Users::RequestOptions` 
-    
+**request_options:** `Rulebricks::Users::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -733,8 +733,8 @@ client.users.list
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Users::RequestOptions` 
-    
+**request_options:** `Rulebricks::Users::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -791,7 +791,7 @@ client.users.create(
 <dd>
 
 **email:** `String` — Email address for the new user.
-    
+
 </dd>
 </dl>
 
@@ -799,7 +799,7 @@ client.users.create(
 <dd>
 
 **password:** `String` — Password for the new user (minimum 8 characters). The user can log in immediately with this password.
-    
+
 </dd>
 </dl>
 
@@ -807,7 +807,7 @@ client.users.create(
 <dd>
 
 **name:** `String` — Display name for the user.
-    
+
 </dd>
 </dl>
 
@@ -815,7 +815,7 @@ client.users.create(
 <dd>
 
 **role:** `String` — Role to assign to the user. Defaults to 'developer' if not specified.
-    
+
 </dd>
 </dl>
 
@@ -823,15 +823,15 @@ client.users.create(
 <dd>
 
 **user_groups:** `Internal::Types::Array[String]` — List of user group names or IDs to assign to the user.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Users::RequestOptions` 
-    
+**request_options:** `Rulebricks::Users::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -885,8 +885,8 @@ client.assets.get_usage
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -897,7 +897,7 @@ client.assets.get_usage
 </dl>
 </details>
 
-<details><summary><code>client.assets.<a href="/lib/rulebricks/assets/client.rb">import_rbm</a>(request) -> Rulebricks::Types::ImportManifestResponse</code></summary>
+<details><summary><code>client.assets.<a href="/lib/rulebricks/assets/client.rb">import_rbm</a>(request) -> Rulebricks::Assets::Types::ImportRbmAssetsResponse</code></summary>
 <dl>
 <dd>
 
@@ -909,7 +909,7 @@ client.assets.get_usage
 <dl>
 <dd>
 
-Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rbm).
+Import rules, flows, contexts, and values from a Rulebricks manifest file (*.rbm). Plain JSON remains supported, and clients may send the same JSON envelope gzip-compressed with `Content-Type: application/octet-stream` and `X-Rulebricks-Content-Encoding: gzip`.
 </dd>
 </dl>
 </dd>
@@ -924,16 +924,7 @@ Import rules, flows, contexts, and values from an Rulebricks manifest file (*.rb
 <dd>
 
 ```ruby
-client.assets.import_rbm(
-  manifest: {
-    version: "1.0",
-    rules: [{}],
-    flows: [{}],
-    entities: [{}],
-    values: [{}]
-  },
-  conflict_strategy: "update"
-)
+client.assets.import_rbm
 ```
 </dd>
 </dl>
@@ -948,40 +939,8 @@ client.assets.import_rbm(
 <dl>
 <dd>
 
-**manifest:** `Rulebricks::Assets::Types::ImportManifestRequestManifest` — The RBM manifest object containing assets to import. Asset objects inside the manifest intentionally preserve `.rbm`/database casing so exported manifests can be imported without rewriting asset payloads. A compressed manifest is also accepted: the JSON array produced by the compress-json library (for example, the contents of a compressed .rbm file exported with `compress: true`); it is detected and decompressed automatically.
-    
-</dd>
-</dl>
+**request_options:** `Rulebricks::Assets::RequestOptions`
 
-<dl>
-<dd>
-
-**conflict_strategy:** `Rulebricks::Assets::Types::ImportManifestRequestConflictStrategy` — How to handle conflicts with existing assets. 'update' overwrites, 'skip' ignores, 'error' fails.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_folder_name:** `String` — Optional folder name to place imported assets into. Created if it doesn't exist.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**legacy_rule_mapping:** `Internal::Types::Hash[String, Rulebricks::Assets::Types::ImportManifestRequestLegacyRuleMappingValue]` — Optional mapping for legacy flow imports to reuse existing rules.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `Rulebricks::Assets::RequestOptions` 
-    
 </dd>
 </dl>
 </dd>
@@ -1004,7 +963,7 @@ client.assets.import_rbm(
 <dl>
 <dd>
 
-Export selected rules, flows, contexts, and values to an Rulebricks manifest file (*.rbm). Dependencies are resolved automatically: exporting a flow includes its rules, contexts, vocabulary values, and any flows referenced by Run Flow nodes (recursively). Set `compress: true` to receive the manifest in compressed form (a compress-json array), which is much smaller and can be saved directly as a .rbm file; the import endpoint accepts both forms.
+Export selected rules, flows, contexts, and values to a Rulebricks manifest file (*.rbm). Dependencies are resolved automatically: exporting a flow includes its rules, contexts, vocabulary values, and any flows referenced by Run Flow nodes (recursively). Set `compress: true` to receive the manifest in compressed form (a compress-json array). Set `download: true` to receive that manifest directly as a streamed attachment instead of inside the `{ success, manifest }` envelope.
 </dd>
 </dl>
 </dd>
@@ -1039,7 +998,7 @@ client.assets.export_rbm(
 <dd>
 
 **root_type:** `Rulebricks::Assets::Types::ExportManifestRequestRootType` — The type of root asset to export. All dependencies will be included.
-    
+
 </dd>
 </dl>
 
@@ -1047,7 +1006,7 @@ client.assets.export_rbm(
 <dd>
 
 **root_ids:** `Internal::Types::Array[String]` — Array of IDs for the root assets to export. Dependencies are automatically resolved.
-    
+
 </dd>
 </dl>
 
@@ -1055,7 +1014,7 @@ client.assets.export_rbm(
 <dd>
 
 **include_downstream:** `Internal::Types::Boolean` — For context exports, whether to include rules and flows bound to the context.
-    
+
 </dd>
 </dl>
 
@@ -1063,7 +1022,7 @@ client.assets.export_rbm(
 <dd>
 
 **manifest_name:** `String` — Optional name for the exported manifest.
-    
+
 </dd>
 </dl>
 
@@ -1071,7 +1030,7 @@ client.assets.export_rbm(
 <dd>
 
 **manifest_description:** `String` — Optional description for the exported manifest.
-    
+
 </dd>
 </dl>
 
@@ -1079,7 +1038,7 @@ client.assets.export_rbm(
 <dd>
 
 **preview_only:** `Internal::Types::Boolean` — If true, returns a preview of what would be exported without the full data.
-    
+
 </dd>
 </dl>
 
@@ -1087,15 +1046,23 @@ client.assets.export_rbm(
 <dd>
 
 **compress:** `Internal::Types::Boolean` — If true, the manifest in the response is returned in compressed form: the JSON array produced by the compress-json library instead of a plain object. Compressed manifests are substantially smaller, can be saved directly as a .rbm file, and are accepted by the import endpoint as-is. Intended for raw HTTP usage and file tooling; typed SDK clients should omit this flag, since the generated response type models the manifest as an object.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::RequestOptions` 
-    
+**download:** `Internal::Types::Boolean` — If true, returns the manifest itself as a streamed application/json attachment with Content-Disposition, rather than the normal `{ success, manifest }` response envelope. Combine with `compress: true` for large .rbm downloads.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Rulebricks::Assets::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1150,7 +1117,7 @@ client.values.list(include: "usage")
 <dd>
 
 **name:** `String` — Query all vocabulary values containing a specific name
-    
+
 </dd>
 </dl>
 
@@ -1158,7 +1125,7 @@ client.values.list(include: "usage")
 <dd>
 
 **prefix:** `String` — Only return values whose name starts with this collection prefix (e.g. 'Countries.').
-    
+
 </dd>
 </dl>
 
@@ -1166,7 +1133,7 @@ client.values.list(include: "usage")
 <dd>
 
 **type:** `String` — Only return values of this type (string, number, boolean, list, date, function).
-    
+
 </dd>
 </dl>
 
@@ -1174,7 +1141,7 @@ client.values.list(include: "usage")
 <dd>
 
 **limit:** `Integer` — Page size (default 100, max 1000). Providing limit or cursor switches the response to the paginated { data, next_cursor } envelope.
-    
+
 </dd>
 </dl>
 
@@ -1182,7 +1149,7 @@ client.values.list(include: "usage")
 <dd>
 
 **cursor:** `String` — Opaque pagination cursor from a previous page's next_cursor.
-    
+
 </dd>
 </dl>
 
@@ -1190,7 +1157,7 @@ client.values.list(include: "usage")
 <dd>
 
 **user_group:** `String` — Filter results by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
-    
+
 </dd>
 </dl>
 
@@ -1198,7 +1165,7 @@ client.values.list(include: "usage")
 <dd>
 
 **include:** `String` — Comma-separated list of additional data to include. Use 'usage' to include which rules reference each value.
-    
+
 </dd>
 </dl>
 
@@ -1206,15 +1173,15 @@ client.values.list(include: "usage")
 <dd>
 
 **resolve:** `Internal::Types::Boolean` — By default, payloads containing value-to-value references are returned materialized (references replaced with their resolved values). Pass 'false' to return stored payloads as-is, with { "$rb": "globalValue", "id": "..." } reference markers intact, so the reference graph round-trips.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Values::RequestOptions` 
-    
+**request_options:** `Rulebricks::Values::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1270,8 +1237,8 @@ client.values.update(
 <dl>
 <dd>
 
-**values:** `Internal::Types::Hash[String, Object]` — A dictionary of keys and values to update or add. This developer-facing sync contract preserves source names and nesting: nested objects are flattened using dot notation while every key segment stays exactly as sent (e.g. 'user.contact_info.email' stays 'user.contact_info.email'). Individual payloads may be value-to-value references (see ValueReference): a scalar payload may be a single { "$ref": "<value name>" } marker, and list payloads may mix literal items with reference markers.
-    
+**values:** `Internal::Types::Hash[String, Object]` — Values to create or update. Nested objects use dot-separated names and payloads may reference other values.
+
 </dd>
 </dl>
 
@@ -1279,7 +1246,7 @@ client.values.update(
 <dd>
 
 **user_groups:** `Internal::Types::Array[String]` — Optional array of user group names or IDs. If omitted and user belongs to user groups, values will be assigned to all user's user groups. Required if values should be restricted to specific user groups.
-    
+
 </dd>
 </dl>
 
@@ -1287,15 +1254,15 @@ client.values.update(
 <dd>
 
 **metadata_by_name:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` — Optional metadata keyed by vocabulary value name. This is the canonical snake_case field; legacy clients may still send `metadataByName`. System-owned keys (managedBy, source, lockedReason, previousTokens, and archive/tombstone fields) are stripped from user payloads - managed provenance and archive state cannot be forged.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Values::RequestOptions` 
-    
+**request_options:** `Rulebricks::Values::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1318,7 +1285,7 @@ client.values.update(
 <dl>
 <dd>
 
-Delete a specific vocabulary value for the authenticated user by its ID. Deletion is blocked while the value is referenced by any rule or flow. Values whose entire payload references the deleted value are deleted with it (cascade), and list values referencing it lose the referencing items; both effects are reported in the response.
+Deletes a value by ID. Rule and flow references block deletion; value references are replaced with the deleted value's content.
 </dd>
 </dl>
 </dd>
@@ -1349,15 +1316,15 @@ client.values.delete(id: "id")
 <dd>
 
 **id:** `String` — ID of the vocabulary value to delete
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Values::RequestOptions` 
-    
+**request_options:** `Rulebricks::Values::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1414,7 +1381,7 @@ client.values.sync(
 <dd>
 
 **collection:** `String` — Collection path to sync (e.g. 'Medical Codes'). Only values under this path are affected.
-    
+
 </dd>
 </dl>
 
@@ -1422,7 +1389,7 @@ client.values.sync(
 <dd>
 
 **values:** `Internal::Types::Hash[String, Object]` — Desired members of the collection, keyed relative to the collection path ('A123' becomes 'Medical Codes.A123'). Nested objects flatten with dot notation, and payloads may use ValueReference markers. An empty object empties the collection. May be omitted on a pure finalize call (sync_id + complete).
-    
+
 </dd>
 </dl>
 
@@ -1430,7 +1397,7 @@ client.values.sync(
 <dd>
 
 **sync_id:** `String` — Identifier for a chunked run. Repeat the call with the same sync_id for each chunk of the desired state; nothing is removed until a call with complete: true. Abandoned runs are purged after 24 hours without removing anything.
-    
+
 </dd>
 </dl>
 
@@ -1438,7 +1405,7 @@ client.values.sync(
 <dd>
 
 **complete:** `Internal::Types::Boolean` — Marks the run as complete, triggering the removal sweep. Implicitly true when sync_id is omitted (single-request syncs), false otherwise.
-    
+
 </dd>
 </dl>
 
@@ -1446,7 +1413,7 @@ client.values.sync(
 <dd>
 
 **permanently_delete:** `Internal::Types::Boolean` — Hard-delete removed values instead of archiving them. Removals still referenced by a rule, flow, or surviving value are archived instead and reported in 'blocked'. Self-hosted deployments retain tombstones regardless.
-    
+
 </dd>
 </dl>
 
@@ -1454,7 +1421,7 @@ client.values.sync(
 <dd>
 
 **dry_run:** `Internal::Types::Boolean` — Compute and return the full diff without writing anything. Only supported for single-request syncs (omit sync_id).
-    
+
 </dd>
 </dl>
 
@@ -1462,7 +1429,7 @@ client.values.sync(
 <dd>
 
 **user_groups:** `Internal::Types::Array[String]` — Optional array of user group names to assign to written values, matching POST /values.
-    
+
 </dd>
 </dl>
 
@@ -1470,15 +1437,15 @@ client.values.sync(
 <dd>
 
 **metadata_by_name:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` — Optional metadata keyed by FULL value name (including the collection prefix).
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Values::RequestOptions` 
-    
+**request_options:** `Rulebricks::Values::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1532,8 +1499,8 @@ client.objects.list
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Objects::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1556,7 +1523,7 @@ client.objects.list
 <dl>
 <dd>
 
-Creates or updates an object by ID or name and syncs enum values it generates. `content` and at least one of `id` or `name` are required. Objects help workspace admins programmatically determine multiple collections of values based on Rulebricks' contracts with external systems from a single JSON Schema source. Renaming the object's display name does not move its managed collection paths: those paths derive from schema field keys. When a schema field key itself is renamed, `field_rename` can preserve the generated values' identities.
+Creates or updates an object and syncs its generated enum values.
 </dd>
 </dl>
 </dd>
@@ -1594,8 +1561,8 @@ client.objects.upsert
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Objects::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1649,15 +1616,15 @@ client.objects.get(object_id_: "objectId")
 <dd>
 
 **object_id_:** `String` — Object ID or exact name
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Objects::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1711,7 +1678,7 @@ client.objects.delete(object_id_: "objectId")
 <dd>
 
 **object_id_:** `String` — Object ID or exact name
-    
+
 </dd>
 </dl>
 
@@ -1719,15 +1686,15 @@ client.objects.delete(object_id_: "objectId")
 <dd>
 
 **values:** `Rulebricks::Objects::Types::DeleteObjectsRequestValues` — What happens to generated values: 'archive' (default) permanently deletes unused values and archives referenced values; 'detach' retains all values as active ordinary values.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Objects::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1785,7 +1752,7 @@ client.contexts.get(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -1793,7 +1760,7 @@ client.contexts.get(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
@@ -1801,15 +1768,15 @@ client.contexts.get(
 <dd>
 
 **include_relations:** `String` — Comma-separated relationship names to include in the response under a 'relations' key (has_many relations return a list of related instance states; has_one/belongs_to return a single state or null). Use '*' for all relationships. Omitted by default - related instances are never fetched into the payload unrequested.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1867,7 +1834,7 @@ client.contexts.submit(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -1875,23 +1842,23 @@ client.contexts.submit(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
-    
+**request:** `Internal::Types::Hash[String, Object]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -1948,7 +1915,7 @@ client.contexts.delete(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -1956,15 +1923,15 @@ client.contexts.delete(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2021,7 +1988,7 @@ client.contexts.get_history(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -2029,7 +1996,7 @@ client.contexts.get_history(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
@@ -2037,7 +2004,7 @@ client.contexts.get_history(
 <dd>
 
 **field:** `String` — Filter history to a specific field.
-    
+
 </dd>
 </dl>
 
@@ -2045,15 +2012,15 @@ client.contexts.get_history(
 <dd>
 
 **limit:** `Integer` — Maximum number of history entries to return.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2110,7 +2077,7 @@ client.contexts.get_pending(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -2118,15 +2085,15 @@ client.contexts.get_pending(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2184,7 +2151,7 @@ client.contexts.cascade(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -2192,23 +2159,23 @@ client.contexts.cascade(
 <dd>
 
 **instance:** `String` — The unique identifier for the context instance.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
-    
+**request:** `Internal::Types::Hash[String, Object]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2265,7 +2232,7 @@ client.contexts.bulk_ingest(
 <dd>
 
 **slug:** `String` — The unique slug for the context.
-    
+
 </dd>
 </dl>
 
@@ -2273,23 +2240,23 @@ client.contexts.bulk_ingest(
 <dd>
 
 **include:** `String` — Comma-separated list of per-instance fields to include in results (instance_id is always present). Omit to include everything. Valid fields: positions, is_new, status, have, need, state, expires_at, executions, executed, triggered, reason. Useful for keeping response size proportional to outcomes rather than data volume, e.g. include=status,executed.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Internal::Types::Hash[String, Object]]` 
-    
+**request:** `Internal::Types::Array[Internal::Types::Hash[String, Object]]`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::RequestOptions` 
-    
+**request_options:** `Rulebricks::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2344,15 +2311,15 @@ client.assets.rules.delete(id: "2855f8da-2654-4df9-8903-8f797cbfe8eb")
 <dd>
 
 **id:** `String` — The ID of the rule to delete.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2406,15 +2373,15 @@ client.assets.rules.pull(id: "2855f8da-2654-4df9-8903-8f797cbfe8eb")
 <dd>
 
 **id:** `String` — The ID of the rule to export.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2551,16 +2518,16 @@ client.assets.rules.push(rule: {
 <dl>
 <dd>
 
-**rule:** `Rulebricks::Types::RuleImportPayload` 
-    
+**rule:** `Rulebricks::Types::RuleImportPayload`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2614,7 +2581,7 @@ client.assets.rules.list(folder: "Marketing Rules")
 <dd>
 
 **folder:** `String` — Filter results by folder name or folder ID.
-    
+
 </dd>
 </dl>
 
@@ -2630,7 +2597,7 @@ client.assets.rules.list(folder: "Marketing Rules")
 <dd>
 
 **user_group:** `String` — Filter results by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
-    
+
 </dd>
 </dl>
 
@@ -2638,15 +2605,15 @@ client.assets.rules.list(folder: "Marketing Rules")
 <dd>
 
 **name:** `String` — Filter results by name using a case-insensitive substring match.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2701,7 +2668,7 @@ client.assets.flows.list
 <dd>
 
 **folder:** `String` — Filter results by folder name or folder ID.
-    
+
 </dd>
 </dl>
 
@@ -2717,7 +2684,7 @@ client.assets.flows.list
 <dd>
 
 **user_group:** `String` — Filter results by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
-    
+
 </dd>
 </dl>
 
@@ -2725,15 +2692,15 @@ client.assets.flows.list
 <dd>
 
 **name:** `String` — Filter results by name using a case-insensitive substring match.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2832,16 +2799,16 @@ client.assets.flows.push(flow: {
 <dl>
 <dd>
 
-**flow:** `Rulebricks::Types::FlowImportPayload` 
-    
+**flow:** `Rulebricks::Types::FlowImportPayload`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2895,7 +2862,7 @@ client.assets.flows.pull
 <dd>
 
 **id:** `String` — The ID of the flow to export (provide `id` or `slug`).
-    
+
 </dd>
 </dl>
 
@@ -2903,15 +2870,15 @@ client.assets.flows.pull
 <dd>
 
 **slug:** `String` — The slug of the flow to export (provide `id` or `slug`).
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -2965,15 +2932,15 @@ client.assets.flows.delete(id: "3855f8da-2654-4df9-8903-8f797cbfe8ec")
 <dd>
 
 **id:** `String` — The ID of the flow to delete.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3028,7 +2995,7 @@ client.assets.folders.list
 <dd>
 
 **user_group:** `String` — Filter results by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
-    
+
 </dd>
 </dl>
 
@@ -3036,15 +3003,15 @@ client.assets.folders.list
 <dd>
 
 **name:** `String` — Filter results by name using a case-insensitive substring match.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Folders::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Folders::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3101,7 +3068,7 @@ client.assets.folders.upsert(
 <dd>
 
 **id:** `String` — Folder ID (required for updates, omit for creation)
-    
+
 </dd>
 </dl>
 
@@ -3109,7 +3076,7 @@ client.assets.folders.upsert(
 <dd>
 
 **name:** `String` — Name of the folder
-    
+
 </dd>
 </dl>
 
@@ -3117,7 +3084,7 @@ client.assets.folders.upsert(
 <dd>
 
 **description:** `String` — Description of the folder
-    
+
 </dd>
 </dl>
 
@@ -3125,15 +3092,15 @@ client.assets.folders.upsert(
 <dd>
 
 **type:** `Rulebricks::Assets::Folders::Types::UpsertFolderRequestType` — The type of assets the folder organizes. Applies on creation; ignored when updating an existing folder.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Folders::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Folders::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3187,15 +3154,15 @@ client.assets.folders.delete(id: "abc123")
 <dd>
 
 **id:** `String` — ID of the folder to delete
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Assets::Folders::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Folders::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3206,8 +3173,8 @@ client.assets.folders.delete(id: "abc123")
 </dl>
 </details>
 
-## Contexts Objects
-<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">list</a>() -> Internal::Types::Array[Rulebricks::Types::ContextListItem]</code></summary>
+## Assets Contexts
+<details><summary><code>client.assets.contexts.<a href="/lib/rulebricks/assets/contexts/client.rb">list</a>() -> Internal::Types::Array[Rulebricks::Types::ContextListItem]</code></summary>
 <dl>
 <dd>
 
@@ -3234,7 +3201,7 @@ Retrieve all contexts for the authenticated user. Results are scoped to the API 
 <dd>
 
 ```ruby
-client.contexts.objects.list
+client.assets.contexts.list
 ```
 </dd>
 </dl>
@@ -3250,7 +3217,7 @@ client.contexts.objects.list
 <dd>
 
 **folder:** `String` — Filter results by folder name or folder ID.
-    
+
 </dd>
 </dl>
 
@@ -3258,7 +3225,7 @@ client.contexts.objects.list
 <dd>
 
 **user_group:** `String` — Filter results by user group name or ID. The value is validated against workspace groups. Admin/unrestricted API keys can request any group-specific view; restricted API keys may only filter to one of their assigned groups and receive a 403 when filtering outside those groups.
-    
+
 </dd>
 </dl>
 
@@ -3266,15 +3233,15 @@ client.contexts.objects.list
 <dd>
 
 **name:** `String` — Filter results by name using a case-insensitive substring match.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3285,7 +3252,7 @@ client.contexts.objects.list
 </dl>
 </details>
 
-<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">create</a>(request) -> Rulebricks::Types::CreateContextResponse</code></summary>
+<details><summary><code>client.assets.contexts.<a href="/lib/rulebricks/assets/contexts/client.rb">create</a>(request) -> Rulebricks::Types::CreateContextResponse</code></summary>
 <dl>
 <dd>
 
@@ -3312,7 +3279,7 @@ Create a new context for the authenticated user.
 <dd>
 
 ```ruby
-client.contexts.objects.create(
+client.assets.contexts.create(
   name: "Customer",
   description: "Represents a customer in the system",
   schema: {
@@ -3345,7 +3312,7 @@ client.contexts.objects.create(
 <dd>
 
 **name:** `String` — The name of the context. The context's slug is generated from it (suffixed on collision).
-    
+
 </dd>
 </dl>
 
@@ -3353,7 +3320,7 @@ client.contexts.objects.create(
 <dd>
 
 **description:** `String` — The description of the context.
-    
+
 </dd>
 </dl>
 
@@ -3361,7 +3328,7 @@ client.contexts.objects.create(
 <dd>
 
 **schema:** `Rulebricks::Types::ContextSchema` — The context's schema: an object with `base` (stored facts; at least one required) and optional `derived` (expression-computed facts) field arrays.
-    
+
 </dd>
 </dl>
 
@@ -3369,7 +3336,7 @@ client.contexts.objects.create(
 <dd>
 
 **identity_fact:** `String` — The fact key to use as the unique identifier for instances. Must be a key from schema.base.
-    
+
 </dd>
 </dl>
 
@@ -3377,7 +3344,7 @@ client.contexts.objects.create(
 <dd>
 
 **auto_execute_decisions:** `Internal::Types::Boolean` — When true (default), bound rules and flows automatically execute when their inputs are satisfied.
-    
+
 </dd>
 </dl>
 
@@ -3385,7 +3352,7 @@ client.contexts.objects.create(
 <dd>
 
 **ttl_seconds:** `Integer` — Time-to-live in seconds for live context instances (60 seconds to 30 days). Instances expire after this duration; each write extends the expiry.
-    
+
 </dd>
 </dl>
 
@@ -3393,23 +3360,23 @@ client.contexts.objects.create(
 <dd>
 
 **history_limit:** `Integer` — Maximum number of history entries to retain per field.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**on_schema_mismatch:** `Rulebricks::Contexts::Objects::Types::CreateContextRequestOnSchemaMismatch` — How to handle submitted fields that don't match the schema: `ignore` drops them, `reject` fails the request (or the batch item), `store` persists them alongside declared facts.
-    
+**on_schema_mismatch:** `Rulebricks::Assets::Contexts::Types::CreateContextRequestOnSchemaMismatch` — How to handle submitted fields that don't match the schema: `ignore` drops them, `reject` fails the request (or the batch item), `store` persists them alongside declared facts.
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3420,7 +3387,7 @@ client.contexts.objects.create(
 </dl>
 </details>
 
-<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">get</a>(id) -> Rulebricks::Types::ContextDetail</code></summary>
+<details><summary><code>client.assets.contexts.<a href="/lib/rulebricks/assets/contexts/client.rb">get</a>(id) -> Rulebricks::Types::ContextDetail</code></summary>
 <dl>
 <dd>
 
@@ -3447,7 +3414,7 @@ Retrieve a specific context by its ID.
 <dd>
 
 ```ruby
-client.contexts.objects.get(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
+client.assets.contexts.get(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -3463,15 +3430,15 @@ client.contexts.objects.get(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3482,7 +3449,7 @@ client.contexts.objects.get(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 </dl>
 </details>
 
-<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">update</a>(id, request) -> Rulebricks::Types::UpdateContextResponse</code></summary>
+<details><summary><code>client.assets.contexts.<a href="/lib/rulebricks/assets/contexts/client.rb">update</a>(id, request) -> Rulebricks::Types::UpdateContextResponse</code></summary>
 <dl>
 <dd>
 
@@ -3509,7 +3476,7 @@ Update an existing context's properties and schema.
 <dd>
 
 ```ruby
-client.contexts.objects.update(
+client.assets.contexts.update(
   id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   name: "Updated Customer",
   description: "Updated description for premium customers"
@@ -3529,7 +3496,7 @@ client.contexts.objects.update(
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
@@ -3537,7 +3504,7 @@ client.contexts.objects.update(
 <dd>
 
 **name:** `String` — The name of the context. Changing it regenerates the context's slug.
-    
+
 </dd>
 </dl>
 
@@ -3545,7 +3512,7 @@ client.contexts.objects.update(
 <dd>
 
 **description:** `String` — The description of the context.
-    
+
 </dd>
 </dl>
 
@@ -3553,7 +3520,7 @@ client.contexts.objects.update(
 <dd>
 
 **schema:** `Rulebricks::Types::ContextSchema` — Updated schema for the context: an object with `base` and optional `derived` field arrays.
-    
+
 </dd>
 </dl>
 
@@ -3561,7 +3528,7 @@ client.contexts.objects.update(
 <dd>
 
 **identity_fact:** `String` — The fact key to use as the unique identifier for instances. Must be a key from schema.base. Caution: changing this on a context with live instances changes how future writes resolve instances.
-    
+
 </dd>
 </dl>
 
@@ -3569,7 +3536,7 @@ client.contexts.objects.update(
 <dd>
 
 **auto_execute_decisions:** `Internal::Types::Boolean` — When true, bound rules and flows automatically execute when their inputs are satisfied.
-    
+
 </dd>
 </dl>
 
@@ -3577,7 +3544,7 @@ client.contexts.objects.update(
 <dd>
 
 **ttl_seconds:** `Integer` — Time-to-live in seconds for live context instances (60 seconds to 30 days). Instances expire after this duration.
-    
+
 </dd>
 </dl>
 
@@ -3585,23 +3552,23 @@ client.contexts.objects.update(
 <dd>
 
 **history_limit:** `Integer` — Maximum number of history entries to retain per field.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**on_schema_mismatch:** `Rulebricks::Contexts::Objects::Types::UpdateContextRequestOnSchemaMismatch` — How to handle submitted fields that don't match the schema: `ignore` drops them, `reject` fails the request (or the batch item), `store` persists them alongside declared facts.
-    
+**on_schema_mismatch:** `Rulebricks::Assets::Contexts::Types::UpdateContextRequestOnSchemaMismatch` — How to handle submitted fields that don't match the schema: `ignore` drops them, `reject` fails the request (or the batch item), `store` persists them alongside declared facts.
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3612,7 +3579,7 @@ client.contexts.objects.update(
 </dl>
 </details>
 
-<details><summary><code>client.contexts.objects.<a href="/lib/rulebricks/contexts/objects/client.rb">delete</a>(id) -> Rulebricks::Types::DeleteContextResponse</code></summary>
+<details><summary><code>client.assets.contexts.<a href="/lib/rulebricks/assets/contexts/client.rb">delete</a>(id) -> Rulebricks::Types::DeleteContextResponse</code></summary>
 <dl>
 <dd>
 
@@ -3639,7 +3606,7 @@ Delete a specific context and all its instances.
 <dd>
 
 ```ruby
-client.contexts.objects.delete(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
+client.assets.contexts.delete(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -3655,15 +3622,15 @@ client.contexts.objects.delete(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Objects::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3674,8 +3641,8 @@ client.contexts.objects.delete(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 </dl>
 </details>
 
-## Contexts Relationships
-<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">list</a>(id) -> Rulebricks::Types::ContextRelationshipsResponse</code></summary>
+## Assets Contexts Relationships
+<details><summary><code>client.assets.contexts.relationships.<a href="/lib/rulebricks/assets/contexts/relationships/client.rb">list</a>(id) -> Rulebricks::Types::ContextRelationshipsResponse</code></summary>
 <dl>
 <dd>
 
@@ -3702,7 +3669,7 @@ List all relationships for a specific context.
 <dd>
 
 ```ruby
-client.contexts.relationships.list(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
+client.assets.contexts.relationships.list(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 ```
 </dd>
 </dl>
@@ -3718,15 +3685,15 @@ client.contexts.relationships.list(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::Relationships::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3737,7 +3704,7 @@ client.contexts.relationships.list(id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890")
 </dl>
 </details>
 
-<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">create</a>(id, request) -> Rulebricks::Types::ContextRelationshipOutgoing</code></summary>
+<details><summary><code>client.assets.contexts.relationships.<a href="/lib/rulebricks/assets/contexts/relationships/client.rb">create</a>(id, request) -> Rulebricks::Types::ContextRelationshipOutgoing</code></summary>
 <dl>
 <dd>
 
@@ -3764,7 +3731,7 @@ Create a new relationship between two contexts.
 <dd>
 
 ```ruby
-client.contexts.relationships.create(
+client.assets.contexts.relationships.create(
   id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   to_context_id: "b2c3d4e5-f6a7-8901-bcde-f12345678901",
   relation_type: "has_many",
@@ -3786,7 +3753,7 @@ client.contexts.relationships.create(
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
@@ -3794,15 +3761,15 @@ client.contexts.relationships.create(
 <dd>
 
 **to_context_id:** `String` — The ID of the target context.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**relation_type:** `Rulebricks::Contexts::Relationships::Types::CreateRelationshipRequestRelationType` — The type of relationship.
-    
+**relation_type:** `Rulebricks::Assets::Contexts::Relationships::Types::CreateRelationshipRequestRelationType` — The type of relationship.
+
 </dd>
 </dl>
 
@@ -3810,7 +3777,7 @@ client.contexts.relationships.create(
 <dd>
 
 **foreign_key_fact:** `String` — The field key to use as the foreign key.
-    
+
 </dd>
 </dl>
 
@@ -3818,7 +3785,7 @@ client.contexts.relationships.create(
 <dd>
 
 **name:** `String` — Optional runtime relationship key. It is normalized to lowercase snake_case; the target context slug is used when omitted.
-    
+
 </dd>
 </dl>
 
@@ -3826,15 +3793,15 @@ client.contexts.relationships.create(
 <dd>
 
 **description:** `String` — Description of the relationship.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::Relationships::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3845,7 +3812,7 @@ client.contexts.relationships.create(
 </dl>
 </details>
 
-<details><summary><code>client.contexts.relationships.<a href="/lib/rulebricks/contexts/relationships/client.rb">delete</a>(id, relationship) -> Rulebricks::Types::DeleteRelationshipResponse</code></summary>
+<details><summary><code>client.assets.contexts.relationships.<a href="/lib/rulebricks/assets/contexts/relationships/client.rb">delete</a>(id, relationship) -> Rulebricks::Types::DeleteRelationshipResponse</code></summary>
 <dl>
 <dd>
 
@@ -3872,7 +3839,7 @@ Delete a specific relationship between contexts.
 <dd>
 
 ```ruby
-client.contexts.relationships.delete(
+client.assets.contexts.relationships.delete(
   id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   relationship: "c3d4e5f6-a7b8-9012-cdef-123456789012"
 )
@@ -3891,7 +3858,7 @@ client.contexts.relationships.delete(
 <dd>
 
 **id:** `String` — The unique identifier for the context.
-    
+
 </dd>
 </dl>
 
@@ -3899,15 +3866,15 @@ client.contexts.relationships.delete(
 <dd>
 
 **relationship:** `String` — The unique identifier for the relationship.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Contexts::Relationships::RequestOptions` 
-    
+**request_options:** `Rulebricks::Assets::Contexts::Relationships::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3962,15 +3929,15 @@ client.tests.rules.list(slug: "slug")
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -3993,7 +3960,7 @@ client.tests.rules.list(slug: "slug")
 <dl>
 <dd>
 
-Adds a new test to the test suite of a rule identified by the slug.
+Adds a new test to the rule. `contains` (Contains Data, the default) finds the expected fragment anywhere in the output, `matches` (Matches Exactly) requires complete equality, and `excludes` (Excludes Data) requires the fragment to be absent.
 </dd>
 </dl>
 </dd>
@@ -4013,6 +3980,7 @@ client.tests.rules.create(
   name: "Test 3",
   request: {},
   response: {},
+  policy: "contains",
   critical: true
 )
 ```
@@ -4030,23 +3998,23 @@ client.tests.rules.create(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Rulebricks::Types::CreateTestRequest` 
-    
+**request:** `Rulebricks::Types::CreateTestRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4103,7 +4071,7 @@ client.tests.rules.delete(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
@@ -4111,15 +4079,15 @@ client.tests.rules.delete(
 <dd>
 
 **test_id:** `String` — The ID of the test.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4176,23 +4144,23 @@ client.tests.rules.run(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Rulebricks::Types::RunTestsRequest` 
-    
+**request:** `Rulebricks::Types::RunTestsRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Rules::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Rules::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4247,15 +4215,15 @@ client.tests.flows.list(slug: "slug")
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4278,7 +4246,7 @@ client.tests.flows.list(slug: "slug")
 <dl>
 <dd>
 
-Adds a new test to the test suite of a flow identified by the slug.
+Adds a new test to the flow. `contains` (Contains Data, the default) finds the expected fragment anywhere in the output, `matches` (Matches Exactly) requires complete equality, and `excludes` (Excludes Data) requires the fragment to be absent.
 </dd>
 </dl>
 </dd>
@@ -4298,6 +4266,7 @@ client.tests.flows.create(
   name: "Test 3",
   request: {},
   response: {},
+  policy: "contains",
   critical: true
 )
 ```
@@ -4315,23 +4284,23 @@ client.tests.flows.create(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Rulebricks::Types::CreateTestRequest` 
-    
+**request:** `Rulebricks::Types::CreateTestRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4388,7 +4357,7 @@ client.tests.flows.delete(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
@@ -4396,15 +4365,15 @@ client.tests.flows.delete(
 <dd>
 
 **test_id:** `String` — The ID of the test.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4461,23 +4430,23 @@ client.tests.flows.run(
 <dd>
 
 **slug:** `String` — The unique identifier for the resource.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Rulebricks::Types::RunTestsRequest` 
-    
+**request:** `Rulebricks::Types::RunTestsRequest`
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Tests::Flows::RequestOptions` 
-    
+**request_options:** `Rulebricks::Tests::Flows::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4531,8 +4500,8 @@ client.users.groups.list
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Users::Groups::RequestOptions` 
-    
+**request_options:** `Rulebricks::Users::Groups::RequestOptions`
+
 </dd>
 </dl>
 </dd>
@@ -4589,7 +4558,7 @@ client.users.groups.create(
 <dd>
 
 **name:** `String` — Unique name of the user group.
-    
+
 </dd>
 </dl>
 
@@ -4597,15 +4566,15 @@ client.users.groups.create(
 <dd>
 
 **description:** `String` — Description of the user group.
-    
+
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request_options:** `Rulebricks::Users::Groups::RequestOptions` 
-    
+**request_options:** `Rulebricks::Users::Groups::RequestOptions`
+
 </dd>
 </dl>
 </dd>

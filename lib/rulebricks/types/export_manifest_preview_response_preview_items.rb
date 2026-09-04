@@ -10,6 +10,8 @@ module Rulebricks
       field :contexts, -> { Internal::Types::Array[Rulebricks::Types::ExportManifestPreviewResponsePreviewItemsContextsItem] }, optional: true, nullable: false
 
       field :values, -> { Internal::Types::Array[Rulebricks::Types::ExportManifestPreviewResponsePreviewItemsValuesItem] }, optional: true, nullable: false
+
+      field :entity_relationships, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false, api_name: "entityRelationships"
     end
   end
 end

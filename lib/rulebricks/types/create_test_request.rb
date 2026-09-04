@@ -9,6 +9,8 @@ module Rulebricks
 
       field :response, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
 
+      field :policy, -> { Rulebricks::Types::CreateTestRequestPolicy }, optional: true, nullable: false
+
       field :critical, -> { Internal::Types::Boolean }, optional: false, nullable: false
     end
   end

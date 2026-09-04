@@ -10,9 +10,9 @@ module Rulebricks
         @client = client
       end
 
-      # Execute a flow by its slug. Optionally target a specific published version (e.g. `3`) or a release environment
-      # (e.g. `production`) via the `version` path segment; `latest` (the default) executes the current published
-      # version.
+      # Execute a flow by slug and optional version. Policy failures return `{ error }` with status 200, including
+      # per-item errors for bulk requests. Errors: 400 invalid input, 500 unhandled execution failure, 503 unavailable,
+      # 504 timeout.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Types::DynamicRequestPayload]

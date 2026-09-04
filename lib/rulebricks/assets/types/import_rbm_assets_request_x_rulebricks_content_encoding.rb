@@ -3,12 +3,10 @@
 module Rulebricks
   module Assets
     module Types
-      module ImportManifestRequestConflictStrategy
+      module ImportRbmAssetsRequestXRulebricksContentEncoding
         extend Rulebricks::Internal::Types::Enum
 
-        UPDATE = "update"
-        SKIP = "skip"
-        ERROR = "error"
+        GZIP = "gzip"
       end
     end
   end

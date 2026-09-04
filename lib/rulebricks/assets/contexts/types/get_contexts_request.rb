@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Relationships
+  module Assets
+    module Contexts
       module Types
-        class ListRelationshipsRequest < Internal::Types::Model
+        class GetContextsRequest < Internal::Types::Model
           field :id, -> { String }, optional: false, nullable: false
         end
       end

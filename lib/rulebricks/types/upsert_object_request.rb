@@ -2,8 +2,7 @@
 
 module Rulebricks
   module Types
-    # `content` is always required, together with at least one of `id` or `name`. Supplying both updates the object
-    # selected by `id` and may change its display name.
+    # Requires `content` and either `id` or `name`.
     class UpsertObjectRequest < Internal::Types::Model
       extend Rulebricks::Internal::Types::Union
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Objects
+  module Assets
+    module Contexts
       class Client
         # @param client [Rulebricks::Internal::Http::RawClient]
         #
@@ -58,7 +58,7 @@ module Rulebricks
         # Create a new context for the authenticated user.
         #
         # @param request_options [Hash]
-        # @param params [Rulebricks::Contexts::Objects::Types::CreateContextRequest]
+        # @param params [Rulebricks::Assets::Contexts::Types::CreateContextRequest]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -72,7 +72,7 @@ module Rulebricks
             base_url: request_options[:base_url],
             method: "POST",
             path: "admin/contexts",
-            body: Rulebricks::Contexts::Objects::Types::CreateContextRequest.new(params).to_h,
+            body: Rulebricks::Assets::Contexts::Types::CreateContextRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -126,7 +126,7 @@ module Rulebricks
         # Update an existing context's properties and schema.
         #
         # @param request_options [Hash]
-        # @param params [Rulebricks::Contexts::Objects::Types::UpdateContextRequest]
+        # @param params [Rulebricks::Assets::Contexts::Types::UpdateContextRequest]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -137,7 +137,7 @@ module Rulebricks
         # @return [Rulebricks::Types::UpdateContextResponse]
         def update(request_options: {}, **params)
           params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
-          request_data = Rulebricks::Contexts::Objects::Types::UpdateContextRequest.new(params).to_h
+          request_data = Rulebricks::Assets::Contexts::Types::UpdateContextRequest.new(params).to_h
           non_body_param_names = %w[id]
           body = request_data.except(*non_body_param_names)
 
@@ -194,6 +194,11 @@ module Rulebricks
             error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
           end
+        end
+
+        # @return [Rulebricks::Relationships::Client]
+        def relationships
+          @relationships ||= Rulebricks::Assets::Contexts::Relationships::Client.new(client: @client)
         end
       end
     end

@@ -17,6 +17,8 @@ module Rulebricks
         field :preview_only, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
         field :compress, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
+        field :download, -> { Internal::Types::Boolean }, optional: true, nullable: false
       end
     end
   end

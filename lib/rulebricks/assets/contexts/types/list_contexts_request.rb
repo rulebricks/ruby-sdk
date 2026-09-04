@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Objects
+  module Assets
+    module Contexts
       module Types
-        class ListObjectsRequest < Internal::Types::Model
+        class ListContextsRequest < Internal::Types::Model
           field :folder, -> { String }, optional: true, nullable: false
 
           field :user_group, -> { String }, optional: true, nullable: false

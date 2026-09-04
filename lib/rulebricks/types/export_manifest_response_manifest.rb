@@ -7,13 +7,15 @@ module Rulebricks
     # `compress: true`, this field is instead the compress-json array encoding of the same manifest (a JSON array, not
     # the object described below).
     class ExportManifestResponseManifest < Internal::Types::Model
-      field :version, -> { String }, optional: true, nullable: false
+      field :schema_version, -> { Integer }, optional: true, nullable: false
 
       field :name, -> { String }, optional: true, nullable: false
 
       field :description, -> { String }, optional: true, nullable: false
 
       field :exported_at, -> { String }, optional: true, nullable: false
+
+      field :exported_from, -> { String }, optional: true, nullable: false
 
       field :contexts, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
 

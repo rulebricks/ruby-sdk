@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Objects
+  module Assets
+    module Contexts
       module Types
         class UpdateContextRequest < Internal::Types::Model
           field :id, -> { String }, optional: false, nullable: false
@@ -21,7 +21,7 @@ module Rulebricks
 
           field :history_limit, -> { Integer }, optional: true, nullable: false
 
-          field :on_schema_mismatch, -> { Rulebricks::Contexts::Objects::Types::UpdateContextRequestOnSchemaMismatch }, optional: true, nullable: false
+          field :on_schema_mismatch, -> { Rulebricks::Assets::Contexts::Types::UpdateContextRequestOnSchemaMismatch }, optional: true, nullable: false
         end
       end
     end

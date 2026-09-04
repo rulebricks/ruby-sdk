@@ -45,7 +45,9 @@ module Rulebricks
           end
         end
 
-        # Adds a new test to the test suite of a flow identified by the slug.
+        # Adds a new test to the flow. `contains` (Contains Data, the default) finds the expected fragment anywhere in
+        # the output, `matches` (Matches Exactly) requires complete equality, and `excludes` (Excludes Data) requires
+        # the fragment to be absent.
         #
         # @param request_options [Hash]
         # @param params [Rulebricks::Types::CreateTestRequest]

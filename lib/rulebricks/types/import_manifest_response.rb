@@ -5,6 +5,8 @@ module Rulebricks
     class ImportManifestResponse < Internal::Types::Model
       field :success, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
+      field :outcome, -> { Rulebricks::Types::ImportManifestResponseOutcome }, optional: true, nullable: false
+
       field :created, -> { Internal::Types::Array[Rulebricks::Types::ImportManifestResponseCreatedItem] }, optional: true, nullable: false
 
       field :updated, -> { Internal::Types::Array[Rulebricks::Types::ImportManifestResponseUpdatedItem] }, optional: true, nullable: false

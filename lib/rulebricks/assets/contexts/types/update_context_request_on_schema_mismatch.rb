@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Rulebricks
-  module Contexts
-    module Objects
+  module Assets
+    module Contexts
       module Types
         module UpdateContextRequestOnSchemaMismatch
           extend Rulebricks::Internal::Types::Enum

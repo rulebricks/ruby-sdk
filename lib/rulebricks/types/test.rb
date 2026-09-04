@@ -11,6 +11,8 @@ module Rulebricks
 
       field :response, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
 
+      field :policy, -> { Rulebricks::Types::TestPolicy }, optional: false, nullable: false
+
       field :critical, -> { Internal::Types::Boolean }, optional: false, nullable: false
 
       field :error, -> { Internal::Types::Boolean }, optional: true, nullable: false

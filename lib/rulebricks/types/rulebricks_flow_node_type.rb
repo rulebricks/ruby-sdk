@@ -12,6 +12,7 @@ module Rulebricks
       FLOW = "flow"
       SUBFLOW = "subflow"
       RUN_FLOW = "run_flow"
+      RUNFLOW = "runflow"
       IFELSE = "ifelse"
       CONTINUE_IF = "continue_if"
       CONTINUEIF = "continueif"
@@ -38,6 +39,7 @@ module Rulebricks
       VAULT = "vault"
       ENTITY = "entity"
       CONTEXT_OPERATION = "context_operation"
+      ENTITYOPERATION = "entityoperation"
       NOTIFICATION = "notification"
       SEND_NOTIFICATION = "send_notification"
     end

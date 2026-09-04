@@ -9,6 +9,8 @@ module Rulebricks
       field :max_value_length, -> { Integer }, optional: true, nullable: false, api_name: "MAX_VALUE_LENGTH"
 
       field :max_key_length, -> { Integer }, optional: true, nullable: false, api_name: "MAX_KEY_LENGTH"
+
+      field :max_key_bytes, -> { Integer }, optional: true, nullable: false, api_name: "MAX_KEY_BYTES"
     end
   end
 end

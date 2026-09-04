@@ -7,6 +7,8 @@ module Rulebricks
 
       field :name, -> { String }, optional: false, nullable: false
 
+      field :policy, -> { Rulebricks::Types::RunTestsResponseFailuresItemPolicy }, optional: false, nullable: false
+
       field :critical, -> { Internal::Types::Boolean }, optional: false, nullable: false
 
       field :expected, -> { Object }, optional: false, nullable: true
