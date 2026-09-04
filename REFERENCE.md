@@ -343,7 +343,7 @@ client.infra.scale
 </details>
 
 ## Flows
-<details><summary><code>client.flows.<a href="/lib/rulebricks/flows/client.rb">execute</a>(slug, version, request) -> Internal::Types::Hash[String, Object]</code></summary>
+<details><summary><code>client.flows.<a href="/lib/rulebricks/flows/client.rb">execute</a>(slug, version, request) -> Rulebricks::Types::FlowExecutionResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -405,7 +405,7 @@ client.flows.execute(
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]`
+**request:** `Rulebricks::Types::FlowExecutionRequestPayload`
 
 </dd>
 </dl>

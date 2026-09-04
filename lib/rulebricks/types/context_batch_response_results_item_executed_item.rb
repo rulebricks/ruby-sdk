@@ -9,6 +9,8 @@ module Rulebricks
 
       field :status, -> { Rulebricks::Types::ContextBatchResponseResultsItemExecutedItemStatus }, optional: true, nullable: false
 
+      field :execution_id, -> { String }, optional: true, nullable: false
+
       field :error, -> { String }, optional: true, nullable: false
 
       field :written_to_context, -> { Internal::Types::Array[String] }, optional: true, nullable: false

@@ -10,6 +10,8 @@ module Rulebricks
 
       field :flow, -> { String }, optional: true, nullable: false
 
+      field :execution_id, -> { String }, optional: true, nullable: false
+
       field :status, -> { Rulebricks::Types::CascadeResultStatus }, optional: true, nullable: false
 
       field :result, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false

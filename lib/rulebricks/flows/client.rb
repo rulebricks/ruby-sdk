@@ -15,7 +15,7 @@ module Rulebricks
       # 504 timeout.
       #
       # @param request_options [Hash]
-      # @param params [Rulebricks::Types::DynamicRequestPayload]
+      # @param params [Rulebricks::Types::FlowExecutionRequestPayload]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -24,7 +24,7 @@ module Rulebricks
       # @option params [String] :slug
       # @option params [String] :version
       #
-      # @return [Hash[String, Object]]
+      # @return [Rulebricks::Types::FlowExecutionResponsePayload]
       def execute(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug version]
@@ -34,7 +34,7 @@ module Rulebricks
           base_url: request_options[:base_url],
           method: "POST",
           path: "flows/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params.fetch(:version, "latest").to_s)}",
-          body: body_params,
+          body: Rulebricks::Types::FlowExecutionRequestPayload.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -44,7 +44,7 @@ module Rulebricks
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Rulebricks::Types::DynamicResponsePayload.load(response.body)
+          Rulebricks::Types::FlowExecutionResponsePayload.load(response.body)
         else
           error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
