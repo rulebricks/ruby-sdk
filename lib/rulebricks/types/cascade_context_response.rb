@@ -6,7 +6,7 @@ module Rulebricks
     class CascadeContextResponse < Internal::Types::Model
       field :context, -> { String }, optional: true, nullable: false
 
-      field :cascaded, -> { Internal::Types::Array[Rulebricks::Types::CascadeResult] }, optional: true, nullable: false
+      field :cascaded, -> { Internal::Types::Array[Rulebricks::Types::CascadeContextResponseCascadedItem] }, optional: true, nullable: false
     end
   end
 end

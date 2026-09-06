@@ -121,8 +121,13 @@ module Rulebricks
           end
         end
 
-        # List all rules in the organization. Results are scoped to the API key holder's user groups. Optionally filter
-        # by folder name or ID, labels, user group name or ID when the API key has access to that group, or by name.
+        # List rules in the organization, scoped to the API key holder's user groups. Combine folder, labels,
+        # user_group, id, slug, name, and search filters. When version is supplied, the filters must match exactly one
+        # accessible rule: multiple matches return 400 and no matches return 404. Version accepts a published version
+        # number, release environment slug, or latest, using the same publication and access checks as execution. A
+        # missing version or release returns 404. The response remains an array; schemas and condition count come from
+        # the selected version, while descriptive workspace metadata stays current. Without version, published rules use
+        # their published schemas and unpublished rules use their drafts.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -131,6 +136,10 @@ module Rulebricks
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String, nil] :id
+        # @option params [String, nil] :slug
+        # @option params [String, nil] :search
+        # @option params [String, nil] :version
         # @option params [String, nil] :folder
         # @option params [String, nil] :labels
         # @option params [String, nil] :user_group
@@ -140,6 +149,10 @@ module Rulebricks
         def list(request_options: {}, **params)
           params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
+          query_params["id"] = params[:id] if params.key?(:id)
+          query_params["slug"] = params[:slug] if params.key?(:slug)
+          query_params["search"] = params[:search] if params.key?(:search)
+          query_params["version"] = params[:version] if params.key?(:version)
           query_params["folder"] = params[:folder] if params.key?(:folder)
           query_params["labels"] = params[:labels] if params.key?(:labels)
           query_params["user_group"] = params[:user_group] if params.key?(:user_group)

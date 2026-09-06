@@ -8,6 +8,8 @@ module Rulebricks
 
         field :instance, -> { String }, optional: false, nullable: false
 
+        field :include, -> { String }, optional: true, nullable: false
+
         field :include_relations, -> { String }, optional: true, nullable: false
       end
     end

@@ -5,6 +5,8 @@ module Rulebricks
     # Response from a context batch: admission counts, per-record rejections, execution outcomes, and the resolved state
     # of every touched instance.
     class ContextBatchResponse < Internal::Types::Model
+      field :cascade_rejections, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+
       field :context, -> { String }, optional: true, nullable: false
 
       field :trace_id, -> { String }, optional: true, nullable: false

@@ -2,13 +2,12 @@
 
 module Rulebricks
   module Types
-    # Returned with HTTP 202 when a rule or flow cannot run yet because required facts are missing. The evaluation is
-    # registered and fires automatically when the instance receives the missing facts (visible under the instance's
-    # /pending endpoint until then).
+    # HTTP 202: required facts are missing. The registered rule/flow runs when those facts arrive and remains visible
+    # under `/pending` until then.
     class PendingContextEvaluationResponse < Internal::Types::Model
-      field :status, -> { Rulebricks::Types::PendingContextEvaluationResponseStatus }, optional: true, nullable: false
+      field :status, -> { Rulebricks::Types::PendingContextEvaluationResponseStatus }, optional: false, nullable: false
 
-      field :context, -> { String }, optional: true, nullable: false
+      field :context, -> { String }, optional: false, nullable: false
 
       field :rule, -> { String }, optional: true, nullable: false
 

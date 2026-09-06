@@ -2,13 +2,14 @@
 
 module Rulebricks
   module Types
-    # A single flow output object or an array of output objects for bulk execution.
+    # For object input, one flow result. For list input, a same-length list with one result per input in input order.
+    # Failed executions use ExecutionErrorResult and are never null.
     class FlowExecutionResponsePayload < Internal::Types::Model
       extend Rulebricks::Internal::Types::Union
 
-      member -> { Internal::Types::Hash[String, Object] }
+      member -> { Rulebricks::Types::FlowExecutionResult }
 
-      member -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }
+      member -> { Internal::Types::Array[Rulebricks::Types::FlowExecutionResult] }
     end
   end
 end

@@ -13,6 +13,8 @@ module Rulebricks
 
       field :error, -> { String }, optional: true, nullable: false
 
+      field :result, -> { Object }, optional: true, nullable: false
+
       field :written_to_context, -> { Internal::Types::Array[String] }, optional: true, nullable: false
     end
   end

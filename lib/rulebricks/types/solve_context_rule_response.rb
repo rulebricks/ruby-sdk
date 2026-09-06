@@ -4,9 +4,9 @@ module Rulebricks
   module Types
     # Response after solving a rule against a context instance.
     class SolveContextRuleResponse < Internal::Types::Model
-      field :status, -> { Rulebricks::Types::SolveContextRuleResponseStatus }, optional: true, nullable: false
+      field :status, -> { Rulebricks::Types::SolveContextRuleResponseStatus }, optional: false, nullable: false
 
-      field :context, -> { String }, optional: true, nullable: false
+      field :context, -> { String }, optional: false, nullable: false
 
       field :rule, -> { String }, optional: true, nullable: false
 

@@ -4,9 +4,9 @@ module Rulebricks
   module Types
     # Response after executing a flow against a context instance.
     class SolveContextFlowResponse < Internal::Types::Model
-      field :status, -> { Rulebricks::Types::SolveContextFlowResponseStatus }, optional: true, nullable: false
+      field :status, -> { Rulebricks::Types::SolveContextFlowResponseStatus }, optional: false, nullable: false
 
-      field :context, -> { String }, optional: true, nullable: false
+      field :context, -> { String }, optional: false, nullable: false
 
       field :flow, -> { String }, optional: true, nullable: false
 

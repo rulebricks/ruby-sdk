@@ -5,6 +5,14 @@ module Rulebricks
     module Rules
       module Types
         class ListRulesRequest < Internal::Types::Model
+          field :id, -> { String }, optional: true, nullable: false
+
+          field :slug, -> { String }, optional: true, nullable: false
+
+          field :search, -> { String }, optional: true, nullable: false
+
+          field :version, -> { String }, optional: true, nullable: false
+
           field :folder, -> { String }, optional: true, nullable: false
 
           field :labels, -> { String }, optional: true, nullable: false

@@ -3,12 +3,12 @@
 module Rulebricks
   module Contexts
     module Types
-      class SubmitContextsRequest < Internal::Types::Model
+      class SolveFlowContextsRequest < Internal::Types::Model
         field :slug, -> { String }, optional: false, nullable: false
 
         field :instance, -> { String }, optional: false, nullable: false
 
-        field :include, -> { String }, optional: true, nullable: false
+        field :flow_slug, -> { String }, optional: false, nullable: false, api_name: "flowSlug"
 
         field :body, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
       end

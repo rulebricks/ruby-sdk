@@ -3,6 +3,8 @@
 module Rulebricks
   module Types
     class FlowDetail < Internal::Types::Model
+      field :request_schema, -> { Internal::Types::Array[Rulebricks::Types::SchemaField] }, optional: true, nullable: false
+
       field :published, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
       field :updated_at, -> { String }, optional: true, nullable: false

@@ -4,6 +4,10 @@ module Rulebricks
   module Types
     # Response after submitting data, including any auto-executed evaluations.
     class SubmitContextDataResponse < Internal::Types::Model
+      field :execution_degraded, -> { String }, optional: true, nullable: false
+
+      field :cascade_rejections, -> { Internal::Types::Array[Internal::Types::Hash[String, Object]] }, optional: true, nullable: false
+
       field :context, -> { String }, optional: true, nullable: false
 
       field :state, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
@@ -15,6 +19,8 @@ module Rulebricks
       field :need, -> { Internal::Types::Array[String] }, optional: true, nullable: false
 
       field :is_new, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
+      field :triggered, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
       field :expires_at, -> { String }, optional: true, nullable: false
 

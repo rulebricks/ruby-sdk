@@ -24,7 +24,7 @@ module Rulebricks
       # @option params [String] :slug
       # @option params [String] :version
       #
-      # @return [Hash[String, Object]]
+      # @return [Rulebricks::Types::RuleExecutionResult]
       def solve(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[slug version]
@@ -44,7 +44,7 @@ module Rulebricks
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Rulebricks::Types::DynamicResponsePayload.load(response.body)
+          Rulebricks::Types::RuleExecutionResult.load(response.body)
         else
           error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

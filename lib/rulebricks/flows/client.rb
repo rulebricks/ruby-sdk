@@ -10,9 +10,11 @@ module Rulebricks
         @client = client
       end
 
-      # Execute a flow by slug and optional version. Policy failures return `{ error }` with status 200, including
-      # per-item errors for bulk requests. Errors: 400 invalid input, 500 unhandled execution failure, 503 unavailable,
-      # 504 timeout.
+      # Execute a flow by slug and optional version. The flow setting `failedResponseMode` controls execution-failure
+      # responses: a missing or invalid value is treated as `return` (the default), which returns an `{ "error": "..."
+      # }` payload with HTTP 200; `fail` returns HTTP 400 for input/schema failures and HTTP 500 for escalated
+      # policy/runtime failures. Request- and entity-level errors, capacity errors, and infrastructure failures remain
+      # non-2xx responses as documented.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Types::FlowExecutionRequestPayload]

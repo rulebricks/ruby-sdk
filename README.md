@@ -21,7 +21,7 @@ The Rulebricks Ruby library provides convenient access to the Rulebricks APIs fr
 
 ## Reference
 
-A full reference for this library is available [here](./reference.md).
+A full reference for this library is available [here](./REFERENCE.md).
 
 ## Usage
 

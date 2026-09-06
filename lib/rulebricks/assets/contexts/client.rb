@@ -11,9 +11,9 @@ module Rulebricks
           @client = client
         end
 
-        # Retrieve all contexts for the authenticated user. Results are scoped to the API key holder's user groups.
-        # Optionally filter by folder name or ID, by user group name or ID when the API key has access to that group, or
-        # by name.
+        # List contexts accessible to the API key. Filter by context name, folder name/ID, or an accessible user group's
+        # name/ID. Returns an array when pagination is omitted; optional limit/cursor pagination returns {data,cursor}
+        # in descending creation time and ID order.
         #
         # @param request_options [Hash]
         # @param params [Hash]
@@ -22,14 +22,18 @@ module Rulebricks
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        # @option params [Integer, nil] :limit
+        # @option params [String, nil] :cursor
         # @option params [String, nil] :folder
         # @option params [String, nil] :user_group
         # @option params [String, nil] :name
         #
-        # @return [Array[Rulebricks::Types::ContextListItem]]
+        # @return [Rulebricks::Assets::Contexts::Types::ListContextsResponse]
         def list(request_options: {}, **params)
           params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
+          query_params["limit"] = params[:limit] if params.key?(:limit)
+          query_params["cursor"] = params[:cursor] if params.key?(:cursor)
           query_params["folder"] = params[:folder] if params.key?(:folder)
           query_params["user_group"] = params[:user_group] if params.key?(:user_group)
           query_params["name"] = params[:name] if params.key?(:name)
@@ -48,7 +52,7 @@ module Rulebricks
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Rulebricks::Types::ContextListResponse.load(response.body)
+            Rulebricks::Assets::Contexts::Types::ListContextsResponse.load(response.body)
           else
             error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

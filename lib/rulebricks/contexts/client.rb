@@ -21,12 +21,14 @@ module Rulebricks
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :slug
       # @option params [String] :instance
+      # @option params [String, nil] :include
       # @option params [String, nil] :include_relations
       #
       # @return [Rulebricks::Types::ContextInstanceState]
       def get(request_options: {}, **params)
         params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
+        query_params["include"] = params[:include] if params.key?(:include)
         query_params["include_relations"] = params[:include_relations] if params.key?(:include_relations)
 
         request = Rulebricks::Internal::JSON::Request.new(
@@ -51,6 +53,8 @@ module Rulebricks
       end
 
       # Submit data to a context instance, creating it if it doesn't exist. May trigger bound rule/flow evaluations.
+      # Each instance supports up to 64 MiB of combined stored state and execution metadata, measured as serialized
+      # database JSON. Deployment transport limits and execution deadlines also apply.
       #
       # @param request_options [Hash]
       # @param params [Rulebricks::Types::SubmitContextDataRequest]
@@ -61,6 +65,7 @@ module Rulebricks
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :slug
       # @option params [String] :instance
+      # @option params [String, nil] :include
       #
       # @return [Rulebricks::Types::SubmitContextDataResponse]
       def submit(request_options: {}, **params)
@@ -68,10 +73,16 @@ module Rulebricks
         path_param_names = %i[slug instance]
         body_params = params.except(*path_param_names)
 
+        query_param_names = %i[include]
+        query_params = {}
+        query_params["include"] = params[:include] if params.key?(:include)
+        params = params.except(*query_param_names)
+
         request = Rulebricks::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}",
+          query: query_params,
           body: body_params,
           request_options: request_options
         )
@@ -241,11 +252,95 @@ module Rulebricks
         end
       end
 
-      # Submit an array of records to any context in one synchronous call. Records merge into their context instances
-      # (matched by the context's identity fact), bound rules and flows whose inputs became satisfied execute, and the
-      # response returns the resolved state of every touched instance. Retries are always safe: merges are idempotent
-      # and executions are deduplicated by input hash. Fact history is recorded for tracked facts exactly as on
-      # individual writes. Clients chunk large datasets across requests.
+      # Execute one rule bound to this context. An optional object body is validated and persisted before evaluation.
+      # Returns HTTP 202 and registers pending work when that rule's own inputs are not yet available.
+      #
+      # @param request_options [Hash]
+      # @param params [Rulebricks::Types::SolveContextRuleRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :slug
+      # @option params [String] :instance
+      # @option params [String] :rule_slug
+      #
+      # @return [Rulebricks::Types::SolveContextRuleResponse]
+      def solve_rule(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[slug instance rule_slug]
+        body_params = params.except(*path_param_names)
+
+        request = Rulebricks::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/solve/#{URI.encode_uri_component(params[:rule_slug].to_s)}",
+          body: body_params,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Rulebricks::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Rulebricks::Types::SolveContextRuleResponse.load(response.body)
+        else
+          error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Execute one flow bound to this context. An optional object body is validated and persisted before evaluation.
+      # Returns HTTP 202 and registers pending work when that flow's own inputs are not yet available.
+      #
+      # @param request_options [Hash]
+      # @param params [Rulebricks::Types::SolveContextFlowRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :slug
+      # @option params [String] :instance
+      # @option params [String] :flow_slug
+      #
+      # @return [Rulebricks::Types::SolveContextFlowResponse]
+      def solve_flow(request_options: {}, **params)
+        params = Rulebricks::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[slug instance flow_slug]
+        body_params = params.except(*path_param_names)
+
+        request = Rulebricks::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "contexts/#{URI.encode_uri_component(params[:slug].to_s)}/#{URI.encode_uri_component(params[:instance].to_s)}/flows/#{URI.encode_uri_component(params[:flow_slug].to_s)}",
+          body: body_params,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Rulebricks::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Rulebricks::Types::SolveContextFlowResponse.load(response.body)
+        else
+          error_class = Rulebricks::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Synchronously merge records by identity, record tracked history, and execute ready bound rules/flows. Returns
+      # each touched instance's resolved state and execution summary. Successful runs are deduplicated by input hash;
+      # lost responses can cause repeated external effects. Each instance supports up to 64 MiB of combined stored state
+      # and execution metadata, measured as serialized database JSON. Contexts impose no separate request-wide size or
+      # record-count budget. Deployment transport limits, available resources, and execution deadlines still apply.
+      # Error responses identify committed and failed instances when known; a failed request does not imply rollback of
+      # earlier writes.
       #
       # @param request_options [Hash]
       # @param params [Hash]

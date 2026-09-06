@@ -2,8 +2,8 @@
 
 module Rulebricks
   module Types
-    # One input-order-aligned bulk rule result. A failed execution is represented by ExecutionErrorResult, never null.
-    class BulkRuleResponseItem < Internal::Types::Model
+    # The rule-defined output or an inline execution-failure payload.
+    class RuleExecutionResult < Internal::Types::Model
       extend Rulebricks::Internal::Types::Union
 
       member -> { Internal::Types::Hash[String, Object] }

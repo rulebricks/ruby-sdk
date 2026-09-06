@@ -19,6 +19,8 @@ module Rulebricks
       field :history_limit, -> { Integer }, optional: true, nullable: false
 
       field :on_schema_mismatch, -> { Rulebricks::Types::ContextBaseOnSchemaMismatch }, optional: true, nullable: false
+
+      field :source_objects, -> { Internal::Types::Array[String] }, optional: true, nullable: false
     end
   end
 end

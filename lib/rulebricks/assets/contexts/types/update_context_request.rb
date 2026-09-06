@@ -22,6 +22,12 @@ module Rulebricks
           field :history_limit, -> { Integer }, optional: true, nullable: false
 
           field :on_schema_mismatch, -> { Rulebricks::Assets::Contexts::Types::UpdateContextRequestOnSchemaMismatch }, optional: true, nullable: false
+
+          field :source_objects, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
+          field :user_groups, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+
+          field :folder, -> { String }, optional: true, nullable: false
         end
       end
     end

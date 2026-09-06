@@ -2,12 +2,12 @@
 
 module Rulebricks
   module Types
-    module RulebricksFlowNodeOperation
+    module UpdateContextResponseOnSchemaMismatch
       extend Rulebricks::Internal::Types::Enum
 
-      READ = "read"
-      UPDATE = "update"
-      DELETE = "delete"
+      IGNORE = "ignore"
+      REJECT = "reject"
+      STORE = "store"
     end
   end
 end
